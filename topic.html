@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic — Ravionus Learn</title>
+    <meta name="description" content="Start learning with Ravionus — interactive lessons with built-in quizzes.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                Ravionus
+                <span class="logo-badge">Learn</span>
+            </a>
+            <a href="index.html" class="nav-back">
+                ← All Topics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Topic Hero -->
+    <div class="topic-hero">
+        <div class="topic-hero-inner">
+            <div class="topic-meta">
+                <span class="topic-icon-lg" id="topicIcon"></span>
+                <span class="badge" id="topicDiff"></span>
+                <span class="badge badge-time" id="topicTime"></span>
+            </div>
+            <h1 class="topic-title" id="topicTitleEl"></h1>
+            <p class="topic-desc-hero" id="topicDescEl"></p>
+        </div>
+    </div>
+
+    <!-- Reader Layout -->
+    <div class="reader-layout">
+
+        <!-- Sidebar: Section Progress -->
+        <aside class="progress-sidebar" id="progressSidebar">
+            <div class="sidebar-title">Progress</div>
+            <div class="section-steps" id="sectionSteps">
+                <!-- Rendered by app.js -->
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Rendered by app.js -->
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>Made with ❤️ by <a href="/">Ravionus</a></p>
+    </footer>
+
+    <script src="content.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
