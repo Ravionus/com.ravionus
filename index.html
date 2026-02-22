@@ -1,30 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./learn/">
-    <title>Ravionus — Redirecting…</title>
-    <style>
-        body {
-            background: #0a0a0f;
-            color: #9090a8;
-            font-family: system-ui, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ravionus</title>
+  <meta name="description" content="Ravionus — interactive bite-sized learning tools and developer resources.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        a {
-            color: #a855f7;
-        }
-    </style>
+    :root {
+      --bg:        #0a0a0f;
+      --surface:   #12121a;
+      --border:    #1e1e2e;
+      --text:      #e2e2f0;
+      --muted:     #7878a0;
+      --purple:    #a855f7;
+      --cyan:      #22d3ee;
+      --accent-g:  linear-gradient(135deg, #a855f7, #22d3ee);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -.5px;
+      background: var(--accent-g);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color .2s, background .2s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface); }
+    .nav-link.primary {
+      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      color: #fff;
+      font-weight: 600;
+    }
+    .nav-link.primary:hover { opacity: .88; background: linear-gradient(135deg, #7c3aed, #0e7490); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      background: var(--surface);
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      margin-bottom: 20px;
+    }
+    .gradient-text {
+      background: var(--accent-g);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .18s, opacity .18s;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: .9; }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(168,85,247,.25);
+    }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    /* ── Cards ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+    .section-label {
+      font-size: .78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--purple);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      background: var(--surface);
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-g);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .card:hover { border-color: #7c3aed66; transform: translateY(-4px); box-shadow: 0 8px 32px rgba(124,58,237,.15); }
+    .card:hover::before { opacity: .04; }
+    .card-icon { font-size: 2rem; }
+    .card-title { font-size: 1.1rem; font-weight: 700; }
+    .card-desc { font-size: .88rem; color: var(--muted); line-height: 1.6; flex: 1; }
+    .card-badge {
+      align-self: flex-start;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--purple);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    footer a { color: var(--purple); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
 </head>
-
 <body>
-    <p>Redirecting to <a href="./learn/">ravionus.com/learn</a>…</p>
-</body>
 
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Ravionus</a>
+      <div class="nav-links">
+        <a href="/learn/" class="nav-link primary">✨ Learn</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">
+      <span>🚀</span> Developer tools &amp; learning
+    </div>
+    <h1>
+      Build. Learn.<br>
+      <span class="gradient-text">Level up.</span>
+    </h1>
+    <p>
+      Ravionus is a collection of interactive tools and bite-sized courses designed to help developers grow faster and smarter.
+    </p>
+    <div class="hero-cta">
+      <a href="/learn/" class="btn btn-primary">Start Learning →</a>
+      <a href="#explore" class="btn btn-ghost">Explore</a>
+    </div>
+  </section>
+
+  <!-- Explore section -->
+  <div id="explore" class="section">
+    <div class="section-label">Explore</div>
+    <div class="section-title">What's on Ravionus</div>
+    <div class="cards">
+
+      <a href="/learn/" class="card">
+        <div class="card-icon">📚</div>
+        <div class="card-title">Ravionus Learn</div>
+        <div class="card-desc">
+          Bite-sized interactive lessons on Git, JavaScript, and more — with instant quizzes built right in. Learn by doing, not just reading.
+        </div>
+        <div class="card-badge">Live ✓</div>
+      </a>
+
+      <div class="card" style="cursor:default; opacity:.6;">
+        <div class="card-icon">🛠️</div>
+        <div class="card-title">Dev Tools</div>
+        <div class="card-desc">
+          Handy utilities for everyday developer workflows. More coming soon.
+        </div>
+        <div class="card-badge">Coming Soon</div>
+      </div>
+
+      <div class="card" style="cursor:default; opacity:.6;">
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Playgrounds</div>
+        <div class="card-desc">
+          Interactive sandboxes to experiment with code concepts right in your browser.
+        </div>
+        <div class="card-badge">Coming Soon</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Made with ❤️ by <a href="/">Ravionus</a>
+  </footer>
+
+</body>
 </html>
