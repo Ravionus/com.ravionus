@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn — Ravionus</title>
+  <meta name="description" content="Interactive bite-sized learning on Git, JavaScript, and more — with quizzes built right in. Start learning for free on Ravionus.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        Ravionus
+        <span class="logo-badge">Learn</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span>✨</span> Interactive Courses
+    </div>
+    <h1>
+      Learn things that<br>
+      <span class="gradient-text">actually matter</span>
+    </h1>
+    <p class="hero-sub">
+      Bite-sized lessons paired with instant quizzes — so you don't just read, you <em>understand</em>.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value" id="statTopics">—</div>
+        <div class="stat-label">Topics</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="statLessons">—</div>
+        <div class="stat-label">Lessons</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="statQuizzes">—</div>
+        <div class="stat-label">Quizzes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search topics, tags…"
+        aria-label="Search topics"
+        autocomplete="off"
+      >
+    </div>
+  </div>
+
+  <!-- Topic Grid -->
+  <section class="topics-section">
+    <div class="section-header">
+      <span class="section-title">All Topics</span>
+    </div>
+    <div class="topics-grid" id="topicsGrid">
+      <!-- Rendered by app.js -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>Made with ❤️ by <a href="/">Ravionus</a></p>
+  </footer>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
