@@ -515,6 +515,307 @@ null === undefined  // false (strict)</code></pre>
   }
 
   // ─────────────────────────────────────────────────────────
+  //  TOPIC 3: Python Fundamentals
+  // ─────────────────────────────────────────────────────────
+  {
+    id: "python-fundamentals",
+    title: "Python Fundamentals",
+    icon: "🐍",
+    color: "#16a34a",
+    description: "Discover Python — the world's most beginner-friendly programming language. From variables to functions, build a solid foundation for data science, automation, and beyond.",
+    difficulty: "Beginner",
+    estimatedTime: "30 min",
+    tags: ["Programming", "Python"],
+    sections: [
+      // ── Lesson 1 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "What is Python?",
+        content: `
+          <p>Python is one of the most popular programming languages in the world — and for good reason. It reads almost like plain English, making it perfect for beginners while remaining powerful enough for experts.</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Use Case</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td>🌐 Web Development</td><td>Django, Flask, FastAPI</td></tr>
+                <tr><td>📊 Data Science & AI</td><td>NumPy, Pandas, TensorFlow</td></tr>
+                <tr><td>🤖 Automation & Scripting</td><td>File handling, web scraping</td></tr>
+                <tr><td>🎮 Game Development</td><td>Pygame</td></tr>
+                <tr><td>🔬 Scientific Computing</td><td>SciPy, Matplotlib</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Why Python?</h3>
+          <ul>
+            <li>✅ <strong>Readable syntax</strong> — less boilerplate, more clarity</li>
+            <li>✅ <strong>Huge ecosystem</strong> — hundreds of thousands of libraries</li>
+            <li>✅ <strong>Cross-platform</strong> — runs on Windows, Mac, Linux</li>
+            <li>✅ <strong>Interpreted</strong> — run code line by line without compiling</li>
+          </ul>
+          <h3>Your first Python program</h3>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>print("Hello, World!")</code></pre>
+          </div>
+          <p>That's it — just one line! No semicolons. No curly braces. No boilerplate. Python uses <strong>indentation</strong> (spaces) instead of braces to define code blocks.</p>
+          <div class="callout callout-info">
+            <strong>🐍 Fun fact:</strong> Python is named after the British comedy group <em>Monty Python</em>, not the snake — though the snake logo became iconic anyway!
+          </div>
+        `
+      },
+      // ── Lesson 2 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Variables & Data Types",
+        content: `
+          <p>In Python, you don't need to declare the type of a variable — Python figures it out automatically. This is called <strong>dynamic typing</strong>.</p>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>name = "Ravi"          # str  (text)
+age = 28               # int  (whole number)
+height = 5.11          # float (decimal)
+is_active = True       # bool (True or False)
+scores = [95, 87, 92]  # list (ordered collection)
+person = {"city": "Bengaluru", "lang": "Python"}  # dict</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Note:</strong> Python is <em>case-sensitive</em>. <code>True</code> and <code>False</code> must be capitalised — <code>true</code> will cause an error!
+          </div>
+          <h3>Checking Types</h3>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>print(type("hello"))    # &lt;class 'str'&gt;
+print(type(42))         # &lt;class 'int'&gt;
+print(type(3.14))       # &lt;class 'float'&gt;
+print(type(True))       # &lt;class 'bool'&gt;</code></pre>
+          </div>
+          <h3>String Operations</h3>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>first = "Hello"
+second = "World"
+combined = first + " " + second   # "Hello World"
+
+# f-strings (modern, preferred)
+name = "Ravi"
+greeting = f"Hello, {name}! You are {age} years old."
+print(greeting)  # Hello, Ravi! You are 28 years old.</code></pre>
+          </div>
+          <div class="callout callout-info">
+            <strong>💡 f-strings</strong> (formatted strings) are the modern way to embed variables inside text in Python. Prefix the string with <code>f</code> and use <code>{variable}</code> inside.
+          </div>
+        `
+      },
+      // ── Quiz 1 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "⚡ Quick Check #1",
+        questions: [
+          {
+            q: "What will print(type(3.14)) output in Python?",
+            options: [
+              "<class 'int'>",
+              "<class 'number'>",
+              "<class 'float'>",
+              "<class 'decimal'>"
+            ],
+            answer: 2,
+            explanation: "3.14 is a floating-point number in Python, so type() returns <class 'float'>. Python distinguishes between int (whole numbers) and float (decimals)."
+          },
+          {
+            q: "Which of these correctly creates an f-string in Python?",
+            options: [
+              "\"Hello, ${name}\"",
+              "f\"Hello, {name}\"",
+              "\"Hello, \" + {name}",
+              "format(\"Hello, name\")"
+            ],
+            answer: 1,
+            explanation: "f-strings are created by prefixing a string with 'f' and placing variable names inside curly braces {}. They are the modern, preferred way to format strings in Python 3.6+."
+          },
+          {
+            q: "What is 'dynamic typing' in Python?",
+            options: [
+              "Variables can change their value frequently",
+              "Python automatically determines a variable's type based on its value",
+              "You must declare the type before using a variable",
+              "Types are checked at compile time"
+            ],
+            answer: 1,
+            explanation: "Dynamic typing means Python infers the type of a variable from the value assigned to it. You don't write 'int age = 28' — just 'age = 28' and Python knows it's an int."
+          }
+        ]
+      },
+      // ── Lesson 3 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Functions",
+        content: `
+          <p>Functions let you write a block of code once and reuse it many times. Python functions are defined with the <code>def</code> keyword.</p>
+          <div class="code-block">
+            <div class="code-label">Python — Basic Function</div>
+            <pre><code>def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Ravi"))    # Hello, Ravi!
+print(greet("World"))   # Hello, World!</code></pre>
+          </div>
+          <div class="callout callout-info">
+            <strong>⚠️ Indentation matters!</strong> Python uses 4 spaces of indentation to define code blocks. Unlike JavaScript (which uses <code>{}</code>), getting the indentation wrong causes a <code>IndentationError</code>.
+          </div>
+          <h3>Default Parameters</h3>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>def greet(name="stranger"):
+    return f"Hello, {name}!"
+
+print(greet("Ravi"))  # Hello, Ravi!
+print(greet())        # Hello, stranger!</code></pre>
+          </div>
+          <h3>Multiple Return Values</h3>
+          <p>Python functions can return multiple values at once — a feature not available in most other languages:</p>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>def min_max(numbers):
+    return min(numbers), max(numbers)
+
+lowest, highest = min_max([3, 1, 7, 2, 9])
+print(lowest)   # 1
+print(highest)  # 9</code></pre>
+          </div>
+          <h3>Lambda Functions</h3>
+          <p>For short, one-liner functions, Python has <strong>lambda</strong> expressions:</p>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>square = lambda x: x ** 2
+print(square(5))   # 25
+
+double = lambda x: x * 2
+print(double(7))   # 14</code></pre>
+          </div>
+        `
+      },
+      // ── Lesson 4 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Control Flow — if/else & Loops",
+        content: `
+          <p>Control flow in Python is clean and readable — no parentheses required around conditions, and no curly braces.</p>
+          <h3>🔀 Conditionals</h3>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code>score = 85
+
+if score >= 90:
+    print("Grade: A")
+elif score >= 80:
+    print("Grade: B")   # ← this runs
+elif score >= 70:
+    print("Grade: C")
+else:
+    print("Grade: D or below")</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Note:</strong> Python uses <code>elif</code> (not <code>else if</code>) for chained conditions. Don't forget the <strong>colons</strong> — they end every condition/loop header.
+          </div>
+          <h3>🔁 Loops</h3>
+          <div class="code-block">
+            <div class="code-label">Python — for loop</div>
+            <pre><code>fruits = ["apple", "banana", "cherry"]
+
+for fruit in fruits:
+    print(fruit)   # apple, banana, cherry</code></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-label">Python — range loop</div>
+            <pre><code>for i in range(5):
+    print(i)   # 0, 1, 2, 3, 4
+
+# range(start, stop, step)
+for i in range(0, 10, 2):
+    print(i)   # 0, 2, 4, 6, 8</code></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-label">Python — while loop</div>
+            <pre><code>count = 0
+while count < 3:
+    print(f"Count: {count}")
+    count += 1   # 0, 1, 2</code></pre>
+          </div>
+          <h3>List Comprehensions — Python's Secret Weapon 🚀</h3>
+          <p>Python has a powerful one-liner syntax for creating lists:</p>
+          <div class="code-block">
+            <div class="code-label">Python</div>
+            <pre><code># Traditional way
+squares = []
+for x in range(5):
+    squares.append(x ** 2)
+
+# List comprehension — same result, one line!
+squares = [x ** 2 for x in range(5)]
+print(squares)  # [0, 1, 4, 9, 16]
+
+# With condition
+evens = [x for x in range(10) if x % 2 == 0]
+print(evens)    # [0, 2, 4, 6, 8]</code></pre>
+          </div>
+        `
+      },
+      // ── Quiz 2 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "🏆 Final Quiz — Python Fundamentals",
+        questions: [
+          {
+            q: "What keyword does Python use to define a function?",
+            options: [
+              "function",
+              "func",
+              "def",
+              "fn"
+            ],
+            answer: 2,
+            explanation: "Python uses the 'def' keyword to define functions, followed by the function name, parameters in parentheses, and a colon. The function body is indented."
+          },
+          {
+            q: "What will this code print?\n\nfor i in range(2, 8, 2):\n    print(i)",
+            options: [
+              "2 4 6 8",
+              "2 4 6",
+              "0 2 4 6",
+              "2 3 4 5 6 7"
+            ],
+            answer: 1,
+            explanation: "range(2, 8, 2) starts at 2, stops before 8, stepping by 2. So it produces: 2, 4, 6. The stop value (8) is excluded."
+          },
+          {
+            q: "Which of these is a valid Python list comprehension?",
+            options: [
+              "[x * 2 from x in range(5)]",
+              "{x * 2 for x in range(5)}",
+              "[x * 2 for x in range(5)]",
+              "(x * 2 for x in range(5)).toList()"
+            ],
+            answer: 2,
+            explanation: "A list comprehension uses square brackets [] with the expression first, then 'for item in iterable'. Option B creates a set, not a list. The syntax is: [expression for item in iterable]."
+          },
+          {
+            q: "What is the output of this code?\n\ndef add(a, b=10):\n    return a + b\n\nprint(add(5))",
+            options: [
+              "Error: missing argument",
+              "5",
+              "10",
+              "15"
+            ],
+            answer: 3,
+            explanation: "b has a default value of 10. When add(5) is called, a=5 and b=10 (the default). So a + b = 5 + 10 = 15."
+          }
+        ]
+      }
+    ]
+  }
+
+  // ─────────────────────────────────────────────────────────
   //  ADD YOUR NEXT TOPIC HERE
   //  Just copy the structure above and fill in your content!
   // ─────────────────────────────────────────────────────────
