@@ -1786,6 +1786,356 @@ type RoleMap = Record<string, string[]>;
         ]
       }
     ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  //  TOPIC 7: SQL & Databases
+  // ─────────────────────────────────────────────────────────
+  {
+    id: "sql-databases",
+    title: "SQL & Databases",
+    icon: "🗄️",
+    color: "#dc2626",
+    description: "Master the language of data. Learn how relational databases store information, write powerful SQL queries, and understand core concepts like joins, indexes, and schema design.",
+    difficulty: "Beginner",
+    estimatedTime: "35 min",
+    tags: ["Databases", "SQL", "Backend"],
+    sections: [
+      // ── Lesson 1 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "What are Databases?",
+        content: `
+          <p>A <strong>database</strong> is an organised collection of data stored electronically. Almost every application you use — from Instagram to your bank — is powered by a database behind the scenes.</p>
+          <div class="callout callout-info">
+            <strong>🧠 Core idea:</strong> Without a database, your app's data disappears the moment the server restarts. Databases provide <em>persistent, structured, and queryable</em> storage.
+          </div>
+          <h3>Relational vs Non-Relational</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Relational (SQL)</th><th>Non-Relational (NoSQL)</th></tr></thead>
+              <tbody>
+                <tr><td>Data in <strong>tables</strong> (rows & columns)</td><td>Data in documents, key-value, or graphs</td></tr>
+                <tr><td>Fixed schema — structure defined upfront</td><td>Flexible schema — structure can vary</td></tr>
+                <tr><td>SQL query language</td><td>Varies (MongoDB uses JSON-like queries)</td></tr>
+                <tr><td>Strong consistency & ACID compliance</td><td>Often eventual consistency for scale</td></tr>
+                <tr><td>MySQL, PostgreSQL, SQLite</td><td>MongoDB, Redis, DynamoDB, Cassandra</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>📊 How Relational Data Looks</h3>
+          <p>Think of a <strong>table</strong> like a spreadsheet:</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>id</th><th>name</th><th>email</th><th>role</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Ravi</td><td>ravi@example.com</td><td>admin</td></tr>
+                <tr><td>2</td><td>Priya</td><td>priya@example.com</td><td>editor</td></tr>
+                <tr><td>3</td><td>Arjun</td><td>arjun@example.com</td><td>viewer</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li>📋 <strong>Table</strong> — a collection of related data (e.g. <code>users</code>)</li>
+            <li>📄 <strong>Row</strong> (Record) — a single entry (e.g. one user)</li>
+            <li>📊 <strong>Column</strong> (Field) — a specific attribute (e.g. <code>email</code>)</li>
+            <li>🔑 <strong>Primary Key</strong> — a unique identifier for each row (e.g. <code>id</code>)</li>
+          </ul>
+          <div class="callout callout-tip">
+            <strong>🎯 This course focuses on SQL</strong> — the standard language for relational databases. The concepts you learn here apply to MySQL, PostgreSQL, SQLite, SQL Server, and more.
+          </div>
+        `
+      },
+      // ── Lesson 2 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Core SQL — SELECT Queries",
+        content: `
+          <p><strong>SQL</strong> (Structured Query Language) is the standard language for interacting with relational databases. The most common operation? <strong>SELECT</strong> — reading data.</p>
+          <h3>📖 Basic SELECT</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Select all columns from a table
+SELECT * FROM users;
+
+-- Select specific columns
+SELECT name, email FROM users;
+
+-- Limit results
+SELECT name FROM users LIMIT 5;</code></pre>
+          </div>
+          <h3>🔍 Filtering with WHERE</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Exact match
+SELECT * FROM users WHERE role = 'admin';
+
+-- Comparison operators
+SELECT * FROM products WHERE price > 100;
+SELECT * FROM products WHERE price BETWEEN 50 AND 200;
+
+-- Pattern matching
+SELECT * FROM users WHERE name LIKE 'R%';    -- starts with R
+SELECT * FROM users WHERE email LIKE '%@gmail.com';
+
+-- Multiple conditions
+SELECT * FROM users WHERE role = 'editor' AND is_active = true;
+SELECT * FROM users WHERE role = 'admin' OR role = 'editor';
+
+-- NULL checks
+SELECT * FROM users WHERE bio IS NULL;
+SELECT * FROM users WHERE bio IS NOT NULL;</code></pre>
+          </div>
+          <h3>📊 Sorting & Aggregating</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Sort results
+SELECT * FROM products ORDER BY price ASC;     -- cheapest first
+SELECT * FROM products ORDER BY price DESC;    -- most expensive first
+
+-- Aggregate functions
+SELECT COUNT(*) FROM users;                    -- total rows
+SELECT AVG(price) FROM products;               -- average price
+SELECT MAX(price), MIN(price) FROM products;   -- max and min
+
+-- Group by category
+SELECT category, COUNT(*) as total
+FROM products
+GROUP BY category
+ORDER BY total DESC;</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 SQL keywords</strong> like <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code> are case-insensitive — but writing them in UPPERCASE is a widely followed convention for readability.
+          </div>
+        `
+      },
+      // ── Quiz 1 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "⚡ Quick Check #1",
+        questions: [
+          {
+            q: "What is a 'Primary Key' in a relational database?",
+            options: [
+              "The first column in every table",
+              "A unique identifier for each row in a table",
+              "The password used to access the database",
+              "The most important table in the database"
+            ],
+            answer: 1,
+            explanation: "A primary key uniquely identifies each row in a table. No two rows can have the same primary key value, and it cannot be NULL. Common examples include auto-incrementing IDs."
+          },
+          {
+            q: "What does this SQL return?\\n\\nSELECT name FROM users WHERE role = 'admin' ORDER BY name ASC;",
+            options: [
+              "All columns for admin users, sorted alphabetically",
+              "Only the name column for admin users, sorted A→Z",
+              "All users sorted by role",
+              "Counts how many admins exist"
+            ],
+            answer: 1,
+            explanation: "This query selects only the 'name' column, filters to rows where role is 'admin', and sorts the results alphabetically (ASC = ascending = A→Z)."
+          },
+          {
+            q: "Which SQL keyword is used to filter groups created by GROUP BY?",
+            options: [
+              "WHERE",
+              "FILTER",
+              "HAVING",
+              "GROUP WHERE"
+            ],
+            answer: 2,
+            explanation: "WHERE filters individual rows before grouping. HAVING filters groups after GROUP BY has been applied. For example: HAVING COUNT(*) > 5 shows only groups with more than 5 items."
+          }
+        ]
+      },
+      // ── Lesson 3 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "JOINs — Connecting Tables",
+        content: `
+          <p>Real databases split data across <strong>multiple tables</strong> to avoid repetition. <strong>JOINs</strong> let you combine data from two or more tables based on a shared column.</p>
+          <h3>📊 Example: Two Related Tables</h3>
+          <p><strong>users</strong> table:</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>id</th><th>name</th><th>email</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Ravi</td><td>ravi@example.com</td></tr>
+                <tr><td>2</td><td>Priya</td><td>priya@example.com</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>orders</strong> table:</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>order_id</th><th>user_id</th><th>product</th><th>amount</th></tr></thead>
+              <tbody>
+                <tr><td>101</td><td>1</td><td>Laptop</td><td>75000</td></tr>
+                <tr><td>102</td><td>1</td><td>Mouse</td><td>1500</td></tr>
+                <tr><td>103</td><td>2</td><td>Keyboard</td><td>3000</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>🔗 INNER JOIN — Only Matching Rows</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>SELECT users.name, orders.product, orders.amount
+FROM users
+INNER JOIN orders ON users.id = orders.user_id;
+
+-- Result:
+-- Ravi  | Laptop   | 75000
+-- Ravi  | Mouse    | 1500
+-- Priya | Keyboard | 3000</code></pre>
+          </div>
+          <h3>🔀 Types of JOINs</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>JOIN Type</th><th>Returns</th></tr></thead>
+              <tbody>
+                <tr><td><strong>INNER JOIN</strong></td><td>Only rows that match in <em>both</em> tables</td></tr>
+                <tr><td><strong>LEFT JOIN</strong></td><td>All rows from left table + matching from right (NULL if no match)</td></tr>
+                <tr><td><strong>RIGHT JOIN</strong></td><td>All rows from right table + matching from left</td></tr>
+                <tr><td><strong>FULL OUTER JOIN</strong></td><td>All rows from both tables (NULL where no match)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>⬅️ LEFT JOIN — Keep All From Left Table</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Find ALL users, even those with no orders
+SELECT users.name, orders.product
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+
+-- If a user has no orders, product shows as NULL</code></pre>
+          </div>
+          <h3>🔑 Foreign Keys</h3>
+          <p>The <code>user_id</code> column in orders is a <strong>foreign key</strong> — it references the <code>id</code> column in users. This creates a relationship between the two tables and ensures data integrity.</p>
+          <div class="callout callout-tip">
+            <strong>🎯 When to use which JOIN:</strong> Use <code>INNER JOIN</code> when you only want rows with matches in both tables. Use <code>LEFT JOIN</code> when you want all records from the "main" table even if there's no match in the joined table.
+          </div>
+        `
+      },
+      // ── Lesson 4 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Modifying Data & Schema Design",
+        content: `
+          <p>SQL isn't just for reading data — you can also <strong>create, insert, update, and delete</strong> data and tables.</p>
+          <h3>🏗️ Creating Tables</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>CREATE TABLE users (
+  id        INT PRIMARY KEY AUTO_INCREMENT,
+  name      VARCHAR(100) NOT NULL,
+  email     VARCHAR(255) UNIQUE NOT NULL,
+  role      VARCHAR(20) DEFAULT 'viewer',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+          </div>
+          <h3>➕ Inserting Data</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Insert a single row
+INSERT INTO users (name, email, role)
+VALUES ('Ravi', 'ravi@example.com', 'admin');
+
+-- Insert multiple rows
+INSERT INTO users (name, email) VALUES
+  ('Priya', 'priya@example.com'),
+  ('Arjun', 'arjun@example.com');</code></pre>
+          </div>
+          <h3>✏️ Updating Data</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Update specific rows
+UPDATE users SET role = 'editor' WHERE name = 'Priya';
+
+-- Update multiple columns
+UPDATE products SET price = 999, stock = 50 WHERE id = 42;</code></pre>
+          </div>
+          <div class="callout callout-info">
+            <strong>⚠️ Always use WHERE with UPDATE and DELETE!</strong> Without a WHERE clause, the operation applies to <em>every row</em> in the table. <code>DELETE FROM users;</code> deletes ALL users — not what you want!
+          </div>
+          <h3>🗑️ Deleting Data</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Delete specific rows
+DELETE FROM users WHERE id = 3;
+
+-- Delete all inactive users
+DELETE FROM users WHERE is_active = false;</code></pre>
+          </div>
+          <h3>⚡ Indexes — Speeding Up Queries</h3>
+          <div class="code-block">
+            <div class="code-label">SQL</div>
+            <pre><code>-- Create an index on email (speeds up WHERE email = '...')
+CREATE INDEX idx_users_email ON users(email);
+
+-- Composite index (speeds up queries filtering on both columns)
+CREATE INDEX idx_orders_user_date ON orders(user_id, created_at);</code></pre>
+          </div>
+          <p>Indexes work like a book's index — instead of scanning every page (row), the database jumps directly to the right location. Add indexes on columns you frequently <code>WHERE</code>, <code>JOIN</code>, or <code>ORDER BY</code>.</p>
+          <div class="callout callout-tip">
+            <strong>🎯 Schema design tips:</strong> (1) Every table should have a primary key. (2) Use foreign keys to enforce relationships. (3) Don't duplicate data — normalise into separate tables. (4) Index columns you query often.
+          </div>
+        `
+      },
+      // ── Quiz 2 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "🏆 Final Quiz — SQL & Databases",
+        questions: [
+          {
+            q: "What does an INNER JOIN return?",
+            options: [
+              "All rows from both tables, with NULLs where there's no match",
+              "All rows from the left table, with NULLs for unmatched right rows",
+              "Only rows that have matching values in both tables",
+              "The first 10 rows from both tables combined"
+            ],
+            answer: 2,
+            explanation: "INNER JOIN returns only the rows where there is a match in both tables based on the join condition. Rows without a match in either table are excluded from the result."
+          },
+          {
+            q: "What happens if you run DELETE FROM users; without a WHERE clause?",
+            options: [
+              "Nothing — SQL requires a WHERE clause for DELETE",
+              "It deletes only the first row",
+              "It deletes ALL rows in the users table",
+              "It drops (removes) the entire table"
+            ],
+            answer: 2,
+            explanation: "DELETE FROM users; without WHERE deletes every single row in the table! The table structure remains (unlike DROP TABLE), but all data is gone. Always double-check your WHERE clause before running DELETE or UPDATE."
+          },
+          {
+            q: "What is the purpose of a database index?",
+            options: [
+              "To encrypt sensitive data in the table",
+              "To speed up query performance on frequently searched columns",
+              "To create a backup of the table",
+              "To enforce unique constraints on all columns"
+            ],
+            answer: 1,
+            explanation: "An index is a data structure that speeds up data retrieval — like a book's index lets you find a topic without reading every page. Add indexes on columns used in WHERE, JOIN, and ORDER BY clauses."
+          },
+          {
+            q: "What is a foreign key?",
+            options: [
+              "A key used to encrypt data between tables",
+              "The primary key of a table",
+              "A column that references the primary key of another table, creating a relationship",
+              "A special key that allows access from external applications"
+            ],
+            answer: 2,
+            explanation: "A foreign key is a column in one table that references the primary key of another table. It creates a relationship between the two tables and enforces referential integrity — you can't insert a user_id that doesn't exist in the users table."
+          }
+        ]
+      }
+    ]
   }
 
   // ─────────────────────────────────────────────────────────
