@@ -512,7 +512,7 @@ null === undefined  // false (strict)</code></pre>
         ]
       }
     ]
-  }
+  },
 
   // ─────────────────────────────────────────────────────────
   //  TOPIC 3: Python Fundamentals
