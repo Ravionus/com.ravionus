@@ -1132,6 +1132,278 @@ terraform destroy # Tear everything down</code></pre>
         ]
       }
     ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  //  TOPIC 5: GenAI Fundamentals
+  // ─────────────────────────────────────────────────────────
+  {
+    id: "genai-fundamentals",
+    title: "GenAI Fundamentals",
+    icon: "🤖",
+    color: "#9333ea",
+    description: "Understand the technology reshaping the world. Learn how Large Language Models work, how to write effective prompts, and how to use AI tools responsibly and productively.",
+    difficulty: "Beginner",
+    estimatedTime: "30 min",
+    tags: ["AI", "Machine Learning", "Tools"],
+    sections: [
+      // ── Lesson 1 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "What is Generative AI?",
+        content: `
+          <p><strong>Generative AI</strong> refers to AI systems that can <em>create</em> new content — text, images, code, audio, and video — rather than just classifying or analysing existing data.</p>
+          <div class="callout callout-info">
+            <strong>🧠 Key distinction:</strong> Traditional AI <em>recognises</em> patterns (e.g. "Is this email spam?"). Generative AI <em>produces</em> new content (e.g. "Write me a professional email about X").
+          </div>
+          <h3>A Brief Timeline</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Year</th><th>Milestone</th></tr></thead>
+              <tbody>
+                <tr><td>2017</td><td>Google publishes the <strong>Transformer</strong> architecture ("Attention is All You Need")</td></tr>
+                <tr><td>2018</td><td>OpenAI releases <strong>GPT-1</strong>; Google releases <strong>BERT</strong></td></tr>
+                <tr><td>2020</td><td><strong>GPT-3</strong> stuns the world with human-like text generation</td></tr>
+                <tr><td>2022</td><td><strong>ChatGPT</strong> launches — 1 million users in 5 days</td></tr>
+                <tr><td>2023–24</td><td>GPT-4, Gemini, Claude, Llama — the era of multimodal AI</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>What Can GenAI Create?</h3>
+          <ul>
+            <li>📝 <strong>Text</strong> — articles, emails, code, summaries, translations</li>
+            <li>🖼️ <strong>Images</strong> — artwork, photos, logos (DALL·E, Midjourney, Stable Diffusion)</li>
+            <li>🎵 <strong>Audio</strong> — music, voice cloning, sound effects</li>
+            <li>🎬 <strong>Video</strong> — synthetic video clips (Sora, Runway, Pika)</li>
+            <li>💻 <strong>Code</strong> — full functions, tests, refactoring (GitHub Copilot, Cursor)</li>
+          </ul>
+          <div class="callout callout-tip">
+            <strong>🎯 Not magic:</strong> GenAI models are sophisticated <em>pattern-completion engines</em> trained on vast datasets. They predict the most probable next token — they don't "think" or "understand" in the human sense.
+          </div>
+        `
+      },
+      // ── Lesson 2 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "LLMs — How They Work",
+        content: `
+          <p><strong>Large Language Models (LLMs)</strong> are the engine behind tools like ChatGPT, Gemini, and Claude. Understanding how they work helps you use them more effectively.</p>
+          <h3>🔤 Tokens — the Atomic Unit</h3>
+          <p>LLMs don't process words — they process <strong>tokens</strong>. A token is roughly 3–4 characters or ¾ of a word. "Hello world" is 2 tokens; a 1000-word essay is ~750 tokens.</p>
+          <div class="callout callout-info">
+            <strong>Why tokens matter:</strong> Every LLM has a <strong>context window</strong> — a maximum number of tokens it can process at once. GPT-4 handles ~128 000 tokens; Gemini 1.5 Pro handles up to 1 million.
+          </div>
+          <h3>🏋️ Training in Three Stages</h3>
+          <div class="stages">
+            <div class="stage"><span class="stage-num">1</span><strong>Pre-training</strong><br>Predict next token on trillions of words from the internet</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">2</span><strong>Fine-tuning</strong><br>Train on curated high-quality instruction-response pairs</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">3</span><strong>RLHF</strong><br>Humans rank outputs; model learns from feedback</div>
+          </div>
+          <p style="margin-top:8px"><strong>RLHF</strong> = Reinforcement Learning from Human Feedback — the key step that transforms a next-token predictor into a helpful assistant.</p>
+          <h3>🌡️ Temperature & Randomness</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Temperature</th><th>Behaviour</th><th>Best For</th></tr></thead>
+              <tbody>
+                <tr><td><strong>0.0</strong></td><td>Deterministic — always the most likely token</td><td>Factual Q&A, code generation</td></tr>
+                <tr><td><strong>0.7</strong></td><td>Balanced creativity and coherence</td><td>General chat, summaries</td></tr>
+                <tr><td><strong>1.0+</strong></td><td>High randomness — diverse, surprising outputs</td><td>Brainstorming, creative writing</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>⚠️ Key Limitations</h3>
+          <ul>
+            <li>🔻 <strong>Hallucinations</strong> — LLMs confidently make up false facts</li>
+            <li>📅 <strong>Knowledge cutoff</strong> — training data has a cut-off date; models don't know recent events</li>
+            <li>📐 <strong>No true reasoning</strong> — they mimic reasoning via pattern matching, not logical deduction</li>
+            <li>🔁 <strong>Context window limits</strong> — very long documents may be truncated</li>
+          </ul>
+        `
+      },
+      // ── Quiz 1 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "⚡ Quick Check #1",
+        questions: [
+          {
+            q: "What is a 'token' in the context of Large Language Models?",
+            options: [
+              "A security credential used to authenticate API requests",
+              "A full word processed by the model",
+              "The smallest unit of text (roughly 3-4 characters) that an LLM processes",
+              "A type of neural network layer"
+            ],
+            answer: 2,
+            explanation: "Tokens are the atomic units LLMs work with — roughly 3-4 characters or ¾ of an average word. Understanding tokens helps you reason about context window limits and API costs (which are priced per token)."
+          },
+          {
+            q: "What does a higher 'temperature' setting do to an LLM's output?",
+            options: [
+              "Makes the model run faster",
+              "Increases randomness and creativity in the output",
+              "Makes the output more factual and deterministic",
+              "Increases the context window size"
+            ],
+            answer: 1,
+            explanation: "Temperature controls randomness. A temperature of 0 makes the model pick the most probable token every time (deterministic). Higher temperatures make the model sample more randomly, producing more creative but less predictable outputs."
+          },
+          {
+            q: "What is an LLM 'hallucination'?",
+            options: [
+              "When the model crashes due to a complex query",
+              "When the model generates images instead of text",
+              "When the model confidently produces false or made-up information",
+              "When the model refuses to answer a question"
+            ],
+            answer: 2,
+            explanation: "Hallucinations are when an LLM generates plausible-sounding but factually incorrect information — and presents it confidently. This is a key limitation to watch for, especially with facts, citations, and specific data."
+          }
+        ]
+      },
+      // ── Lesson 3 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Prompt Engineering",
+        content: `
+          <p><strong>Prompt engineering</strong> is the skill of crafting inputs to AI models that reliably produce useful, accurate, and well-formatted outputs. A better prompt = dramatically better results.</p>
+          <div class="callout callout-info">
+            <strong>💡 Key insight:</strong> LLMs are powerful but literal. They do exactly what you ask — so asking precisely and completely is everything.
+          </div>
+          <h3>🏗️ The Anatomy of a Great Prompt</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Component</th><th>Purpose</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Role</strong></td><td>Sets the persona</td><td>"You are a senior software engineer..."</td></tr>
+                <tr><td><strong>Context</strong></td><td>Provides background</td><td>"I'm building a React e-commerce app..."</td></tr>
+                <tr><td><strong>Task</strong></td><td>What to do</td><td>"Review this function and suggest improvements"</td></tr>
+                <tr><td><strong>Format</strong></td><td>How to respond</td><td>"Return as bullet points, max 5 items"</td></tr>
+                <tr><td><strong>Constraints</strong></td><td>Limits & rules</td><td>"Avoid using external libraries"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>🔑 Core Techniques</h3>
+          <p><strong>1. Zero-shot prompting</strong> — Ask directly without examples:</p>
+          <div class="code-block">
+            <div class="code-label">Prompt</div>
+            <pre><code>Translate this sentence to French: "The meeting starts at 9am."</code></pre>
+          </div>
+          <p><strong>2. Few-shot prompting</strong> — Provide examples to guide the format:</p>
+          <div class="code-block">
+            <div class="code-label">Prompt</div>
+            <pre><code>Classify the sentiment. Examples:
+"I love this product!" → Positive
+"Terrible experience." → Negative
+"It was okay." → Neutral
+
+Now classify: "The delivery was late but the item is great."</code></pre>
+          </div>
+          <p><strong>3. Chain-of-thought</strong> — Tell the model to reason step by step:</p>
+          <div class="code-block">
+            <div class="code-label">Prompt</div>
+            <pre><code>A train travels 120 km in 1.5 hours. What is its speed in km/h?
+Think step by step.</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Golden rules:</strong> Be specific over vague. Give examples when you want a specific format. Say what you <em>do</em> want, not just what you don't. And always iterate — prompting is an experiment.
+          </div>
+        `
+      },
+      // ── Lesson 4 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "AI Tools & Responsible Use",
+        content: `
+          <p>The GenAI landscape is moving fast. Here's a map of the key tools and the critical principles for using them responsibly.</p>
+          <h3>🗺️ Key AI Tools by Category</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Category</th><th>Top Tools</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Chat / General</strong></td><td>ChatGPT (OpenAI), Gemini (Google), Claude (Anthropic)</td></tr>
+                <tr><td><strong>Coding</strong></td><td>GitHub Copilot, Cursor, Codeium, Amazon Q Developer</td></tr>
+                <tr><td><strong>Image Generation</strong></td><td>DALL·E 3, Midjourney, Stable Diffusion, Adobe Firefly</td></tr>
+                <tr><td><strong>Search + AI</strong></td><td>Perplexity, Google AI Overviews, Bing Copilot</td></tr>
+                <tr><td><strong>Open-source LLMs</strong></td><td>Meta Llama, Mistral, Falcon — run locally or self-hosted</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>🔗 RAG — Grounding AI in Your Data</h3>
+          <p><strong>Retrieval-Augmented Generation (RAG)</strong> is the most popular technique for giving LLMs access to up-to-date or private information:</p>
+          <div class="stages">
+            <div class="stage"><span class="stage-num">1</span><strong>Retrieve</strong><br>Search your docs for relevant chunks</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">2</span><strong>Augment</strong><br>Inject chunks into the prompt as context</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">3</span><strong>Generate</strong><br>LLM answers using that grounded context</div>
+          </div>
+          <h3>⚖️ Responsible AI Use</h3>
+          <ul>
+            <li>✅ <strong>Verify outputs</strong> — never publish AI-generated facts without checking. Hallucinations are real.</li>
+            <li>🔒 <strong>Protect privacy</strong> — don't paste personal data, passwords, or confidential business info into public AI tools</li>
+            <li>🪞 <strong>Watch for bias</strong> — LLMs can reflect and amplify biases present in their training data</li>
+            <li>📜 <strong>Check IP & copyright</strong> — AI-generated content may raise copyright questions depending on jurisdiction</li>
+            <li>🏷️ <strong>Disclose AI use</strong> — be transparent when AI helped create content, especially in academic or professional contexts</li>
+          </ul>
+          <div class="callout callout-tip">
+            <strong>🎯 Best mindset:</strong> Treat AI as a brilliant but imperfect <em>collaborator</em>, not an oracle. Use it to accelerate your thinking — not to replace it. Your critical judgement is what makes the output trustworthy.
+          </div>
+        `
+      },
+      // ── Quiz 2 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "🏆 Final Quiz — GenAI Fundamentals",
+        questions: [
+          {
+            q: "Which prompting technique involves providing examples within the prompt to guide the model's output format?",
+            options: [
+              "Zero-shot prompting",
+              "Chain-of-thought prompting",
+              "Few-shot prompting",
+              "Temperature prompting"
+            ],
+            answer: 2,
+            explanation: "Few-shot prompting includes 2-5 input/output examples in the prompt itself, showing the model exactly the format and style you want. It's very effective when zero-shot gives inconsistent results."
+          },
+          {
+            q: "What does RAG (Retrieval-Augmented Generation) primarily solve?",
+            options: [
+              "Making LLMs run faster on local hardware",
+              "Grounding LLM responses in up-to-date or private documents",
+              "Reducing the hallucination rate to zero",
+              "Training a new model from scratch on your data"
+            ],
+            answer: 1,
+            explanation: "RAG retrieves relevant chunks from your own documents or databases and injects them into the LLM's context window. This grounds responses in real, current data — solving the knowledge cutoff and private data problems without retraining the model."
+          },
+          {
+            q: "Which component of a well-structured prompt helps set the model's expertise level and persona?",
+            options: [
+              "Format",
+              "Context",
+              "Constraints",
+              "Role"
+            ],
+            answer: 3,
+            explanation: "The 'Role' component (e.g. 'You are a senior security engineer...') primes the model to respond from a specific perspective and expertise level. It's one of the most effective ways to improve response quality."
+          },
+          {
+            q: "What is the most responsible approach when using AI-generated content professionally?",
+            options: [
+              "Use it as-is — AI is more accurate than humans",
+              "Only use AI-generated content for internal documents, never public ones",
+              "Always verify facts, disclose AI use where appropriate, and apply your own critical judgement",
+              "Avoid AI tools entirely to eliminate risk"
+            ],
+            answer: 2,
+            explanation: "Responsible AI use means verifying outputs (hallucinations happen), being transparent about AI assistance, protecting private data, and using your own judgement to assess quality. AI is a powerful collaborator — not a replacement for critical thinking."
+          }
+        ]
+      }
+    ]
   }
 
   // ─────────────────────────────────────────────────────────
