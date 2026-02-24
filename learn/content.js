@@ -1404,6 +1404,388 @@ Think step by step.</code></pre>
         ]
       }
     ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  //  TOPIC 6: TypeScript Fundamentals
+  // ─────────────────────────────────────────────────────────
+  {
+    id: "typescript-fundamentals",
+    title: "TypeScript Fundamentals",
+    icon: "🔷",
+    color: "#2563eb",
+    description: "Level up your JavaScript with static types. Learn how TypeScript catches bugs at compile time, makes refactoring safe, and powers modern frameworks like Angular, Next.js, and more.",
+    difficulty: "Intermediate",
+    estimatedTime: "35 min",
+    tags: ["Programming", "Web Dev", "TypeScript"],
+    sections: [
+      // ── Lesson 1 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Why TypeScript?",
+        content: `
+          <p><strong>TypeScript</strong> is a superset of JavaScript that adds <em>static types</em>. Every valid JS file is already valid TS — TypeScript just adds optional type annotations on top.</p>
+          <div class="callout callout-info">
+            <strong>🧠 Core idea:</strong> JavaScript tells you about bugs <em>at runtime</em> (when the app crashes). TypeScript tells you about bugs <em>at compile time</em> (before the code even runs).
+          </div>
+          <h3>JavaScript vs TypeScript</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>JavaScript</th><th>TypeScript</th></tr></thead>
+              <tbody>
+                <tr><td>Dynamically typed</td><td>Statically typed (with inference)</td></tr>
+                <tr><td>Errors found at runtime</td><td>Errors caught at compile time</td></tr>
+                <tr><td>No editor autocompletion for shapes</td><td>Rich IntelliSense & autocompletion</td></tr>
+                <tr><td>Refactoring is risky</td><td>Refactoring is safe & confident</td></tr>
+                <tr><td>Runs directly in browsers</td><td>Compiles to JavaScript first</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Who Uses TypeScript?</h3>
+          <p>TypeScript is used by <strong>most large-scale projects</strong> today:</p>
+          <ul>
+            <li>🅰️ <strong>Angular</strong> — built entirely in TypeScript</li>
+            <li>⚛️ <strong>React / Next.js</strong> — first-class TypeScript support</li>
+            <li>💚 <strong>Vue 3</strong> — rewritten in TypeScript</li>
+            <li>🟢 <strong>Node.js / Deno</strong> — server-side TypeScript</li>
+            <li>📱 <strong>React Native</strong> — mobile apps with TypeScript</li>
+          </ul>
+          <h3>🚀 Getting Started</h3>
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+            <pre><code>npm install -g typescript    # Install globally
+tsc --init                   # Create tsconfig.json
+tsc app.ts                   # Compile app.ts → app.js</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Key takeaway:</strong> TypeScript doesn't run in the browser — it <em>compiles</em> to plain JavaScript. The types exist only during development and are stripped out in the final output.
+          </div>
+        `
+      },
+      // ── Lesson 2 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Type Annotations & Primitives",
+        content: `
+          <p>TypeScript lets you annotate variables, function parameters, and return values with types. But it also <strong>infers</strong> types automatically when possible.</p>
+          <h3>🏷️ Basic Type Annotations</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Explicit types
+let name: string = "Ravi";
+let age: number = 28;
+let isActive: boolean = true;
+
+// Type inference — TS figures it out
+let city = "Bengaluru";   // inferred as string
+let score = 95;            // inferred as number</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Best practice:</strong> Let TypeScript <em>infer</em> types when the value makes the type obvious. Only add explicit annotations when inference isn't enough (e.g. function parameters).
+          </div>
+          <h3>📦 Arrays & Tuples</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Arrays — two equivalent syntaxes
+let scores: number[] = [95, 87, 92];
+let names: Array<string> = ["Alice", "Bob"];
+
+// Tuples — fixed length & fixed types per position
+let user: [string, number] = ["Ravi", 28];
+// user[0] is string, user[1] is number</code></pre>
+          </div>
+          <h3>🔧 Function Types</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Parameter types + return type
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+// Arrow function with types
+const greet = (name: string): string => {
+  return \`Hello, \${name}!\`;
+};
+
+// Optional parameter (?)
+function log(message: string, level?: string): void {
+  console.log(level ? \`[\${level}] \${message}\` : message);
+}
+
+log("Server started");           // ✅ OK
+log("DB error", "ERROR");        // ✅ OK</code></pre>
+          </div>
+          <h3>🚫 The <code>any</code> Escape Hatch</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>let data: any = "hello";
+data = 42;       // ✅ No error — any disables type checking
+data = true;     // ✅ No error</code></pre>
+          </div>
+          <div class="callout callout-info">
+            <strong>⚠️ Avoid <code>any</code></strong> — it defeats the purpose of TypeScript. If you don't know the type, use <code>unknown</code> instead, which forces you to narrow the type before using it.
+          </div>
+        `
+      },
+      // ── Quiz 1 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "⚡ Quick Check #1",
+        questions: [
+          {
+            q: "What is the key difference between JavaScript and TypeScript?",
+            options: [
+              "TypeScript is a completely different language unrelated to JavaScript",
+              "TypeScript adds static types to JavaScript and catches errors at compile time",
+              "TypeScript runs faster than JavaScript in all cases",
+              "TypeScript replaces JavaScript in the browser"
+            ],
+            answer: 1,
+            explanation: "TypeScript is a strict superset of JavaScript — it adds optional static type annotations. These types are checked at compile time and stripped away in the final JavaScript output. TypeScript doesn't run in the browser directly."
+          },
+          {
+            q: "What does TypeScript do with type annotations when it compiles?",
+            options: [
+              "Keeps them in the output JavaScript for runtime checking",
+              "Converts them to JSDoc comments",
+              "Strips them out — the output is plain JavaScript with no types",
+              "Sends them to a separate type-check server"
+            ],
+            answer: 2,
+            explanation: "TypeScript types exist only during development. When you compile (tsc), all type annotations are removed and the output is plain JavaScript. Types are a development-time safety net, not a runtime feature."
+          },
+          {
+            q: "Why should you avoid using 'any' in TypeScript?",
+            options: [
+              "It causes runtime errors",
+              "It makes the code run slower",
+              "It disables type checking, defeating the purpose of TypeScript",
+              "It is not valid TypeScript syntax"
+            ],
+            answer: 2,
+            explanation: "'any' tells TypeScript to skip all type checking for that value. This effectively turns off TypeScript's safety for that variable. Use 'unknown' instead — it's safer because it forces you to narrow the type before using it."
+          }
+        ]
+      },
+      // ── Lesson 3 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Interfaces & Custom Types",
+        content: `
+          <p>Real-world applications work with complex data — user objects, API responses, config settings. TypeScript's <strong>interfaces</strong> and <strong>type aliases</strong> let you describe these shapes precisely.</p>
+          <h3>📐 Interfaces — Describing Object Shapes</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>interface User {
+  id: number;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  bio?: string;          // optional property
+}
+
+const user: User = {
+  id: 1,
+  name: "Ravi",
+  email: "ravi@example.com",
+  isAdmin: false
+  // bio is optional, so omitting it is fine
+};</code></pre>
+          </div>
+          <h3>🆚 Interface vs Type Alias</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Type alias — can describe ANY type
+type Status = "active" | "inactive" | "banned";
+type ID = string | number;
+
+// Interface — best for object shapes
+interface Product {
+  name: string;
+  price: number;
+}
+
+// Extending interfaces
+interface DigitalProduct extends Product {
+  downloadUrl: string;
+  fileSizeMb: number;
+}</code></pre>
+          </div>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Feature</th><th>Interface</th><th>Type Alias</th></tr></thead>
+              <tbody>
+                <tr><td>Object shapes</td><td>✅ Primary use</td><td>✅ Works too</td></tr>
+                <tr><td>Extending</td><td><code>extends</code></td><td><code>&</code> (intersection)</td></tr>
+                <tr><td>Union types</td><td>❌</td><td>✅ <code>string | number</code></td></tr>
+                <tr><td>Declaration merging</td><td>✅</td><td>❌</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>🔀 Union & Literal Types</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Union type — value can be one of several types
+type Result = "success" | "error" | "loading";
+
+function showStatus(status: Result): string {
+  switch (status) {
+    case "success": return "✅ Done!";
+    case "error":   return "❌ Failed!";
+    case "loading": return "⏳ Loading...";
+  }
+}
+
+// Narrowing — TypeScript tracks type through conditions
+function print(value: string | number) {
+  if (typeof value === "string") {
+    console.log(value.toUpperCase());  // TS knows it's string here
+  } else {
+    console.log(value.toFixed(2));     // TS knows it's number here
+  }
+}</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Rule of thumb:</strong> Use <code>interface</code> for object shapes (especially if they'll be extended). Use <code>type</code> for unions, primitives, and more complex type expressions.
+          </div>
+        `
+      },
+      // ── Lesson 4 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Generics & Utility Types",
+        content: `
+          <p><strong>Generics</strong> let you write reusable, type-safe code that works with <em>any</em> type — without losing type information. They're the key to writing flexible yet safe TypeScript.</p>
+          <h3>🧬 Generics — Type Parameters</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>// Without generics — loses type info
+function first(arr: any[]): any {
+  return arr[0];
+}
+
+// With generics — preserves type info
+function first<T>(arr: T[]): T {
+  return arr[0];
+}
+
+first([1, 2, 3]);         // returns number
+first(["a", "b", "c"]);   // returns string
+// TypeScript knows the return type automatically!</code></pre>
+          </div>
+          <div class="callout callout-info">
+            <strong>💡 Think of <code>&lt;T&gt;</code></strong> like a placeholder that gets filled in when you call the function. It's a "type variable" — it lets the function adapt to whatever type you pass in.
+          </div>
+          <h3>📦 Generic Interfaces</h3>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+// Usage — T becomes User
+const userResponse: ApiResponse<User> = {
+  data: { id: 1, name: "Ravi", email: "r@e.com", isAdmin: false },
+  status: 200,
+  message: "OK"
+};
+
+// T becomes string[]
+const tagsResponse: ApiResponse<string[]> = {
+  data: ["typescript", "javascript"],
+  status: 200,
+  message: "OK"
+};</code></pre>
+          </div>
+          <h3>🛠️ Built-in Utility Types</h3>
+          <p>TypeScript ships with powerful utility types that transform existing types:</p>
+          <div class="code-block">
+            <div class="code-label">TypeScript</div>
+            <pre><code>interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+// Partial — all properties become optional
+type UpdateUser = Partial<User>;
+// { id?: number; name?: string; email?: string }
+
+// Pick — select specific properties
+type UserPreview = Pick<User, "id" | "name">;
+// { id: number; name: string }
+
+// Omit — exclude specific properties
+type CreateUser = Omit<User, "id">;
+// { name: string; email: string }
+
+// Readonly — all properties become readonly
+type FrozenUser = Readonly<User>;
+// Cannot reassign any property after creation
+
+// Record — create an object type with typed keys & values
+type RoleMap = Record<string, string[]>;
+// { [key: string]: string[] }</code></pre>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Power tip:</strong> Utility types compose beautifully. <code>Partial&lt;Pick&lt;User, "name" | "email"&gt;&gt;</code> gives you an object where <code>name</code> and <code>email</code> are both optional. This is incredibly useful for update/patch operations.
+          </div>
+        `
+      },
+      // ── Quiz 2 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "🏆 Final Quiz — TypeScript Fundamentals",
+        questions: [
+          {
+            q: "What does the Partial<T> utility type do?",
+            options: [
+              "Removes all properties from a type",
+              "Makes all properties required",
+              "Makes all properties optional",
+              "Picks only string properties"
+            ],
+            answer: 2,
+            explanation: "Partial<T> takes a type T and returns a new type where every property is optional (?). It's very useful for update/patch functions where you only want to send changed fields."
+          },
+          {
+            q: "What is the purpose of generics in TypeScript?",
+            options: [
+              "To make functions run faster at runtime",
+              "To write reusable code that preserves type information across different types",
+              "To convert JavaScript to TypeScript automatically",
+              "To create global variables accessible everywhere"
+            ],
+            answer: 1,
+            explanation: "Generics let you write functions, classes, and interfaces that work with any type while still maintaining full type safety. Without generics, you'd have to use 'any' (losing type info) or write separate functions for every type."
+          },
+          {
+            q: "When should you use an interface vs a type alias in TypeScript?",
+            options: [
+              "Always use interfaces, type aliases are deprecated",
+              "Always use type aliases, interfaces are legacy",
+              "Use interfaces for object shapes (especially extendable); use type aliases for unions and complex types",
+              "They are identical in every way — use whichever you prefer"
+            ],
+            answer: 2,
+            explanation: "Interfaces are ideal for defining object shapes, especially when you want to extend them. Type aliases are more flexible — they can describe unions (string | number), intersections, and other complex type expressions that interfaces cannot."
+          },
+          {
+            q: "What will TypeScript do with this code?\n\nconst x: string = 42;",
+            options: [
+              "Run fine — TypeScript auto-converts 42 to \"42\"",
+              "Throw a runtime error when executed",
+              "Show a compile-time error: Type 'number' is not assignable to type 'string'",
+              "Ignore the type annotation and infer number"
+            ],
+            answer: 2,
+            explanation: "TypeScript catches this at compile time — you declared x as string but assigned a number. This is the core value of TypeScript: catching type mismatches before your code ever runs."
+          }
+        ]
+      }
+    ]
   }
 
   // ─────────────────────────────────────────────────────────
