@@ -813,6 +813,325 @@ print(evens)    # [0, 2, 4, 6, 8]</code></pre>
         ]
       }
     ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  //  TOPIC 4: DevOps Fundamentals
+  // ─────────────────────────────────────────────────────────
+  {
+    id: "devops-fundamentals",
+    title: "DevOps Fundamentals",
+    icon: "⚙️",
+    color: "#0891b2",
+    description: "Bridge the gap between development and operations. Learn CI/CD pipelines, containers, infrastructure as code, and the culture that makes modern software delivery fast and reliable.",
+    difficulty: "Intermediate",
+    estimatedTime: "35 min",
+    tags: ["DevOps", "Cloud", "Tools"],
+    sections: [
+      // ── Lesson 1 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "What is DevOps?",
+        content: `
+          <p>DevOps is a <strong>culture and set of practices</strong> that brings development (Dev) and operations (Ops) teams together to deliver software faster, more reliably, and more securely.</p>
+          <div class="callout callout-info">
+            <strong>🧠 Core idea:</strong> Instead of developers throwing code "over the wall" to ops teams, everyone owns the full lifecycle — from writing code to running it in production.
+          </div>
+          <h3>The Old Way vs the DevOps Way</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Traditional</th><th>DevOps</th></tr></thead>
+              <tbody>
+                <tr><td>Dev and Ops in silos</td><td>Shared ownership of delivery</td></tr>
+                <tr><td>Long release cycles (months)</td><td>Continuous delivery (daily/hourly)</td></tr>
+                <tr><td>Manual testing & deployment</td><td>Automated pipelines</td></tr>
+                <tr><td>Ops manages servers manually</td><td>Infrastructure as Code</td></tr>
+                <tr><td>Blame culture</td><td>Blameless post-mortems</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>The DevOps Infinity Loop</h3>
+          <p>DevOps is often visualised as an infinite loop covering 8 phases:</p>
+          <div class="stages">
+            <div class="stage"><span class="stage-num">1</span><strong>Plan</strong><br>Roadmap & backlog</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">2</span><strong>Code</strong><br>Write & review</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">3</span><strong>Build</strong><br>Compile & package</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">4</span><strong>Test</strong><br>Automated checks</div>
+          </div>
+          <div class="stages" style="margin-top:8px">
+            <div class="stage"><span class="stage-num">5</span><strong>Release</strong><br>Approve & tag</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">6</span><strong>Deploy</strong><br>Push to production</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">7</span><strong>Operate</strong><br>Run & scale</div>
+            <div class="stage-arrow">→</div>
+            <div class="stage"><span class="stage-num">8</span><strong>Monitor</strong><br>Observe & alert</div>
+          </div>
+          <div class="callout callout-tip">
+            <strong>🎯 Key metric:</strong> <strong>DORA metrics</strong> (Deployment Frequency, Lead Time, Change Failure Rate, MTTR) are the industry-standard way to measure DevOps performance.
+          </div>
+        `
+      },
+      // ── Lesson 2 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "CI/CD Pipelines",
+        content: `
+          <p><strong>CI/CD</strong> (Continuous Integration / Continuous Delivery) is the backbone of modern software delivery. It replaces slow, error-prone manual processes with automated pipelines.</p>
+          <h3>🔄 Continuous Integration (CI)</h3>
+          <p>Every time a developer pushes code, CI automatically:</p>
+          <ul>
+            <li>🏗️ <strong>Builds</strong> the application</li>
+            <li>🧪 <strong>Runs tests</strong> (unit, integration, lint)</li>
+            <li>📊 <strong>Reports results</strong> back to the developer immediately</li>
+          </ul>
+          <div class="callout callout-info">
+            <strong>💡 Why CI matters:</strong> Catching bugs the moment they're introduced is 10× cheaper than finding them weeks later in production. CI creates a tight feedback loop.
+          </div>
+          <h3>🚀 Continuous Delivery (CD)</h3>
+          <p>CD extends CI — after tests pass, the pipeline automatically <strong>deploys</strong> the code to staging (and optionally, production).</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td><strong>CI</strong></td><td>Auto-build + auto-test on every push</td></tr>
+                <tr><td><strong>Continuous Delivery</strong></td><td>Auto-deploy to staging; manual approval for production</td></tr>
+                <tr><td><strong>Continuous Deployment</strong></td><td>Fully automated — code goes to production without human approval</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>📋 A Typical CI/CD Pipeline</h3>
+          <div class="code-block">
+            <div class="code-label">GitHub Actions — .github/workflows/deploy.yml</div>
+            <pre><code>name: CI/CD Pipeline
+
+on: [push]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Deploy to production
+        run: ./deploy.sh</code></pre>
+          </div>
+          <p>Popular CI/CD tools: <strong>GitHub Actions</strong>, <strong>GitLab CI</strong>, <strong>Jenkins</strong>, <strong>CircleCI</strong>, <strong>ArgoCD</strong>.</p>
+        `
+      },
+      // ── Quiz 1 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "⚡ Quick Check #1",
+        questions: [
+          {
+            q: "What does 'CI' stand for and what does it primarily automate?",
+            options: [
+              "Code Integration — merging branches manually",
+              "Continuous Integration — automatically building and testing code on every push",
+              "Cloud Infrastructure — provisioning servers automatically",
+              "Container Images — building Docker images"
+            ],
+            answer: 1,
+            explanation: "CI stands for Continuous Integration. It automatically builds and tests code every time a developer pushes a change, catching bugs early in the development cycle."
+          },
+          {
+            q: "What is the key difference between Continuous Delivery and Continuous Deployment?",
+            options: [
+              "They are the same thing",
+              "Continuous Delivery requires manual approval before production; Continuous Deployment is fully automated",
+              "Continuous Deployment requires manual approval; Continuous Delivery is fully automated",
+              "Continuous Delivery only runs tests, not deployments"
+            ],
+            answer: 1,
+            explanation: "Continuous Delivery deploys automatically to staging but requires a human to approve the final push to production. Continuous Deployment skips that human gate — every passing build goes straight to production."
+          },
+          {
+            q: "Which of these is NOT one of the DORA metrics for measuring DevOps performance?",
+            options: [
+              "Deployment Frequency",
+              "Mean Time to Recovery (MTTR)",
+              "Number of Developers",
+              "Change Failure Rate"
+            ],
+            answer: 2,
+            explanation: "The four DORA metrics are: Deployment Frequency, Lead Time for Changes, Change Failure Rate, and Mean Time to Recovery (MTTR). Team size is not a DORA metric."
+          }
+        ]
+      },
+      // ── Lesson 3 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Containers & Docker",
+        content: `
+          <p>Containers solve the classic <em>"it works on my machine!"</em> problem by packaging an application <strong>together with everything it needs to run</strong> — code, runtime, libraries, and config — into a single portable unit.</p>
+          <h3>🐳 What is Docker?</h3>
+          <p>Docker is the most popular platform for building and running containers. A <strong>Docker image</strong> is the blueprint; a <strong>container</strong> is a running instance of that image.</p>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Concept</th><th>Analogy</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Docker Image</strong></td><td>A recipe / blueprint</td></tr>
+                <tr><td><strong>Docker Container</strong></td><td>A meal cooked from that recipe</td></tr>
+                <tr><td><strong>Dockerfile</strong></td><td>Instructions for creating the recipe</td></tr>
+                <tr><td><strong>Docker Hub</strong></td><td>A recipe book (image registry)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>📄 A Simple Dockerfile</h3>
+          <div class="code-block">
+            <div class="code-label">Dockerfile</div>
+            <pre><code># Start from an official Node.js base image
+FROM node:20-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Expose the port and start the app
+EXPOSE 3000
+CMD ["node", "server.js"]</code></pre>
+          </div>
+          <h3>🛠️ Essential Docker Commands</h3>
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+            <pre><code>docker build -t my-app .        # Build an image from a Dockerfile
+docker run -p 3000:3000 my-app  # Run a container (map port 3000)
+docker ps                       # List running containers
+docker stop <container-id>      # Stop a container
+docker pull nginx               # Download an image from Docker Hub</code></pre>
+          </div>
+          <h3>🆚 Containers vs Virtual Machines</h3>
+          <p>Containers share the host OS kernel and are <strong>lightweight</strong> (MBs, start in seconds). VMs include a full OS (GBs, take minutes to boot). For most microservices, containers are the preferred choice.</p>
+          <div class="callout callout-tip">
+            <strong>🚀 Next level:</strong> <strong>Kubernetes (K8s)</strong> is the industry-standard tool for <em>orchestrating</em> many containers — automatically scheduling, scaling, and healing them across a cluster of machines.
+          </div>
+        `
+      },
+      // ── Lesson 4 ──────────────────────────────────────────
+      {
+        type: "lesson",
+        title: "Infrastructure as Code (IaC)",
+        content: `
+          <p><strong>Infrastructure as Code (IaC)</strong> means managing and provisioning servers, networks, and cloud resources using <em>code and configuration files</em> — instead of clicking through a web console or running manual commands.</p>
+          <div class="callout callout-info">
+            <strong>💡 Why IaC?</strong> Infrastructure defined in code can be version-controlled (in Git), reviewed, tested, and reproduced identically across environments — eliminating the "snowflake server" problem.
+          </div>
+          <h3>Key IaC Tools</h3>
+          <div class="comparison-table">
+            <table>
+              <thead><tr><th>Tool</th><th>What it does</th><th>By</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Terraform</strong></td><td>Provisions cloud resources (VMs, DBs, networks)</td><td>HashiCorp</td></tr>
+                <tr><td><strong>Ansible</strong></td><td>Configures & deploys software on existing servers</td><td>Red Hat</td></tr>
+                <tr><td><strong>AWS CloudFormation</strong></td><td>AWS-native IaC with JSON/YAML templates</td><td>Amazon</td></tr>
+                <tr><td><strong>Pulumi</strong></td><td>IaC using real programming languages (Python, JS)</td><td>Pulumi Corp</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>🔧 A Terraform Example</h3>
+          <div class="code-block">
+            <div class="code-label">Terraform — main.tf</div>
+            <pre><code># Provision an EC2 instance on AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "web_server" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "MyWebServer"
+    Env  = "production"
+  }
+}</code></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-label">Terminal — Terraform workflow</div>
+            <pre><code>terraform init    # Download providers & set up state
+terraform plan    # Preview what will be created/changed
+terraform apply   # Actually create/update the infrastructure
+terraform destroy # Tear everything down</code></pre>
+          </div>
+          <h3>🔑 IaC Best Practices</h3>
+          <ul>
+            <li>📁 Store all IaC code in <strong>Git</strong> — infrastructure changes should go through pull requests</li>
+            <li>🌍 Use <strong>separate state files</strong> per environment (dev, staging, production)</li>
+            <li>🔒 Never hardcode secrets — use environment variables or secret managers (AWS Secrets Manager, HashiCorp Vault)</li>
+            <li>♻️ Write <strong>reusable modules</strong> to avoid repeating yourself</li>
+          </ul>
+          <div class="callout callout-tip">
+            <strong>🎯 Golden rule:</strong> If you clicked a button to create a resource, it's not IaC. Everything should be code — reproducible, reviewable, and version-controlled.
+          </div>
+        `
+      },
+      // ── Quiz 2 ────────────────────────────────────────────
+      {
+        type: "quiz",
+        title: "🏆 Final Quiz — DevOps Fundamentals",
+        questions: [
+          {
+            q: "What problem do containers primarily solve?",
+            options: [
+              "Making code run faster on all machines",
+              "Replacing version control systems like Git",
+              "Ensuring the app runs consistently regardless of environment ('works on my machine')",
+              "Providing unlimited cloud storage"
+            ],
+            answer: 2,
+            explanation: "Containers bundle the app with all its dependencies, ensuring it runs identically on a developer's laptop, a CI server, or in production. This eliminates environment-specific bugs."
+          },
+          {
+            q: "In Docker terminology, what is the relationship between an image and a container?",
+            options: [
+              "They are the same thing",
+              "An image is a running instance; a container is the blueprint",
+              "A container is a running instance of an image",
+              "An image is created from a running container"
+            ],
+            answer: 2,
+            explanation: "A Docker image is the blueprint (built from a Dockerfile). A container is a live, running instance of that image. You can run many containers from the same image."
+          },
+          {
+            q: "What is the correct order of the standard Terraform workflow?",
+            options: [
+              "apply → plan → init",
+              "init → apply → plan",
+              "plan → init → apply",
+              "init → plan → apply"
+            ],
+            answer: 3,
+            explanation: "'terraform init' downloads providers and sets up state. 'terraform plan' previews changes. 'terraform apply' actually creates/modifies infrastructure. Always init first, plan second, apply third."
+          },
+          {
+            q: "Which of these best describes Infrastructure as Code (IaC)?",
+            options: [
+              "Writing scripts to test your application code",
+              "Managing servers and cloud resources through version-controlled configuration files",
+              "Using a GUI dashboard to provision cloud resources",
+              "Documenting your infrastructure in a wiki"
+            ],
+            answer: 1,
+            explanation: "IaC means defining your infrastructure (servers, networks, databases) in code files that can be version-controlled, reviewed, and automatically applied — making infrastructure as repeatable and auditable as application code."
+          }
+        ]
+      }
+    ]
   }
 
   // ─────────────────────────────────────────────────────────
