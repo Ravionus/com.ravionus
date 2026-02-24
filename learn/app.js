@@ -154,10 +154,10 @@ let quizState = {};
 function initTopicPage() {
     const params = new URLSearchParams(window.location.search);
     const topicId = params.get('id');
-    if (!topicId) { window.location.href = 'index.html'; return; }
+    if (!topicId) { window.location.href = './'; return; }
 
     const topic = TOPICS.find(t => t.id === topicId);
-    if (!topic) { window.location.href = 'index.html'; return; }
+    if (!topic) { window.location.href = './'; return; }
 
     // Set page title & hero
     document.title = `${topic.title} — Ravionus Learn`;
@@ -473,7 +473,7 @@ function showCompletionScreen(topic, prog) {
         <div class="comp-stat-lbl">Quiz Score</div>
       </div>` : ''}
     </div>
-    <a href="index.html" class="btn btn-primary" style="margin:0 auto">← Back to All Topics</a>`;
+    <a href="./" class="btn btn-primary" style="margin:0 auto">← Back to All Topics</a>`;
 
     contentArea.appendChild(screen);
 }
