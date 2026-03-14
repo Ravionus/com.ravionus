@@ -298,22 +298,22 @@
 <!-- ── Toolbar ── -->
 <div class="toolbar">
     <div class="tb-group">
-        <button class="tb-btn primary" id="btnHash">🔒 Generate Hashes</button>
+        <button class="tb-btn primary" id="btnHash" title="Generate cryptographic hashes for the input text">🔒 Generate Hashes</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
         <span class="tb-label">Format:</span>
-        <button class="tb-btn active" id="btnHex" data-fmt="hex">hex</button>
-        <button class="tb-btn" id="btnBase64" data-fmt="base64">base64</button>
+        <button class="tb-btn active" id="btnHex" data-fmt="hex" title="Display hashes in hexadecimal format">hex</button>
+        <button class="tb-btn" id="btnBase64" data-fmt="base64" title="Display hashes in Base64 format">base64</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
-        <button class="tb-btn" id="btnSample">💡 Sample</button>
-        <button class="tb-btn" id="btnCopyAll">📋 Copy All</button>
+        <button class="tb-btn" id="btnSample" title="Load a sample input string">💡 Sample</button>
+        <button class="tb-btn" id="btnCopyAll" title="Copy all hash values to clipboard">📋 Copy All</button>
     </div>
     <div class="tb-right">
-        <button class="tb-btn" id="btnDownload">⬇ Download</button>
-        <button class="tb-btn danger" id="btnClear">✕ Clear</button>
+        <button class="tb-btn" id="btnDownload" title="Download hash values as a text file">⬇ Download</button>
+        <button class="tb-btn danger" id="btnClear" title="Clear input and results">✕ Clear</button>
     </div>
 </div>
 

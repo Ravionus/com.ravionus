@@ -431,11 +431,11 @@
 
 <!-- ── Toolbar ── -->
 <div class="toolbar">
-    <button class="tb-btn primary" id="btnConvert">⇄ Convert</button>
-    <button class="tb-btn" id="btnCopy">📋 Copy Decimal</button>
-    <button class="tb-btn" id="btnSample">🎲 Random</button>
+    <button class="tb-btn primary" id="btnConvert" title="Convert the number to all bases">⇄ Convert</button>
+    <button class="tb-btn" id="btnCopy" title="Copy the decimal value to clipboard">📋 Copy Decimal</button>
+    <button class="tb-btn" id="btnSample" title="Generate a random number to convert">🎲 Random</button>
     <span class="tb-spacer"></span>
-    <button class="tb-btn danger" id="btnClear">✕ Clear</button>
+    <button class="tb-btn danger" id="btnClear" title="Clear all fields">✕ Clear</button>
 </div>
 
 <!-- ── Banners ── -->
@@ -493,7 +493,7 @@
                 <option value="36">Base 36</option>
             </select>
         </div>
-        <button class="tb-btn primary" id="btnConvert2" style="margin-bottom:0">⇄ Convert</button>
+        <button class="tb-btn primary" id="btnConvert2" style="margin-bottom:0" title="Convert with step-by-step breakdown">⇄ Convert</button>
     </div>
 
     <!-- Results grid -->
@@ -562,7 +562,7 @@
                 <div id="customResult" title="Click to copy" tabindex="0"
                      role="button" aria-label="Custom base result">—</div>
             </div>
-            <button class="tb-btn" id="btnCustom">Convert</button>
+            <button class="tb-btn" id="btnCustom" title="Convert with custom base options">Convert</button>
         </div>
     </div>
 

@@ -379,7 +379,7 @@
     <div class="main-wrap">
         <!-- Toolbar -->
         <div class="toolbar">
-            <button id="btnRun" class="tb-btn primary">▶ Run</button>
+            <button id="btnRun" class="tb-btn primary" title="Run the JavaScript code">▶ Run</button>
 
             <select id="exampleSelect" class="example-select" aria-label="Load example snippet">
                 <option value="">📂 Load example…</option>
@@ -402,15 +402,15 @@
                 Running…
             </div>
 
-            <button id="btnCopyCode" class="tb-btn">📋 Copy Code</button>
-            <button id="btnClearOutput" class="tb-btn">🗑 Clear Output</button>
-            <button id="btnClearAll" class="tb-btn danger">✕ Clear All</button>
+            <button id="btnCopyCode" class="tb-btn" title="Copy the code to clipboard">📋 Copy Code</button>
+            <button id="btnClearOutput" class="tb-btn" title="Clear the output panel">🗑 Clear Output</button>
+            <button id="btnClearAll" class="tb-btn danger" title="Clear both code and output">✕ Clear All</button>
         </div>
 
         <!-- Mobile tabs -->
         <div class="mobile-tabs">
-            <button class="mob-tab active" id="tabInput">📥 Editor</button>
-            <button class="mob-tab" id="tabOutput">📤 Output</button>
+            <button class="mob-tab active" id="tabInput" title="Switch to Code editor">📥 Editor</button>
+            <button class="mob-tab" id="tabOutput" title="Switch to Output panel">📤 Output</button>
         </div>
 
         <!-- Editor -->

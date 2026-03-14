@@ -408,7 +408,7 @@
     <div class="main-wrap">
         <!-- Toolbar -->
         <div class="toolbar">
-            <button id="btnHighlight" class="tb-btn primary">⚡ Highlight</button>
+            <button id="btnHighlight" class="tb-btn primary" title="Apply syntax highlighting to the code">⚡ Highlight</button>
 
             <select id="langSelect" class="lang-select" aria-label="Programming language">
                 <option value="javascript">JavaScript</option>
@@ -443,15 +443,15 @@
 
             <div class="tb-sep"></div>
 
-            <button id="btnCopyHtml" class="tb-btn">📋 Copy HTML</button>
-            <button id="btnCopyText" class="tb-btn">📄 Copy Text</button>
-            <button id="btnClear" class="tb-btn danger">🗑 Clear</button>
+            <button id="btnCopyHtml" class="tb-btn" title="Copy highlighted HTML to clipboard">📋 Copy HTML</button>
+            <button id="btnCopyText" class="tb-btn" title="Copy plain text to clipboard">📄 Copy Text</button>
+            <button id="btnClear" class="tb-btn danger" title="Clear input and output">🗑 Clear</button>
         </div>
 
         <!-- Mobile tabs -->
         <div class="mobile-tabs">
-            <button class="mob-tab active" id="tabInput">📥 Input</button>
-            <button class="mob-tab" id="tabOutput">📤 Output</button>
+            <button class="mob-tab active" id="tabInput" title="Switch to Code input">📥 Input</button>
+            <button class="mob-tab" id="tabOutput" title="Switch to Highlighted output">📤 Output</button>
         </div>
 
         <!-- Editor -->

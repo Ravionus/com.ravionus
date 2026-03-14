@@ -233,24 +233,24 @@
 <!-- Toolbar -->
 <div class="toolbar">
     <div class="tb-group">
-        <button class="tb-btn primary" id="btnFormat">⚡ Format</button>
+        <button class="tb-btn primary" id="btnFormat" title="Format / pretty-print the code">⚡ Format</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group" id="langGroup">
         <span class="tb-label">Language:</span>
-        <button class="tb-btn lang active" data-lang="js">JS</button>
-        <button class="tb-btn lang" data-lang="html">HTML</button>
-        <button class="tb-btn lang" data-lang="css">CSS</button>
+        <button class="tb-btn lang active" data-lang="js" title="Format JavaScript">JS</button>
+        <button class="tb-btn lang" data-lang="html" title="Format HTML">HTML</button>
+        <button class="tb-btn lang" data-lang="css" title="Format CSS">CSS</button>
         <button class="tb-btn lang" data-lang="json">JSON</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
-        <button class="tb-btn" id="btnSample">📋 Sample</button>
+        <button class="tb-btn" id="btnSample" title="Load a sample code snippet">📋 Sample</button>
     </div>
     <div class="tb-right">
-        <button class="tb-btn" id="btnDownload">⬇ Download</button>
-        <button class="tb-btn" id="btnCopy">📄 Copy</button>
-        <button class="tb-btn danger" id="btnClear">✕ Clear</button>
+        <button class="tb-btn" id="btnDownload" title="Download the formatted output">⬇ Download</button>
+        <button class="tb-btn" id="btnCopy" title="Copy formatted output to clipboard">📄 Copy</button>
+        <button class="tb-btn danger" id="btnClear" title="Clear input and output">✕ Clear</button>
     </div>
 </div>
 
@@ -277,8 +277,8 @@
 
 <!-- Mobile tabs -->
 <div class="mobile-tabs">
-    <button class="mob-tab active" id="tabInput">📥 Source</button>
-    <button class="mob-tab" id="tabOutput">✨ Formatted</button>
+    <button class="mob-tab active" id="tabInput" title="Switch to Source editor">📥 Source</button>
+    <button class="mob-tab" id="tabOutput" title="Switch to Formatted output">✨ Formatted</button>
 </div>
 
 <!-- Editor layout -->

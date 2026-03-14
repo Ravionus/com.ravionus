@@ -254,9 +254,9 @@
 <!-- Toolbar -->
 <div class="toolbar">
     <div class="tb-group">
-        <button class="tb-btn primary" id="btnFormat">⚡ Format</button>
-        <button class="tb-btn" id="btnMinify">⬜ Minify</button>
-        <button class="tb-btn success" id="btnValidate">✓ Validate</button>
+        <button class="tb-btn primary" id="btnFormat" title="Format / pretty-print the JSON">⚡ Format</button>
+        <button class="tb-btn" id="btnMinify" title="Minify / compact the JSON">⬜ Minify</button>
+        <button class="tb-btn success" id="btnValidate" title="Validate JSON syntax">✓ Validate</button>
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
@@ -269,12 +269,12 @@
     </div>
     <div class="tb-sep"></div>
     <div class="tb-group">
-        <button class="tb-btn" id="btnSample">📋 Sample</button>
-        <button class="tb-btn" id="btnSortKeys">⇅ Sort Keys</button>
+        <button class="tb-btn" id="btnSample" title="Load a sample JSON">📋 Sample</button>
+        <button class="tb-btn" id="btnSortKeys" title="Sort object keys alphabetically">⇅ Sort Keys</button>
     </div>
     <div class="tb-right">
-        <button class="tb-btn" id="btnDownload">⬇ Download</button>
-        <button class="tb-btn danger" id="btnClear">✕ Clear</button>
+        <button class="tb-btn" id="btnDownload" title="Download the formatted JSON">⬇ Download</button>
+        <button class="tb-btn danger" id="btnClear" title="Clear input and output">✕ Clear</button>
     </div>
 </div>
 
@@ -284,9 +284,9 @@
 
 <!-- Mobile tabs -->
 <div class="mobile-tabs">
-    <button class="mob-tab active" id="tabInput">📥 Input</button>
-    <button class="mob-tab" id="tabTree">🌳 Tree</button>
-    <button class="mob-tab" id="tabOutput">📤 Output</button>
+    <button class="mob-tab active" id="tabInput" title="Switch to Input panel">📥 Input</button>
+    <button class="mob-tab" id="tabTree" title="Switch to Tree view">🌳 Tree</button>
+    <button class="mob-tab" id="tabOutput" title="Switch to Output panel">📤 Output</button>
 </div>
 
 <!-- Split layout -->

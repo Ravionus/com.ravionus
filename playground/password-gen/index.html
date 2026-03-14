@@ -488,17 +488,17 @@
 
 <!-- ── Toolbar ── -->
 <div class="toolbar">
-    <button class="tb-btn primary" id="btnGenerate">⚡ Generate</button>
-    <button class="tb-btn" id="btnCopy">📋 Copy All</button>
+    <button class="tb-btn primary" id="btnGenerate" title="Generate passwords with the selected settings">⚡ Generate</button>
+    <button class="tb-btn" id="btnCopy" title="Copy all passwords to clipboard">📋 Copy All</button>
     <span class="tb-sep"></span>
-    <button class="tb-btn danger" id="btnClear">✕ Clear</button>
+    <button class="tb-btn danger" id="btnClear" title="Clear the generated passwords">✕ Clear</button>
 </div>
 
 <!-- ── Mode tabs ── -->
 <div class="util-tabs" role="tablist" aria-label="Password mode">
-    <button class="util-tab active" id="tabClassic"    role="tab" aria-selected="true"  aria-controls="panelClassic">🔑 Classic</button>
-    <button class="util-tab"        id="tabPassphrase" role="tab" aria-selected="false" aria-controls="panelPassphrase">📝 Passphrase</button>
-    <button class="util-tab"        id="tabPin"        role="tab" aria-selected="false" aria-controls="panelPin">🔢 PIN</button>
+    <button class="util-tab active" id="tabClassic"    role="tab" aria-selected="true"  aria-controls="panelClassic" title="Generate passwords with custom character sets">🔑 Classic</button>
+    <button class="util-tab"        id="tabPassphrase" role="tab" aria-selected="false" aria-controls="panelPassphrase" title="Generate memorable word-based passphrases">📝 Passphrase</button>
+    <button class="util-tab"        id="tabPin"        role="tab" aria-selected="false" aria-controls="panelPin" title="Generate numeric PIN codes">🔢 PIN</button>
 </div>
 
 <!-- ── Banners ── -->
