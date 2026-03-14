@@ -228,24 +228,14 @@
     </style>
 </head>
 <body>
+    <script src="/site.js"></script>
 
 <!-- Nav -->
-<nav>
-    <div class="nav-inner">
-        <div class="nav-left">
-            <a href="/" class="nav-logo">Ravionus</a>
-            <span class="nav-sep">/</span>
-            <span class="nav-breadcrumb">
-                <a href="../">Dev Tools</a> / <span class="current">Diff Checker</span>
-            </span>
-        </div>
-        <div class="nav-links">
-            <a href="../../learn/" class="nav-link">✨ Learn</a>
-            <a href="../../tools/" class="nav-link">🛠️ Tools</a>
-            <a href="../../playground/" class="nav-link">🧪 Playgrounds</a>
-        </div>
-    </div>
-</nav>
+<div class="page-breadcrumb">
+    <a href="/">Ravionus</a>
+                <span class="sep">/</span>
+                <a href="../">Dev Tools</a> / <span class="crumb-current">Diff Checker</span>
+</div>
 
 <header class="page-header">
     <h1>Diff Checker</h1>
@@ -677,17 +667,5 @@ inputB.addEventListener('input', () => { updateStats(); scheduleSave(); });
 })();
 </script>
 
-<script>
-/* nav-active */
-(function(){
-  var p = location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(function(a){
-    if((p.includes('/tools/') && a.href.includes('/tools/')) ||
-       (p.includes('/playground/') && a.href.includes('/playground/')) ||
-       (p.includes('/learn/') && a.href.includes('/learn/')))
-      Object.assign(a.style,{color:'var(--cyan)',fontWeight:'700'});
-  });
-})();
-</script>
 </body>
 </html>

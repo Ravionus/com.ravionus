@@ -37,37 +37,7 @@
             flex-direction: column;
         }
 
-        /* ── Nav ── */
-        nav {
-            border-bottom: 1px solid var(--border);
-            background: rgba(10,10,15,.95);
-            backdrop-filter: blur(12px);
-            flex-shrink: 0;
-        }
-        .nav-inner {
-            padding: 0 20px; height: 52px;
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        }
-        .nav-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-        .nav-logo {
-            font-size: 1.1rem; font-weight: 800; text-decoration: none;
-            background: var(--accent-g); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; letter-spacing: -.5px; flex-shrink: 0;
-        }
-        .nav-sep { color: var(--border2); flex-shrink: 0; }
-        .nav-breadcrumb { font-size: .82rem; color: var(--muted); }
-        .nav-breadcrumb a { color: var(--muted); text-decoration: none; }
-        .nav-breadcrumb a:hover { color: var(--text); }
-        .nav-breadcrumb .current { color: var(--text); font-weight: 600; }
-        .nav-links { display: flex; gap: 4px; flex-shrink: 0; }
-        .nav-link {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 5px 10px; border-radius: 7px; font-size: .8rem; font-weight: 500;
-            text-decoration: none; color: var(--muted); transition: color .15s, background .15s;
-        }
-        .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
-
-        /* ── Page header ── */
+                /* ── Page header ── */
         .page-header {
             padding: 18px 20px 14px;
             border-bottom: 1px solid var(--border);
@@ -210,26 +180,16 @@
     </style>
 </head>
 <body>
+    <script src="/site.js"></script>
 
 <!-- ── Nav ──────────────────────────────────────────────────────────────── -->
-<nav>
-    <div class="nav-inner">
-        <div class="nav-left">
-            <a href="../../" class="nav-logo">Ravionus</a>
-            <span class="nav-sep">›</span>
-            <span class="nav-breadcrumb">
+<div class="page-breadcrumb">
+    <a href="../../">Ravionus</a>
+                <span class="sep">›</span>
                 <a href="../../tools/">Dev Tools</a>
-                <span class="nav-sep"> › </span>
-                <span class="current">Minifier</span>
-            </span>
-        </div>
-        <div class="nav-links" role="navigation" aria-label="Site navigation">
-            <a href="../../learn/" class="nav-link">✨ Learn</a>
-            <a href="../../tools/" class="nav-link">🛠️ Tools</a>
-            <a href="../../playground/" class="nav-link">🧪 Playgrounds</a>
-        </div>
-    </div>
-</nav>
+                    <span class="sep"> › </span>
+                    <span class="crumb-current">Minifier</span>
+</div>
 
 <!-- ── Page header ──────────────────────────────────────────────────────── -->
 <header class="page-header">
@@ -701,17 +661,5 @@ greet("World");`
 }());
 </script>
 
-<script>
-/* nav-active */
-(function(){
-  var p = location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(function(a){
-    if((p.includes('/tools/') && a.href.includes('/tools/')) ||
-       (p.includes('/playground/') && a.href.includes('/playground/')) ||
-       (p.includes('/learn/') && a.href.includes('/learn/')))
-      Object.assign(a.style,{color:'var(--cyan)',fontWeight:'700'});
-  });
-})();
-</script>
 </body>
 </html>

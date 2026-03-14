@@ -45,27 +45,7 @@
             flex-direction: column;
         }
 
-        /* ── Nav ── */
-        nav {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 52px;
-            flex-shrink: 0;
-        }
-        .breadcrumb { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--muted); }
-        .breadcrumb a { color: var(--cyan); text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
-        .breadcrumb .sep { color: var(--border2); }
-        .breadcrumb .current { color: var(--text); font-weight: 600; }
-        .nav-links { display: flex; gap: 1.25rem; }
-        .nav-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
-        .nav-links a:hover { color: var(--text); }
-
-        /* ── Page header ── */
+                /* ── Page header ── */
         .page-header { padding: 2rem 1.5rem 1rem; max-width: 1400px; width: 100%; margin: 0 auto; }
         .page-header h1 {
             font-size: 1.75rem; font-weight: 800;
@@ -226,20 +206,14 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="breadcrumb">
-            <a href="../../">Ravionus</a>
-            <span class="sep">›</span>
-            <a href="../../playground/">Playgrounds</a>
-            <span class="sep">›</span>
-            <span class="current">Git Simulator</span>
-        </div>
-        <div class="nav-links" role="navigation">
-            <a href="../../learn/">✨ Learn</a>
-            <a href="../../tools/">🛠️ Tools</a>
-            <a href="../../playground/">🧪 Playgrounds</a>
-        </div>
-    </nav>
+    <script src="/site.js"></script>
+    <div class="page-breadcrumb">
+    <a href="../../">Ravionus</a>
+                <span class="sep">›</span>
+                <a href="../../playground/">Playgrounds</a>
+                <span class="sep">›</span>
+                <span class="crumb-current">Git Simulator</span>
+</div>
 
     <header class="page-header">
         <h1>🔀 Git Simulator</h1>
@@ -1494,17 +1468,5 @@
     terminalInput.focus();
     </script>
 
-<script>
-/* nav-active */
-(function(){
-  var p = location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(function(a){
-    if((p.includes('/tools/') && a.href.includes('/tools/')) ||
-       (p.includes('/playground/') && a.href.includes('/playground/')) ||
-       (p.includes('/learn/') && a.href.includes('/learn/')))
-      Object.assign(a.style,{color:'var(--cyan)',fontWeight:'700'});
-  });
-})();
-</script>
 </body>
 </html>

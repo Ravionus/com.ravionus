@@ -37,24 +37,7 @@
             flex-direction: column;
         }
 
-        /* ── Nav ── */
-        nav {
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-        nav a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
-        nav a:hover { color: var(--text); }
-        .nav-sep { color: var(--border2); }
-        .nav-links { margin-left: auto; display: flex; gap: 16px; }
-        .nav-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
-        .nav-links a:hover { color: var(--cyan); }
-
-        /* ── Page Header ── */
+                /* ── Page Header ── */
         .page-header {
             padding: 24px 20px 16px;
             border-bottom: 1px solid var(--border);
@@ -460,20 +443,16 @@
     </style>
 </head>
 <body>
+    <script src="/site.js"></script>
 
     <!-- Navigation -->
-    <nav>
-        <a href="../../">Ravionus</a>
-        <span class="nav-sep">›</span>
-        <a href="../../tools/">Dev Tools</a>
-        <span class="nav-sep">›</span>
-        <span>Cron Parser</span>
-        <div class="nav-links">
-            <a href="../../learn/">✨ Learn</a>
-            <a href="../../tools/">🛠️ Tools</a>
-            <a href="../../playground/">🧪 Playgrounds</a>
-        </div>
-    </nav>
+    <div class="page-breadcrumb">
+    <a href="../../">Ravionus</a>
+            <span class="sep">›</span>
+            <a href="../../tools/">Dev Tools</a>
+            <span class="sep">›</span>
+            <span>Cron Parser</span>
+</div>
 
     <!-- Page Header -->
     <header class="page-header">
@@ -1211,17 +1190,5 @@
     })();
     </script>
 
-<script>
-/* nav-active */
-(function(){
-  var p = location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(function(a){
-    if((p.includes('/tools/') && a.href.includes('/tools/')) ||
-       (p.includes('/playground/') && a.href.includes('/playground/')) ||
-       (p.includes('/learn/') && a.href.includes('/learn/')))
-      Object.assign(a.style,{color:'var(--cyan)',fontWeight:'700'});
-  });
-})();
-</script>
 </body>
 </html>

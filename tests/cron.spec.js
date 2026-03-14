@@ -86,7 +86,7 @@ test.describe('Cron Expression Parser — smoke', () => {
 
     test('nav Tools link is highlighted as active section', async ({ page }) => {
         await page.goto(BASE_URL);
-        // The nav-active script highlights the correct section link
+        // site.js adds .primary class to the active section link
         const toolsLink = page.locator('.nav-links a[href*="/tools/"]');
         await expect(toolsLink).toHaveCSS('font-weight', '700');
     });

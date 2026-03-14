@@ -43,56 +43,7 @@
             line-height: 1.5;
         }
 
-        /* ── Nav ── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            background: rgba(10,10,15,.9);
-            backdrop-filter: blur(12px);
-        }
-        .nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-            height: 54px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: .85rem;
-            color: var(--muted);
-            flex-shrink: 0;
-        }
-        .breadcrumb a { color: var(--muted); text-decoration: none; }
-        .breadcrumb a:hover { color: var(--text); }
-        .breadcrumb .sep { opacity: .5; }
-        .breadcrumb .current { color: var(--text); font-weight: 600; }
-        .nav-links {
-            display: flex;
-            gap: 4px;
-        }
-        .nav-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: .83rem;
-            font-weight: 500;
-            text-decoration: none;
-            color: var(--muted);
-            transition: color .15s, background .15s;
-        }
-        .nav-links a:hover { color: var(--text); background: var(--surface); }
-
-        /* ── Header ── */
+                /* ── Header ── */
         .page-header {
             max-width: 1100px;
             margin: 0 auto;
@@ -430,23 +381,15 @@
     </style>
 </head>
 <body>
+    <script src="/site.js"></script>
 
-<nav>
-    <div class="nav-inner">
-        <div class="breadcrumb">
-            <a href="../../">Ravionus</a>
-            <span class="sep">›</span>
-            <a href="../../playground/">Playgrounds</a>
-            <span class="sep">›</span>
-            <span class="current">Date/Time Utilities</span>
-        </div>
-        <div class="nav-links" role="navigation">
-            <a href="../../learn/">✨ Learn</a>
-            <a href="../../tools/">🛠️ Tools</a>
-            <a href="../../playground/">🧪 Playgrounds</a>
-        </div>
-    </div>
-</nav>
+<div class="page-breadcrumb">
+    <a href="../../">Ravionus</a>
+                <span class="sep">›</span>
+                <a href="../../playground/">Playgrounds</a>
+                <span class="sep">›</span>
+                <span class="crumb-current">Date/Time Utilities</span>
+</div>
 
 <header class="page-header">
     <h1>📅 Date/Time Utilities</h1>
@@ -1560,17 +1503,5 @@ function debouncedSave() {
 });
 </script>
 
-<script>
-/* nav-active */
-(function(){
-  var p = location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(function(a){
-    if((p.includes('/tools/') && a.href.includes('/tools/')) ||
-       (p.includes('/playground/') && a.href.includes('/playground/')) ||
-       (p.includes('/learn/') && a.href.includes('/learn/')))
-      Object.assign(a.style,{color:'var(--cyan)',fontWeight:'700'});
-  });
-})();
-</script>
 </body>
 </html>

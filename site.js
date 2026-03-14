@@ -1,0 +1,129 @@
+/**
+ * site.js — shared nav & footer injected into every page.
+ * Loaded as the first script inside <body> on every page.
+ * Uses absolute paths so it works regardless of page depth.
+ */
+(function () {
+  'use strict';
+
+  // ── CSS ─────────────────────────────────────────────────────────────────────
+  var css = [
+    /* Reset scope */
+    '.site-nav *,.site-nav *::before,.site-nav *::after{box-sizing:border-box;margin:0;padding:0}',
+
+    /* Nav bar */
+    '.site-nav{position:sticky;top:0;z-index:200;border-bottom:1px solid #1e1e2e;background:rgba(10,10,15,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}',
+    '.site-nav .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}',
+
+    /* Logo */
+    '.site-nav .nav-logo{font-size:1.15rem;font-weight:800;text-decoration:none;letter-spacing:-0.03em;background:linear-gradient(135deg,#a855f7,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent}',
+
+    /* Right group */
+    '.site-nav .nav-right{display:flex;align-items:center;gap:12px}',
+
+    /* Section links */
+    '.site-nav .nav-links{display:flex;gap:6px}',
+    '.site-nav .nav-link{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:0.875rem;font-weight:500;text-decoration:none;color:#7878a0;transition:color .2s,background .2s}',
+    '.site-nav .nav-link:hover{color:#e2e2f0;background:#12121a}',
+    '.site-nav .nav-link.primary{background:linear-gradient(135deg,#7c3aed,#0e7490);color:#fff;font-weight:700}',
+    '.site-nav .nav-link.primary:hover{opacity:.88;background:linear-gradient(135deg,#7c3aed,#0e7490)}',
+
+    /* Auth area */
+    '.site-nav .nav-auth{display:flex;align-items:center;gap:8px}',
+    '.site-nav .btn-signin{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:8px;font-size:0.875rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#e2e2f0;transition:background .2s,border-color .2s;white-space:nowrap}',
+    '.site-nav .btn-signin:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.2)}',
+    '.site-nav .user-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);padding:4px 4px 4px 12px;border-radius:99px;border:1px solid rgba(255,255,255,0.1)}',
+    '.site-nav .user-chip.hidden,.site-nav .hidden{display:none!important}',
+    '.site-nav .user-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;background:#1e1e2e}',
+    '.site-nav .user-name{font-size:0.875rem;color:#e2e2f0;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+    '.site-nav .btn-signout{background:transparent;border:none;color:#7878a0;font-size:0.75rem;cursor:pointer;padding:4px 10px;border-radius:99px;transition:all .2s}',
+    '.site-nav .btn-signout:hover{background:rgba(239,68,68,0.12);color:#ef4444}',
+
+    /* Breadcrumb bar (sub-pages) */
+    '.page-breadcrumb{max-width:1100px;margin:0 auto;padding:10px 24px;font-size:0.82rem;color:#7878a0;display:flex;align-items:center;gap:6px}',
+    '.page-breadcrumb a{color:#7878a0;text-decoration:none;transition:color .15s}',
+    '.page-breadcrumb a:hover{color:#e2e2f0}',
+    '.page-breadcrumb .sep{opacity:.4}',
+    '.page-breadcrumb .crumb-current{color:#e2e2f0;font-weight:500}',
+
+    /* Back bar (learn/topic.html) */
+    '.page-back-bar{max-width:1200px;margin:0 auto;padding:8px 24px}',
+    '.page-back{display:inline-flex;align-items:center;gap:6px;color:#9090a8;text-decoration:none;font-size:0.875rem;font-weight:500;padding:6px 12px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);transition:color .2s,background .2s}',
+    '.page-back:hover{color:#f0f0f8;background:rgba(255,255,255,0.07)}',
+
+    /* Footer */
+    '.site-footer{border-top:1px solid #1e1e2e;padding:32px 24px;text-align:center;color:#7878a0;font-size:0.85rem}',
+    '.site-footer a{color:#a855f7;text-decoration:none}',
+    '.site-footer a:hover{text-decoration:underline}',
+
+    /* Responsive */
+    '@media(max-width:640px){.site-nav .nav-link{padding:6px 10px;font-size:0.8rem}.site-nav .btn-signin .btn-signin-label{display:none}}'
+  ].join('');
+
+  var styleEl = document.createElement('style');
+  styleEl.id = 'site-shared-styles';
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  // ── Active-section detection ─────────────────────────────────────────────
+  var p = location.pathname;
+  function isActive(section) {
+    return p === '/' + section + '/' || p.indexOf('/' + section + '/') === 0;
+  }
+  function navLink(href, label, section) {
+    return '<a href="' + href + '" class="nav-link' + (isActive(section) ? ' primary' : '') + '">' + label + '</a>';
+  }
+
+  // ── Google icon SVG ──────────────────────────────────────────────────────
+  var googleSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>' +
+    '<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>' +
+    '<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>' +
+    '<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>' +
+    '</svg>';
+
+  // ── Build & inject nav ───────────────────────────────────────────────────
+  var nav = document.createElement('nav');
+  nav.className = 'site-nav';
+  nav.innerHTML =
+    '<div class="nav-inner">' +
+      '<a href="/" class="nav-logo">Ravionus</a>' +
+      '<div class="nav-right">' +
+        '<div class="nav-links">' +
+          navLink('/learn/', '✨ Learn', 'learn') +
+          navLink('/tools/', '🛠️ Dev Tools', 'tools') +
+          navLink('/playground/', '🧪 Playgrounds', 'playground') +
+        '</div>' +
+        '<div class="nav-auth" id="navAuth">' +
+          '<button class="btn-signin" id="signInBtn">' +
+            googleSvg +
+            ' <span class="btn-signin-label">Sign in</span>' +
+          '</button>' +
+          '<div class="user-chip hidden" id="userChip">' +
+            '<img class="user-avatar" id="userAvatar" src="" alt="avatar">' +
+            '<span class="user-name" id="userName"></span>' +
+            '<button class="btn-signout" id="signOutBtn">Sign out</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  document.body.prepend(nav);
+
+  // On non-learn pages, Sign In navigates to /learn/
+  if (!isActive('learn')) {
+    var signInBtn = document.getElementById('signInBtn');
+    if (signInBtn) {
+      signInBtn.addEventListener('click', function () { location.href = '/learn/'; });
+    }
+  }
+
+  // ── Build & inject footer ────────────────────────────────────────────────
+  var footer = document.createElement('footer');
+  footer.className = 'site-footer';
+  footer.innerHTML = 'Made with ❤️ by <a href="/">Ravionus</a>';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.appendChild(footer);
+  });
+}());

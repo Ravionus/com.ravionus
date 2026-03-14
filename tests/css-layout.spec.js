@@ -510,18 +510,18 @@ test.describe('CSS Layout Playground — cursor position', () => {
 test.describe('CSS Layout Playground — navigation', () => {
     test('breadcrumb shows Playgrounds link', async ({ page }) => {
         await page.goto(PAGE);
-        const bc = page.locator('.breadcrumb');
+        const bc = page.locator('.page-breadcrumb');
         await expect(bc).toContainText('Playgrounds');
     });
 
     test('breadcrumb shows CSS Layout Playground current page', async ({ page }) => {
         await page.goto(PAGE);
-        await expect(page.locator('.breadcrumb .current')).toContainText('CSS Layout Playground');
+        await expect(page.locator('.page-breadcrumb .crumb-current')).toContainText('CSS Layout Playground');
     });
 
     test('Playgrounds breadcrumb link is correct', async ({ page }) => {
         await page.goto(PAGE);
-        const href = await page.locator('.breadcrumb a').nth(1).getAttribute('href');
+        const href = await page.locator('.page-breadcrumb a').nth(1).getAttribute('href');
         expect(href).toContain('/playground/');
     });
 });

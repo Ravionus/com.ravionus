@@ -22,7 +22,7 @@ test.describe('Diff Checker — smoke', () => {
     await page.goto('/tools/diff/');
     await expect(page.locator('nav')).toBeVisible();
     await expect(page.locator('.nav-logo')).toHaveText('Ravionus');
-    await expect(page.locator('.nav-breadcrumb .current')).toHaveText('Diff Checker');
+    await expect(page.locator('.page-breadcrumb .crumb-current')).toHaveText('Diff Checker');
   });
 
   test('all primary toolbar buttons are visible', async ({ page }) => {

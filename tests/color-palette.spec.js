@@ -58,7 +58,7 @@ test.describe('Color Palette Generator — smoke', () => {
     });
 
     test('nav breadcrumb is visible', async ({ page }) => {
-        await expect(page.locator('nav .breadcrumb')).toBeVisible();
+        await expect(page.locator('.page-breadcrumb')).toBeVisible();
     });
 
     test('Generate button is visible', async ({ page }) => {

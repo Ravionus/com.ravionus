@@ -46,7 +46,7 @@ test.describe('Date/Time Utilities — smoke', () => {
     });
 
     test('nav breadcrumb is visible', async ({ page }) => {
-        await expect(page.locator('nav .breadcrumb')).toBeVisible();
+        await expect(page.locator('.page-breadcrumb')).toBeVisible();
     });
 
     test('Fill Now toolbar button is visible', async ({ page }) => {

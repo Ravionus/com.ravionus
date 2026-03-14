@@ -12,7 +12,7 @@
     <meta property="og:description" content="Developer utility tools for data conversion, formatting, generation, and more.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ravionus.com/tools/">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,71 +45,6 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-        }
-
-        /* ── Nav ── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            background: rgba(10, 10, 15, .85);
-            backdrop-filter: blur(12px);
-        }
-
-        .nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-logo {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -.5px;
-            background: var(--accent-g);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            border-radius: 8px;
-            font-size: .9rem;
-            font-weight: 500;
-            text-decoration: none;
-            color: var(--muted);
-            transition: color .2s, background .2s;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--surface);
-        }
-
-        .nav-link.primary {
-            background: linear-gradient(135deg, #7c3aed, #0e7490);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .nav-link.primary:hover {
-            opacity: .88;
-            background: linear-gradient(135deg, #7c3aed, #0e7490);
         }
 
         /* ── Hero ── */
@@ -262,40 +197,11 @@
             box-shadow: 0 8px 36px rgba(168, 85, 247, .18);
         }
 
-        /* ── Footer ── */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 32px 24px;
-            text-align: center;
-            color: var(--muted);
-            font-size: .85rem;
-        }
-
-        footer a {
-            color: var(--purple);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-inner">
-            <a href="/" class="nav-logo">Ravionus</a>
-            <div class="nav-links">
-                <a href="../learn/" class="nav-link">✨ Learn</a>
-                <a href="../tools/" class="nav-link primary">🛠️ Dev Tools</a>
-                <a href="../playground/" class="nav-link">🧪 Playgrounds</a>
-            </div>
-        </div>
-    </nav>
-
+    <script src="/site.js"></script>
     <!-- Hero -->
     <section class="hero">
         <div class="eyebrow">
@@ -558,12 +464,6 @@
 
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        Made with ❤️ by <a href="/">Ravionus</a>
-    </footer>
-
 </body>
 
 </html>

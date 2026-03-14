@@ -63,7 +63,7 @@ test.describe('Git Simulator — smoke', () => {
     });
 
     test('nav breadcrumb shows Playgrounds link', async ({ page }) => {
-        const breadcrumb = page.locator('nav .breadcrumb');
+        const breadcrumb = page.locator('.page-breadcrumb');
         await expect(breadcrumb).toContainText('Playgrounds');
     });
 });

@@ -40,7 +40,7 @@ test.describe('Base Converter — smoke', () => {
     });
 
     test('nav breadcrumb is visible', async ({ page }) => {
-        await expect(page.locator('nav .breadcrumb')).toBeVisible();
+        await expect(page.locator('.page-breadcrumb')).toBeVisible();
     });
 
     test('Convert button is visible', async ({ page }) => {

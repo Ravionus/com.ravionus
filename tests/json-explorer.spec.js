@@ -414,12 +414,12 @@ test.describe('JSON Explorer — features', () => {
     // ── Breadcrumb navigation ─────────────────────────────────────────────────
     test('breadcrumb shows correct current page', async ({ page }) => {
         await page.goto(PAGE);
-        await expect(page.locator('.breadcrumb .current')).toContainText('JSON Explorer');
+        await expect(page.locator('.page-breadcrumb .crumb-current')).toContainText('JSON Explorer');
     });
 
     test('breadcrumb Playgrounds link points to /playground/', async ({ page }) => {
         await page.goto(PAGE);
-        const href = await page.locator('.breadcrumb a').nth(1).getAttribute('href');
+        const href = await page.locator('.page-breadcrumb a').nth(1).getAttribute('href');
         expect(href).toContain('playground');
     });
 });

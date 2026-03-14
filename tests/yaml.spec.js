@@ -19,7 +19,7 @@ test.describe('YAML Tool — Smoke', () => {
 
     test('nav links are visible', async ({ page }) => {
         await page.goto(PAGE);
-        await expect(page.getByRole('link', { name: /Dev Tools/i })).toBeVisible();
+        await expect(page.getByRole('link', { name: /Dev Tools/i }).first()).toBeVisible();
         await expect(page.getByRole('link', { name: /Learn/i }).first()).toBeVisible();
     });
 

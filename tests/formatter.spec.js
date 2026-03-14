@@ -24,7 +24,7 @@ test.describe('Code Formatter — Smoke', () => {
 
     test('nav breadcrumb and links are visible', async ({ page }) => {
         await page.goto(PAGE);
-        await expect(page.getByRole('link', { name: /Dev Tools/i })).toBeVisible();
+        await expect(page.getByRole('link', { name: /Dev Tools/i }).first()).toBeVisible();
         await expect(page.getByRole('link', { name: /Learn/i }).first()).toBeVisible();
         await expect(page.getByRole('link', { name: /Tools/i }).first()).toBeVisible();
     });
