@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <title>HTML Entity Encoder / Decoder — Ravionus Dev Tools</title>
+    <meta name="description" content="Encode text to HTML entities or decode them back. Supports named (&amp;lt;), decimal (&amp;#60;), and hex (&amp;#x3C;) styles. No server, no sign-up.">
+    <link rel="canonical" href="https://ravionus.com/tools/html-entity/">
+    <meta property="og:title" content="HTML Entity Encoder / Decoder — Ravionus Dev Tools">
+    <meta property="og:description" content="Encode text to HTML entities or decode them back. Supports named (&amp;lt;), decimal (&amp;#60;), and hex (&amp;#x3C;) styles. No server, no sign-up.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ravionus.com/tools/html-entity/">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #0e0e16;
+            --border: #1e1e2e;
+            --border2: #2a2a3e;
+            --text: #e2e2f0;
+            --muted: #7878a0;
+            --purple: #a855f7;
+            --cyan: #22d3ee;
+            --green: #22c55e;
+            --red: #ef4444;
+            --accent-g: linear-gradient(135deg, #a855f7, #22d3ee);
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        html, body { height: 100%; overflow: hidden; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Nav ─────────────────────────────────────────── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 48px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .nav-brand {
+            font-size: .9rem;
+            font-weight: 800;
+            background: var(--accent-g);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .8rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: color .15s, background .15s;
+        }
+        .nav-links a:hover { color: var(--text); background: var(--border); }
+        .nav-links a.active { color: var(--cyan); }
+
+        /* ── Breadcrumb ──────────────────────────────────── */
+        .page-breadcrumb {
+            padding: 6px 20px;
+            font-size: .75rem;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .page-breadcrumb a { color: var(--muted); text-decoration: none; }
+        .page-breadcrumb a:hover { color: var(--text); }
+        .sep { margin: 0 6px; }
+        .crumb-current { color: var(--text); }
+
+        /* ── Page header ─────────────────────────────────── */
+        .page-header {
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .page-header h1 { font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+        .page-header p  { color: var(--muted); font-size: .82rem; line-height: 1.5; }
+
+        /* ── Options row ─────────────────────────────────── */
+        .options-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .opt-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .opt-btn {
+            height: 26px;
+            padding: 0 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            font-size: .77rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color .12s, background .12s, border-color .12s;
+        }
+        .opt-btn:hover { color: var(--text); background: var(--border); }
+        .opt-btn.active {
+            color: var(--purple);
+            background: rgba(168,85,247,.1);
+            border-color: rgba(168,85,247,.3);
+        }
+        .opt-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+        .opt-sep { width: 1px; height: 16px; background: var(--border2); flex-shrink: 0; }
+        /* Scope row: only visible in encode mode */
+        .scope-group { display: flex; align-items: center; gap: 6px; }
+        .scope-group.hidden { display: none; }
+
+        /* ── Toolbar ─────────────────────────────────────── */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .tb-sep { width: 1px; height: 18px; background: var(--border2); margin: 0 4px; flex-shrink: 0; }
+        .tb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            height: 28px;
+            padding: 0 10px;
+            border: none;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--muted);
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color .12s, background .12s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .tb-btn:hover { color: var(--text); background: var(--border); }
+        .tb-btn.primary {
+            background: rgba(168,85,247,.15);
+            color: var(--purple);
+            border: 1px solid rgba(168,85,247,.3);
+        }
+        .tb-btn.primary:hover { background: rgba(168,85,247,.25); color: #c084fc; }
+        .tb-btn.secondary {
+            background: rgba(34,211,238,.1);
+            color: var(--cyan);
+            border: 1px solid rgba(34,211,238,.25);
+        }
+        .tb-btn.secondary:hover { background: rgba(34,211,238,.18); }
+        .tb-btn.danger:hover { color: var(--red); background: rgba(239,68,68,.1); }
+        .tb-right { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+        button:focus-visible, .tb-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+        /* ── Banners ─────────────────────────────────────── */
+        .error-banner {
+            display: none;
+            padding: 7px 18px;
+            background: rgba(239,68,68,.08);
+            border-bottom: 1px solid rgba(239,68,68,.2);
+            color: var(--red);
+            font-size: .82rem;
+            flex-shrink: 0;
+            word-break: break-word;
+        }
+        .error-banner.visible { display: block; }
+        .success-banner {
+            display: none;
+            padding: 6px 18px;
+            background: rgba(34,197,94,.07);
+            border-bottom: 1px solid rgba(34,197,94,.15);
+            color: var(--green);
+            font-size: .8rem;
+            flex-shrink: 0;
+            align-items: center;
+            gap: 6px;
+        }
+        .success-banner.visible { display: flex; }
+
+        /* ── Editor layout ────────────────────────────────── */
+        .editor-layout {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .pane-divider { width: 1px; background: var(--border); flex-shrink: 0; }
+        .pane-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 12px;
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .pane-title {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+        }
+        .pane-meta {
+            font-family: var(--font-mono);
+            font-size: .68rem;
+            color: var(--muted);
+        }
+        textarea {
+            flex: 1;
+            width: 100%;
+            background: var(--bg);
+            color: var(--text);
+            border: none;
+            outline: none;
+            resize: none;
+            padding: 14px 16px;
+            font-family: var(--font-mono);
+            font-size: .82rem;
+            line-height: 1.7;
+        }
+        textarea::placeholder { color: var(--muted); opacity: .45; }
+        textarea:read-only    { color: rgba(226,226,240,.8); }
+        ::-webkit-scrollbar       { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+        /* ── Status bar ──────────────────────────────────── */
+        .status-bar {
+            flex-shrink: 0;
+            padding: 4px 18px;
+            background: var(--surface2);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: .7rem;
+            font-family: var(--font-mono);
+            color: var(--muted);
+            flex-wrap: wrap;
+        }
+        .stat-sep { color: var(--border2); }
+
+        /* ── Toast ───────────────────────────────────────── */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(12px);
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: .82rem;
+            color: var(--text);
+            opacity: 0;
+            transition: opacity .2s, transform .2s;
+            pointer-events: none;
+            z-index: 999;
+            white-space: nowrap;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ── Mobile tabs ─────────────────────────────────── */
+        .mobile-tabs {
+            display: none;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            flex-shrink: 0;
+        }
+        .mob-tab {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: .83rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-top: 2px solid transparent;
+            margin-top: -1px;
+            transition: color .15s, border-color .15s;
+            font-family: inherit;
+        }
+        .mob-tab.active   { color: var(--cyan); border-top-color: var(--cyan); }
+        .mob-tab:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+        /* ── Responsive ──────────────────────────────────── */
+        @media (max-width: 700px) {
+            .mobile-tabs  { display: flex; }
+            .editor-layout { flex-direction: column; }
+            .pane-divider  { width: 100%; height: 1px; }
+            .pane          { display: none; }
+            .pane.mob-visible { display: flex; }
+            .toolbar { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="nav-brand">Ravionus</a>
+    <div class="nav-links">
+        <a href="../../learn/">✨ Learn</a>
+        <a href="../../tools/" class="active">🛠️ Tools</a>
+        <a href="../../playground/">🧪 Playgrounds</a>
+    </div>
+</nav>
+
+<div class="page-breadcrumb">
+    <a href="/">Ravionus</a>
+    <span class="sep">/</span>
+    <a href="../../tools/">Dev Tools</a>
+    <span class="sep">/</span>
+    <span class="crumb-current">HTML Entity Encoder</span>
+</div>
+
+<header class="page-header">
+    <h1>HTML Entity Encoder / Decoder</h1>
+    <p>Encode special characters to HTML entities, or decode entities back to plain text. Choose between named (<code>&amp;lt;</code>), decimal (<code>&amp;#60;</code>), and hex (<code>&amp;#x3C;</code>) styles.</p>
+</header>
+
+<!-- Options row (style + scope controls) -->
+<div class="options-row">
+    <span class="opt-label">Style</span>
+    <button class="opt-btn active" data-style="named"   title="Use named entities: &amp;lt; &amp;amp; &amp;copy;" aria-pressed="true" >Named</button>
+    <button class="opt-btn"        data-style="decimal" title="Use decimal numeric entities: &amp;#60; &amp;#38;" aria-pressed="false">Decimal</button>
+    <button class="opt-btn"        data-style="hex"     title="Use hex numeric entities: &amp;#x3C; &amp;#x26;"  aria-pressed="false">Hex</button>
+    <div class="opt-sep"></div>
+    <div class="scope-group" id="scopeGroup">
+        <span class="opt-label">Scope</span>
+        <button class="opt-btn active" data-scope="essential" title="Encode only &lt; &gt; &amp; &quot; &#39;" aria-pressed="true">Essential</button>
+        <button class="opt-btn"        data-scope="all"       title="Also encode all non-ASCII characters"     aria-pressed="false">All non-ASCII</button>
+    </div>
+</div>
+
+<!-- Action toolbar -->
+<div class="toolbar">
+    <button id="btnEncode" class="tb-btn primary"   title="Encode input to HTML entities (Ctrl+Enter)" aria-label="Encode to HTML entities">⬆ Encode</button>
+    <button id="btnDecode" class="tb-btn secondary" title="Decode HTML entities to plain text"         aria-label="Decode HTML entities">⬇ Decode</button>
+    <div class="tb-sep"></div>
+    <button id="btnSample" class="tb-btn"           title="Load a sample snippet">🧪 Sample</button>
+    <div class="tb-right">
+        <button id="btnCopy"     class="tb-btn" title="Copy output to clipboard">📋 Copy</button>
+        <button id="btnDownload" class="tb-btn" title="Download output as a file">⬇ Download</button>
+        <div class="tb-sep"></div>
+        <button id="btnClear" class="tb-btn danger" title="Clear both input and output">✕ Clear</button>
+    </div>
+</div>
+
+<!-- Error banner -->
+<div class="error-banner" id="errorBanner" role="alert" aria-live="assertive"></div>
+
+<!-- Success banner -->
+<div class="success-banner" id="successBanner" aria-live="polite"></div>
+
+<!-- Split-pane editor -->
+<div class="editor-layout">
+
+    <div class="pane mob-visible" id="inputPane">
+        <div class="pane-header">
+            <span class="pane-title">Input</span>
+            <span class="pane-meta" id="inMeta"></span>
+        </div>
+        <textarea id="inputArea"
+            aria-label="Text or HTML to process"
+            placeholder="Paste text to encode, or HTML entities to decode…
+Or use 🧪 Sample to load an example."
+            spellcheck="false"></textarea>
+    </div>
+
+    <div class="pane-divider"></div>
+
+    <div class="pane" id="outputPane">
+        <div class="pane-header">
+            <span class="pane-title">Output</span>
+            <span class="pane-meta" id="outMeta"></span>
+        </div>
+        <textarea id="outputArea"
+            aria-label="Encoded or decoded output — read-only"
+            placeholder="Result appears here…"
+            readonly
+            spellcheck="false"></textarea>
+    </div>
+
+</div>
+
+<!-- Status bar -->
+<div class="status-bar">
+    <span id="statMode">—</span>
+    <span class="stat-sep">·</span>
+    <span>In: <span id="statIn">—</span></span>
+    <span class="stat-sep">·</span>
+    <span>Out: <span id="statOut">—</span></span>
+    <span class="stat-sep">·</span>
+    <span>Entities: <span id="statCount">—</span></span>
+</div>
+
+<!-- Mobile tabs -->
+<div class="mobile-tabs">
+    <button class="mob-tab active" id="tabInput"  title="Switch to input panel">📥 Input</button>
+    <button class="mob-tab"        id="tabOutput" title="Switch to output panel">📤 Output</button>
+</div>
+
+<!-- Toast -->
+<div id="toast" aria-live="polite" role="status"></div>
+
+<script>
+(function () {
+'use strict';
+
+// ── Constants ──────────────────────────────────────────────────────────────
+var STORAGE_KEY = 'ravionus_tool_html-entity';
+
+// Named entity map (most-common + web-safe subset; sorted for readability)
+var NAMED_MAP = {
+    // Must-encode
+    '&':  '&amp;',   '<':  '&lt;',    '>':  '&gt;',
+    '"':  '&quot;',  "'":  '&apos;',
+    // Typography & punctuation
+    '\u00A0': '&nbsp;',
+    '\u00A1': '&iexcl;', '\u00A2': '&cent;',   '\u00A3': '&pound;',
+    '\u00A4': '&curren;','\u00A5': '&yen;',    '\u00A6': '&brvbar;',
+    '\u00A7': '&sect;',  '\u00A8': '&uml;',    '\u00A9': '&copy;',
+    '\u00AA': '&ordf;',  '\u00AB': '&laquo;',  '\u00AC': '&not;',
+    '\u00AE': '&reg;',   '\u00AF': '&macr;',   '\u00B0': '&deg;',
+    '\u00B1': '&plusmn;','\u00B2': '&sup2;',   '\u00B3': '&sup3;',
+    '\u00B4': '&acute;', '\u00B5': '&micro;',  '\u00B6': '&para;',
+    '\u00B7': '&middot;','\u00B8': '&cedil;',  '\u00B9': '&sup1;',
+    '\u00BA': '&ordm;',  '\u00BB': '&raquo;',  '\u00BC': '&frac14;',
+    '\u00BD': '&frac12;','\u00BE': '&frac34;', '\u00BF': '&iquest;',
+    '\u00D7': '&times;', '\u00F7': '&divide;',
+    '\u00E9': '&eacute;','\u00E8': '&egrave;', '\u00EA': '&ecirc;',
+    '\u00EB': '&euml;',  '\u00E0': '&agrave;', '\u00E2': '&acirc;',
+    '\u00E4': '&auml;',  '\u00E5': '&aring;',  '\u00E6': '&aelig;',
+    '\u00E7': '&ccedil;','\u00F1': '&ntilde;', '\u00F3': '&oacute;',
+    '\u00F4': '&ocirc;', '\u00F6': '&ouml;',   '\u00FA': '&uacute;',
+    '\u00FC': '&uuml;',  '\u00DF': '&szlig;',
+    '\u2013': '&ndash;', '\u2014': '&mdash;',  '\u2018': '&lsquo;',
+    '\u2019': '&rsquo;', '\u201C': '&ldquo;',  '\u201D': '&rdquo;',
+    '\u2026': '&hellip;','\u2022': '&bull;',   '\u2032': '&prime;',
+    '\u20AC': '&euro;',  '\u2122': '&trade;',  '\u2192': '&rarr;',
+    '\u2190': '&larr;',  '\u2194': '&harr;',   '\u2191': '&uarr;',
+    '\u2193': '&darr;',  '\u21D2': '&rArr;',   '\u21D0': '&lArr;',
+    '\u2260': '&ne;',    '\u2264': '&le;',      '\u2265': '&ge;',
+    '\u00BC': '&frac14;','\u00BD': '&frac12;', '\u2153': '&#x2153;',
+    '\u2154': '&#x2154;'
+};
+
+// ── State ──────────────────────────────────────────────────────────────────
+var style = 'named';
+var scope = 'essential';
+var lastMode = 'encode';
+var saveTimer  = null;
+var toastTimer = null;
+
+// ── DOM refs ───────────────────────────────────────────────────────────────
+var inputArea     = document.getElementById('inputArea');
+var outputArea    = document.getElementById('outputArea');
+var errorBanner   = document.getElementById('errorBanner');
+var successBanner = document.getElementById('successBanner');
+var statMode      = document.getElementById('statMode');
+var statIn        = document.getElementById('statIn');
+var statOut       = document.getElementById('statOut');
+var statCount     = document.getElementById('statCount');
+var inMeta        = document.getElementById('inMeta');
+var outMeta       = document.getElementById('outMeta');
+var toast         = document.getElementById('toast');
+var scopeGroup    = document.getElementById('scopeGroup');
+
+// ── Encoding ───────────────────────────────────────────────────────────────
+function encodeEntities(text) {
+    var result = '';
+    var count  = 0;
+    var i = 0;
+    while (i < text.length) {
+        var ch   = text[i];
+        var code = text.charCodeAt(i);
+        // Handle surrogate pairs (emoji, etc.)
+        if (code >= 0xD800 && code <= 0xDBFF && i + 1 < text.length) {
+            var lo = text.charCodeAt(i + 1);
+            if (lo >= 0xDC00 && lo <= 0xDFFF) {
+                code = 0x10000 + (code - 0xD800) * 0x400 + (lo - 0xDC00);
+                ch   = text.slice(i, i + 2);
+                i++;
+            }
+        }
+        var mustEncode  = '<>&"\'';
+        var isMust      = mustEncode.indexOf(text[i]) !== -1;
+        var isHighChar  = code > 127;
+        var shouldEncode = isMust || (scope === 'all' && isHighChar);
+        if (shouldEncode) {
+            count++;
+            if (style === 'named' && NAMED_MAP[ch]) {
+                result += NAMED_MAP[ch];
+            } else if (style === 'named' && ch.length === 1 && NAMED_MAP[ch]) {
+                result += NAMED_MAP[ch];
+            } else if (style === 'hex') {
+                result += '&#x' + code.toString(16).toUpperCase() + ';';
+            } else {
+                // decimal (default fallback when no named entity)
+                result += '&#' + code + ';';
+            }
+        } else {
+            result += text[i];
+        }
+        i++;
+    }
+    return { text: result, count: count };
+}
+
+function decodeEntities(text) {
+    // Use the browser's native parser — safe because we only read textContent
+    var div = document.createElement('div');
+    div.innerHTML = text;
+    var decoded = div.textContent;
+    // Count entity occurrences in original
+    var count = (text.match(/&[a-zA-Z#][^;]{0,10};/g) || []).length;
+    return { text: decoded, count: count };
+}
+
+// ── Core actions ───────────────────────────────────────────────────────────
+function doEncode() {
+    hideAll();
+    var input = inputArea.value;
+    if (!input.trim()) {
+        showError('Nothing to encode — paste some text first.');
+        return;
+    }
+    lastMode = 'encode';
+    var res = encodeEntities(input);
+    outputArea.value = res.text;
+    updateStats('Encoded', input, res.text, res.count);
+    showBanner('✓ Encoded ' + res.count + ' character' + (res.count === 1 ? '' : 's') + ' to HTML entities');
+    updateMeta();
+    schedSave();
+}
+
+function doDecode() {
+    hideAll();
+    var input = inputArea.value;
+    if (!input.trim()) {
+        showError('Nothing to decode — paste HTML with entities first.');
+        return;
+    }
+    lastMode = 'decode';
+    var res = decodeEntities(input);
+    outputArea.value = res.text;
+    updateStats('Decoded', input, res.text, res.count);
+    showBanner('✓ Decoded ' + res.count + ' entit' + (res.count === 1 ? 'y' : 'ies'));
+    updateMeta();
+    schedSave();
+}
+
+// ── Stats ──────────────────────────────────────────────────────────────────
+function updateStats(modeLabel, input, output, count) {
+    statMode.textContent  = '⚡ ' + modeLabel;
+    statIn.textContent    = input.length  + ' ch';
+    statOut.textContent   = output.length + ' ch';
+    statCount.textContent = count;
+}
+
+function updateMeta() {
+    inMeta.textContent  = inputArea.value  ? inputArea.value.length  + ' ch' : '';
+    outMeta.textContent = outputArea.value ? outputArea.value.length + ' ch' : '';
+}
+
+// ── Banners / toast ────────────────────────────────────────────────────────
+function showError(msg)    { errorBanner.textContent = msg; errorBanner.classList.add('visible'); }
+function hideBanner()      { successBanner.classList.remove('visible'); }
+function hideError()       { errorBanner.classList.remove('visible'); }
+function hideAll()         { hideError(); hideBanner(); }
+function showBanner(msg)   { successBanner.textContent = msg; successBanner.classList.add('visible'); }
+
+function showToast(msg) {
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.classList.add('show');
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2500);
+}
+
+// ── Style buttons ──────────────────────────────────────────────────────────
+document.querySelectorAll('[data-style]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        style = btn.getAttribute('data-style');
+        document.querySelectorAll('[data-style]').forEach(function (b) {
+            var on = b === btn;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        schedSave();
+    });
+});
+
+// ── Scope buttons ──────────────────────────────────────────────────────────
+document.querySelectorAll('[data-scope]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        scope = btn.getAttribute('data-scope');
+        document.querySelectorAll('[data-scope]').forEach(function (b) {
+            var on = b === btn;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        schedSave();
+    });
+});
+
+// ── Keyboard shortcut ──────────────────────────────────────────────────────
+inputArea.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        doEncode();
+    }
+});
+
+// ── Toolbar buttons ────────────────────────────────────────────────────────
+document.getElementById('btnEncode').addEventListener('click', doEncode);
+document.getElementById('btnDecode').addEventListener('click', doDecode);
+
+document.getElementById('btnCopy').addEventListener('click', function () {
+    var text = outputArea.value;
+    if (!text) { showToast('Nothing to copy — process some text first'); return; }
+    navigator.clipboard.writeText(text).then(function () {
+        showToast('✓ Copied to clipboard');
+    }).catch(function () {
+        showToast('Copy failed — please copy manually');
+    });
+});
+
+document.getElementById('btnDownload').addEventListener('click', function () {
+    var text = outputArea.value;
+    if (!text) { showToast('Nothing to download — process some text first'); return; }
+    var blob = new Blob([text], { type: 'text/plain' });
+    var url  = URL.createObjectURL(blob);
+    var a    = document.createElement('a');
+    a.href = url;
+    a.download = lastMode === 'encode' ? 'encoded.html' : 'decoded.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✓ Downloading…');
+});
+
+document.getElementById('btnClear').addEventListener('click', function () {
+    inputArea.value  = '';
+    outputArea.value = '';
+    hideAll();
+    statMode.textContent  = '—';
+    statIn.textContent    = '—';
+    statOut.textContent   = '—';
+    statCount.textContent = '—';
+    inMeta.textContent    = '';
+    outMeta.textContent   = '';
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    showToast('✓ Cleared');
+});
+
+// ── Samples ────────────────────────────────────────────────────────────────
+var SAMPLE_ENCODE = '<scr\x69pt>alert("Hello & welcome!");<\/script>\n© 2025 — Ravionus™\nPrice: £49.99 · ¥6,500 · €44.99';
+var SAMPLE_DECODE = '&lt;script&gt;alert(&quot;Hello &amp; welcome!&quot;);&lt;/script&gt;\n&copy; 2025 &mdash; Ravionus&trade;\nPrice: &pound;49.99 &middot; &yen;6,500 &middot; &euro;44.99';
+
+var decodeNext = false;
+document.getElementById('btnSample').addEventListener('click', function () {
+    decodeNext = !decodeNext;
+    if (decodeNext) {
+        inputArea.value = SAMPLE_DECODE;
+        showToast('✓ Decode sample loaded — click ⬇ Decode');
+    } else {
+        inputArea.value = SAMPLE_ENCODE;
+        showToast('✓ Encode sample loaded — click ⬆ Encode');
+    }
+    outputArea.value = '';
+    hideAll();
+    updateMeta();
+    schedSave();
+});
+
+// ── localStorage ──────────────────────────────────────────────────────────
+function schedSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveState, 800);
+}
+function saveState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            input: inputArea.value,
+            style: style,
+            scope: scope
+        }));
+    } catch (e) {}
+}
+function loadState() {
+    try {
+        var s = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (!s) return;
+        if (s.input) { inputArea.value = s.input; updateMeta(); }
+        if (s.style) {
+            style = s.style;
+            document.querySelectorAll('[data-style]').forEach(function (b) {
+                var on = b.getAttribute('data-style') === s.style;
+                b.classList.toggle('active', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+        if (s.scope) {
+            scope = s.scope;
+            document.querySelectorAll('[data-scope]').forEach(function (b) {
+                var on = b.getAttribute('data-scope') === s.scope;
+                b.classList.toggle('active', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+    } catch (e) {}
+}
+
+// ── Input change ──────────────────────────────────────────────────────────
+inputArea.addEventListener('input', function () {
+    hideError();
+    updateMeta();
+    schedSave();
+});
+
+// ── Mobile tabs ───────────────────────────────────────────────────────────
+document.getElementById('tabInput').addEventListener('click', function () {
+    document.getElementById('inputPane').classList.add('mob-visible');
+    document.getElementById('outputPane').classList.remove('mob-visible');
+    document.getElementById('tabInput').classList.add('active');
+    document.getElementById('tabOutput').classList.remove('active');
+});
+document.getElementById('tabOutput').addEventListener('click', function () {
+    document.getElementById('outputPane').classList.add('mob-visible');
+    document.getElementById('inputPane').classList.remove('mob-visible');
+    document.getElementById('tabOutput').classList.add('active');
+    document.getElementById('tabInput').classList.remove('active');
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────
+loadState();
+// Always show both panes on desktop
+if (window.innerWidth > 700) {
+    document.getElementById('outputPane').classList.add('mob-visible');
+}
+
+}());
+</script>
+</body>
+</html>
