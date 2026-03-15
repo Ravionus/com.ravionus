@@ -79,6 +79,7 @@ jobs:
       text_stats:     ${{ steps.filter.outputs.text_stats }}
       cron:           ${{ steps.filter.outputs.cron }}
       api_builder:    ${{ steps.filter.outputs.api_builder }}
+      code_formatter: ${{ steps.filter.outputs.code_formatter }}
     steps:
       - uses: actions/checkout@v4
 
@@ -180,6 +181,9 @@ jobs:
             api_builder:
               - 'playground/api-builder/**'
               - 'tests/api-builder.spec.js'
+            code_formatter:
+              - 'playground/code-formatter/**'
+              - 'tests/code-formatter.spec.js'
 
   # ── Job 1: Learn — catalog + topic tests ─────────────────────────────────
   # Runs when:  learn/** or its spec files change
@@ -1357,13 +1361,50 @@ jobs:
           path: tests/playwright-report/
           retention-days: 7
 
-  # ── Job 39: Deploy to GitHub Pages ────────────────────────────────────────
+  # ── Job 39: Code Formatter tests ────────────────────────────────────────────
+  test_code_formatter:
+    name: "Test › Code Formatter"
+    needs: changes
+    if: >-
+      needs.changes.outputs.code_formatter == 'true' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install test dependencies
+        run: npm install
+        working-directory: tests
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+        working-directory: tests
+
+      - name: Run Code Formatter tests
+        run: npx playwright test code-formatter.spec.js
+        working-directory: tests
+
+      - name: Upload report on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: code-formatter-report
+          path: tests/playwright-report/
+          retention-days: 7
+
+  # ── Job 40: Deploy to GitHub Pages ────────────────────────────────────────
   # Only runs on pushes to main.
   # Requires ALL test jobs to have PASSED or been SKIPPED.
   # On main, no jobs are skipped (all run as pre-deploy gate), so all must pass.
   deploy:
     name: Deploy
-    needs: [test_learn, test_json, test_markdown, test_base64, test_url, test_csv, test_yaml, test_regex, test_formatter, test_hash, test_diff, test_uuid, test_password, test_lorem, test_case, test_color, test_minifier, test_qr, test_syntax, test_repl, test_css_layout, test_json_explorer, test_git_sim, test_color_palette, test_datetime, test_base_converter, test_password_gen, test_jwt, test_text_stats, test_cron, test_api_builder]
+    needs: [test_learn, test_json, test_markdown, test_base64, test_url, test_csv, test_yaml, test_regex, test_formatter, test_hash, test_diff, test_uuid, test_password, test_lorem, test_case, test_color, test_minifier, test_qr, test_syntax, test_repl, test_css_layout, test_json_explorer, test_git_sim, test_color_palette, test_datetime, test_base_converter, test_password_gen, test_jwt, test_text_stats, test_cron, test_api_builder, test_code_formatter]
     if: >-
       always() &&
       github.event_name == 'push' &&
@@ -1398,7 +1439,8 @@ jobs:
       (needs.test_jwt.result               == 'success' || needs.test_jwt.result               == 'skipped') &&
       (needs.test_text_stats.result         == 'success' || needs.test_text_stats.result         == 'skipped') &&
       (needs.test_cron.result                == 'success' || needs.test_cron.result                == 'skipped') &&
-      (needs.test_api_builder.result           == 'success' || needs.test_api_builder.result           == 'skipped')
+      (needs.test_api_builder.result           == 'success' || needs.test_api_builder.result           == 'skipped') &&
+      (needs.test_code_formatter.result          == 'success' || needs.test_code_formatter.result          == 'skipped')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
