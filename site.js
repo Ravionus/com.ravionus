@@ -120,7 +120,7 @@
   // ── Build & inject footer ────────────────────────────────────────────────
   var footer = document.createElement('footer');
   footer.className = 'site-footer';
-  footer.innerHTML = 'Made with ❤\uFE0F by <a href="/">Ravionus</a> &nbsp;&middot;&nbsp; &copy; 2026 Raviprasad';
+  footer.innerHTML = 'Crafted by <a href="/">Ravionus</a> &nbsp;&middot;&nbsp; &copy; 2026 Raviprasad';
 
   document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(footer);
