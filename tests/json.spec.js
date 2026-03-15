@@ -21,7 +21,7 @@ test.describe('JSON Formatter — smoke', () => {
       if (m.type() === 'error') errors.push(m.text().slice(0, 140));
     });
     await page.goto('/tools/json/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
     expect(errors, `Errors on load: ${errors.join(' | ')}`).toHaveLength(0);
   });
 

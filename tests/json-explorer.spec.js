@@ -34,7 +34,7 @@ test.describe('JSON Explorer — smoke', () => {
         const errors = [];
         page.on('pageerror', e => errors.push(e.message));
         await page.goto(PAGE);
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('load');
         expect(errors.filter(e => !e.includes('favicon') && !e.includes('net::ERR'))).toHaveLength(0);
     });
 });
@@ -372,7 +372,7 @@ test.describe('JSON Explorer — features', () => {
         await page.fill('#jsonInput', '{"persist":"yes"}');
         await page.waitForTimeout(1000); // debounced save
         await page.reload();
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('load');
         const val = await page.locator('#jsonInput').inputValue();
         expect(val).toContain('persist');
     });
@@ -383,7 +383,7 @@ test.describe('JSON Explorer — features', () => {
         await page.click('#btnParse');
         await page.waitForTimeout(1000);
         await page.reload();
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('load');
         await expect(page.locator('.tree-root')).toBeVisible();
     });
 
