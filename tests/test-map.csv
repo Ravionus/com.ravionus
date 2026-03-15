@@ -1,0 +1,201 @@
+spec_file,feature,area_type,describe_group,tier,test_count
+api-builder.spec.js,API Request Builder,playground,API Request Builder — smoke,smoke,4
+api-builder.spec.js,API Request Builder,playground,API Request Builder — features,features,25
+base-converter.spec.js,Base Converter,playground,Base Converter — smoke,smoke,9
+base-converter.spec.js,Base Converter,playground,Base Converter — decimal conversions,features,9
+base-converter.spec.js,Base Converter,playground,Base Converter — binary input,features,4
+base-converter.spec.js,Base Converter,playground,Base Converter — hex input,features,5
+base-converter.spec.js,Base Converter,playground,Base Converter — octal input,features,3
+base-converter.spec.js,Base Converter,playground,Base Converter — custom base,features,4
+base-converter.spec.js,Base Converter,playground,Base Converter — bit widths,features,7
+base-converter.spec.js,Base Converter,playground,Base Converter — error handling,features,4
+base-converter.spec.js,Base Converter,playground,Base Converter — toolbar,features,6
+base-converter.spec.js,Base Converter,playground,Base Converter — clipboard,features,5
+base-converter.spec.js,Base Converter,playground,Base Converter — status bar,features,3
+base-converter.spec.js,Base Converter,playground,Base Converter — localStorage,features,3
+base-converter.spec.js,Base Converter,playground,Base Converter — round-trip,features,3
+base64.spec.js,Base64 Encoder/Decoder,tool,Base64 Encoder/Decoder — smoke,smoke,3
+base64.spec.js,Base64 Encoder/Decoder,tool,Base64 Encoder/Decoder — features,features,20
+case.spec.js,Case Converter,tool,Case Converter — smoke,smoke,4
+case.spec.js,Case Converter,tool,Case Converter — features,features,29
+catalog.spec.js,Catalog page,learn,Catalog page — unauthenticated,features,13
+code-formatter.spec.js,Code Formatter,playground,Code Formatter — smoke,smoke,4
+code-formatter.spec.js,Code Formatter,playground,Code Formatter — features,features,16
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — smoke,smoke,7
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — layout,features,16
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — initial palette,features,7
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — generate,features,2
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — color count,features,7
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — harmony,features,8
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — base color,features,3
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — lock,features,4
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — WCAG,features,4
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — sort,features,3
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — exports,features,7
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — reset,features,4
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — large swatches,features,2
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — localStorage,features,3
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — mobile tabs,features,4
+color-palette.spec.js,Color Palette Generator,playground,Color Palette Generator — palette info,features,4
+color.spec.js,Color Converter,tool,Color Converter — smoke,smoke,4
+color.spec.js,Color Converter,tool,Color Converter — features,features,22
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — smoke,smoke,14
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — validation,features,11
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — descriptions,features,15
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — next run times,features,7
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — presets,features,6
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — toolbar,features,7
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — fields breakdown,features,5
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — localStorage,features,3
+cron.spec.js,Cron Expression Parser,tool,Cron Expression Parser — mobile tabs,features,5
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — smoke,smoke,4
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — HTML editor,features,4
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — CSS editor,features,4
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — preview iframe,features,9
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — toolbar,features,7
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — Clear All,features,3
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — examples,features,7
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — status bar,features,3
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — localStorage,features,2
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — mobile tabs,features,3
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — copy,features,3
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — cursor position,features,2
+css-layout.spec.js,CSS Layout Playground,playground,CSS Layout Playground — navigation,features,3
+csv.spec.js,CSV Tool,tool,CSV Tool — Smoke,smoke,3
+csv.spec.js,CSV Tool,tool,CSV Tool — CSV → JSON,features,7
+csv.spec.js,CSV Tool,tool,CSV Tool — JSON → CSV,features,7
+csv.spec.js,CSV Tool,tool,CSV Tool — Headers toggle,features,4
+csv.spec.js,CSV Tool,tool,CSV Tool — Delimiter,features,3
+csv.spec.js,CSV Tool,tool,CSV Tool — Sample button,features,2
+csv.spec.js,CSV Tool,tool,CSV Tool — Clear,features,2
+csv.spec.js,CSV Tool,tool,CSV Tool — Auto-save,features,1
+csv.spec.js,CSV Tool,tool,CSV Tool — Mobile tabs,features,3
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — smoke,smoke,8
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — tab navigation,features,7
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Timestamp,features,12
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Calculator,features,13
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Timezone,features,11
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Formats,features,12
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Fill Now,features,5
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — Clear,features,3
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — clipboard,features,3
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — status bar,features,2
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — localStorage,features,3
+datetime.spec.js,Date/Time Utilities,playground,Date/Time Utilities — error handling,features,2
+diff.spec.js,Diff Checker,tool,Diff Checker — smoke,smoke,4
+diff.spec.js,Diff Checker,tool,Diff Checker — features,features,14
+formatter.spec.js,Code Formatter,tool,Code Formatter — Smoke,smoke,4
+formatter.spec.js,Code Formatter,tool,Code Formatter — JavaScript,features,4
+formatter.spec.js,Code Formatter,tool,Code Formatter — HTML,features,2
+formatter.spec.js,Code Formatter,tool,Code Formatter — CSS,features,2
+formatter.spec.js,Code Formatter,tool,Code Formatter — JSON,features,4
+formatter.spec.js,Code Formatter,tool,Code Formatter — Empty input,features,1
+formatter.spec.js,Code Formatter,tool,Code Formatter — Language switching,features,5
+formatter.spec.js,Code Formatter,tool,Code Formatter — Options,features,17
+git-sim.spec.js,Git Simulator,playground,Git Simulator — smoke,smoke,5
+git-sim.spec.js,Git Simulator,playground,Git Simulator — layout,features,13
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git init,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git commit,features,4
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git status,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git branch,features,4
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git checkout,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git switch,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git merge,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git log,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git tag,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git stash,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git rebase,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git reset,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — errors,features,4
+git-sim.spec.js,Git Simulator,playground,Git Simulator — help & clear,features,4
+git-sim.spec.js,Git Simulator,playground,Git Simulator — scenarios,features,5
+git-sim.spec.js,Git Simulator,playground,Git Simulator — graph rendering,features,6
+git-sim.spec.js,Git Simulator,playground,Git Simulator — command history,features,2
+git-sim.spec.js,Git Simulator,playground,Git Simulator — reset,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — localStorage,features,1
+git-sim.spec.js,Git Simulator,playground,Git Simulator — git remote,features,3
+git-sim.spec.js,Git Simulator,playground,Git Simulator — show & cherry-pick,features,1
+git-sim.spec.js,Git Simulator,playground,Git Simulator — copy log,features,1
+hash.spec.js,Hash Generator,tool,Hash Generator — Smoke,smoke,6
+hash.spec.js,Hash Generator,tool,Hash Generator — Text hashing,features,7
+hash.spec.js,Hash Generator,tool,Hash Generator — Empty input,features,3
+hash.spec.js,Hash Generator,tool,Hash Generator — Format toggle,features,4
+hash.spec.js,Hash Generator,tool,Hash Generator — Sample,features,2
+hash.spec.js,Hash Generator,tool,Hash Generator — Clear,features,3
+hash.spec.js,Hash Generator,tool,Hash Generator — Auto-save,features,3
+hash.spec.js,Hash Generator,tool,Hash Generator — Compare,features,4
+hash.spec.js,Hash Generator,tool,Hash Generator — Input modes,features,3
+hash.spec.js,Hash Generator,tool,Hash Generator — Mobile tabs,features,3
+hash.spec.js,Hash Generator,tool,Hash Generator — Download,features,1
+hash.spec.js,Hash Generator,tool,Hash Generator — Edge cases,features,4
+html-entity.spec.js,HTML Entity Encoder/Decoder,tool,HTML Entity Encoder/Decoder — smoke,smoke,4
+html-entity.spec.js,HTML Entity Encoder/Decoder,tool,HTML Entity Encoder/Decoder — features,features,18
+json-explorer.spec.js,JSON Explorer,playground,JSON Explorer — smoke,smoke,5
+json-explorer.spec.js,JSON Explorer,playground,JSON Explorer — features,features,45
+json.spec.js,JSON Formatter,tool,JSON Formatter — smoke,smoke,3
+json.spec.js,JSON Formatter,tool,JSON Formatter — features,features,23
+jwt.spec.js,Smoke,tool,Smoke,smoke,12
+jwt.spec.js,Core Decode,tool,Core Decode,features,12
+jwt.spec.js,Claims Parsing,tool,Claims Parsing,features,7
+jwt.spec.js,Expiry Status,tool,Expiry Status,features,6
+jwt.spec.js,Error Handling,tool,Error Handling,features,8
+jwt.spec.js,Toolbar,tool,Toolbar,features,6
+jwt.spec.js,Output Format,tool,Output Format,features,4
+jwt.spec.js,localStorage,tool,localStorage,features,3
+lorem.spec.js,Lorem Ipsum Generator,tool,Lorem Ipsum Generator — smoke,smoke,4
+lorem.spec.js,Lorem Ipsum Generator,tool,Lorem Ipsum Generator — features,features,23
+markdown.spec.js,Markdown Preview,playground,Markdown Preview — smoke,smoke,3
+markdown.spec.js,Markdown Preview,playground,Markdown Preview — features,features,21
+minifier.spec.js,Minifier,tool,Minifier — smoke,smoke,4
+minifier.spec.js,Minifier,tool,Minifier — features,features,32
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — smoke,smoke,11
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — classic,features,20
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — passphrase,features,15
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — PIN,features,17
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — toolbar,features,6
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — strength,features,5
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — tab navigation,features,4
+password-gen.spec.js,Password Generator (Playground),playground,Password Generator (Playground) — localStorage,features,4
+password.spec.js,Password Generator,tool,Password Generator — smoke,smoke,4
+password.spec.js,Password Generator,tool,Password Generator — features,features,20
+qr.spec.js,QR Code Generator,tool,QR Code Generator — smoke,smoke,4
+qr.spec.js,QR Code Generator,tool,QR Code Generator — features,features,25
+regex.spec.js,Regex Tester,tool,Regex Tester — Smoke,smoke,3
+regex.spec.js,Regex Tester,tool,Regex Tester — Basic matching,features,7
+regex.spec.js,Regex Tester,tool,Regex Tester — No match / empty,features,3
+regex.spec.js,Regex Tester,tool,Regex Tester — Invalid regex,features,2
+regex.spec.js,Regex Tester,tool,Regex Tester — Flags,features,5
+regex.spec.js,Regex Tester,tool,Regex Tester — Capture groups,features,3
+regex.spec.js,Regex Tester,tool,Regex Tester — Sample,features,2
+regex.spec.js,Regex Tester,tool,Regex Tester — Clear,features,2
+regex.spec.js,Regex Tester,tool,Regex Tester — Download,features,1
+regex.spec.js,Regex Tester,tool,Regex Tester — Replace mode,features,3
+regex.spec.js,Regex Tester,tool,Regex Tester — Auto-save,features,1
+regex.spec.js,Regex Tester,tool,Regex Tester — Status bar,features,2
+regex.spec.js,Regex Tester,tool,Regex Tester — Edge cases,features,2
+regex.spec.js,Regex Tester,tool,Regex Tester — Mobile tabs,features,3
+repl.spec.js,JavaScript REPL,playground,JavaScript REPL — smoke,smoke,4
+repl.spec.js,JavaScript REPL,playground,JavaScript REPL — features,features,39
+syntax.spec.js,Syntax Highlighter,tool,Syntax Highlighter — smoke,smoke,4
+syntax.spec.js,Syntax Highlighter,tool,Syntax Highlighter — features,features,34
+text-stats.spec.js,Text Statistics,tool,Text Statistics — smoke,smoke,10
+text-stats.spec.js,Text Statistics,tool,Text Statistics — word counting,features,6
+text-stats.spec.js,Text Statistics,tool,Text Statistics — character counting,features,5
+text-stats.spec.js,Text Statistics,tool,"Text Statistics — lines, sentences, paragraphs",features,8
+text-stats.spec.js,Text Statistics,tool,Text Statistics — reading time,features,4
+text-stats.spec.js,Text Statistics,tool,Text Statistics — character breakdown,features,5
+text-stats.spec.js,Text Statistics,tool,Text Statistics — word frequency,features,6
+text-stats.spec.js,Text Statistics,tool,Text Statistics — toolbar,features,8
+text-stats.spec.js,Text Statistics,tool,Text Statistics — unique words,features,3
+text-stats.spec.js,Text Statistics,tool,Text Statistics — input footer,features,2
+text-stats.spec.js,Text Statistics,tool,Text Statistics — localStorage,features,3
+text-stats.spec.js,Text Statistics,tool,Text Statistics — mobile tabs,features,4
+topic.spec.js,Topic page,learn,Topic page — unauthenticated,features,16
+url.spec.js,URL Encoder/Decoder,tool,URL Encoder/Decoder — smoke,smoke,3
+url.spec.js,URL Encoder/Decoder,tool,URL Encoder/Decoder — features,features,23
+uuid.spec.js,UUID Generator,tool,UUID Generator — smoke,smoke,4
+uuid.spec.js,UUID Generator,tool,UUID Generator — features,features,18
+yaml.spec.js,YAML Tool,tool,YAML Tool — Smoke,smoke,3
+yaml.spec.js,YAML Tool,tool,YAML Tool — Validate (valid input),features,9
+yaml.spec.js,YAML Tool,tool,YAML Tool — Validate (invalid input),features,22
+TOTAL,,,"34 spec files, 199 groups",smoke=168 / features=1206,1374
