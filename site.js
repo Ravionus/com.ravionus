@@ -210,4 +210,9 @@
     }
     document.body.appendChild(footer);
   });
+
+  // ── Service worker (PWA offline support) ────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(function () {});
+  }
 }());

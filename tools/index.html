@@ -205,6 +205,49 @@
             box-shadow: 0 8px 36px rgba(168, 85, 247, .18);
         }
 
+        /* ── Search ── */
+        .search-wrap {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 11px 18px 11px 44px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, .15);
+        }
+
+        .search-input::placeholder { color: var(--muted); }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .search-no-results {
+            text-align: center;
+            color: var(--muted);
+            padding: 64px 24px;
+            font-size: 0.95rem;
+        }
+
     </style>
 </head>
 
@@ -222,7 +265,17 @@
         <p>
             Essential utilities for data conversion, formatting, generation, and more. No sign-up, no server calls—everything runs in your browser.
         </p>
+        <div class="search-wrap">
+            <span class="search-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <input type="search" id="cardSearch" class="search-input"
+                   placeholder="Search tools…" autocomplete="off"
+                   aria-label="Filter tools by name or description">
+        </div>
     </section>
+
+    <div id="searchNoResults" class="search-no-results" aria-live="polite" style="display:none">No tools match your search.</div>
 
     <!-- Live Tools -->
     <div class="section">
@@ -481,6 +534,7 @@
 
         </div>
     </div>
+    <script src="/listing-search.js" defer></script>
 </body>
 
 </html>

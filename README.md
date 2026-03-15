@@ -286,6 +286,49 @@ When adding a new tool/playground with slug `my_tool`:
 - **~22 tests per tool** (4 smoke + ~18 feature tests)
 - Total: **~1,370+ tests** across the full suite (doubled across two browsers)
 
+### Coverage by spec
+
+Generated from `tests/test-map.csv` (run `python scripts/generate_test_map.py` to refresh).
+
+| Spec | Feature | Area | Smoke | Feature | Total |
+|---|---|---|---:|---:|---:|
+| catalog.spec.js | Catalog page | learn | 0 | 13 | **13** |
+| topic.spec.js | Topic page | learn | 0 | 16 | **16** |
+| api-builder.spec.js | API Request Builder | playground | 4 | 25 | **29** |
+| base-converter.spec.js | Base Converter | playground | 9 | 56 | **65** |
+| code-formatter.spec.js | Code Formatter | playground | 4 | 16 | **20** |
+| color-palette.spec.js | Color Palette Generator | playground | 7 | 78 | **85** |
+| css-layout.spec.js | CSS Layout Playground | playground | 4 | 50 | **54** |
+| datetime.spec.js | Date/Time Utilities | playground | 8 | 73 | **81** |
+| git-sim.spec.js | Git Simulator | playground | 5 | 75 | **80** |
+| json-explorer.spec.js | JSON Explorer | playground | 5 | 45 | **50** |
+| markdown.spec.js | Markdown Preview | playground | 3 | 21 | **24** |
+| password-gen.spec.js | Password Generator (Playground) | playground | 11 | 71 | **82** |
+| repl.spec.js | JavaScript REPL | playground | 4 | 39 | **43** |
+| base64.spec.js | Base64 Encoder/Decoder | tool | 3 | 20 | **23** |
+| case.spec.js | Case Converter | tool | 4 | 29 | **33** |
+| color.spec.js | Color Converter | tool | 4 | 22 | **26** |
+| cron.spec.js | Cron Expression Parser | tool | 14 | 59 | **73** |
+| csv.spec.js | CSV Tool | tool | 3 | 29 | **32** |
+| diff.spec.js | Diff Checker | tool | 4 | 14 | **18** |
+| formatter.spec.js | Code Formatter | tool | 4 | 35 | **39** |
+| hash.spec.js | Hash Generator | tool | 6 | 37 | **43** |
+| homepage.spec.js | Homepage | tool | 0 | 10 | **10** |
+| html-entity.spec.js | HTML Entity Encoder/Decoder | tool | 4 | 18 | **22** |
+| json.spec.js | JSON Formatter | tool | 3 | 23 | **26** |
+| jwt.spec.js | JWT Decoder | tool | 12 | 46 | **58** |
+| lorem.spec.js | Lorem Ipsum Generator | tool | 4 | 23 | **27** |
+| minifier.spec.js | Minifier | tool | 4 | 32 | **36** |
+| password.spec.js | Password Generator | tool | 4 | 20 | **24** |
+| qr.spec.js | QR Code Generator | tool | 4 | 25 | **29** |
+| regex.spec.js | Regex Tester | tool | 3 | 36 | **39** |
+| syntax.spec.js | Syntax Highlighter | tool | 4 | 34 | **38** |
+| text-stats.spec.js | Text Statistics | tool | 10 | 54 | **64** |
+| url.spec.js | URL Encoder/Decoder | tool | 3 | 23 | **26** |
+| uuid.spec.js | UUID Generator | tool | 4 | 18 | **22** |
+| yaml.spec.js | YAML Tool | tool | 3 | 31 | **34** |
+| | **35 specs** | | **168** | **1,216** | **1,384** |
+
 ### Test anatomy (per spec file)
 ```
 describe('… — smoke')
