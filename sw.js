@@ -12,7 +12,7 @@
  */
 'use strict';
 
-var CACHE = 'rv-v1';
+var CACHE = 'rv-v2';
 
 var PRECACHE = [
   '/',
