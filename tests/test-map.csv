@@ -128,6 +128,7 @@ hash.spec.js,Hash Generator,tool,Hash Generator — Input modes,features,3
 hash.spec.js,Hash Generator,tool,Hash Generator — Mobile tabs,features,3
 hash.spec.js,Hash Generator,tool,Hash Generator — Download,features,1
 hash.spec.js,Hash Generator,tool,Hash Generator — Edge cases,features,4
+homepage.spec.js,Homepage,tool,Homepage — /,features,10
 html-entity.spec.js,HTML Entity Encoder/Decoder,tool,HTML Entity Encoder/Decoder — smoke,smoke,4
 html-entity.spec.js,HTML Entity Encoder/Decoder,tool,HTML Entity Encoder/Decoder — features,features,18
 json-explorer.spec.js,JSON Explorer,playground,JSON Explorer — smoke,smoke,5
@@ -198,4 +199,4 @@ uuid.spec.js,UUID Generator,tool,UUID Generator — features,features,18
 yaml.spec.js,YAML Tool,tool,YAML Tool — Smoke,smoke,3
 yaml.spec.js,YAML Tool,tool,YAML Tool — Validate (valid input),features,9
 yaml.spec.js,YAML Tool,tool,YAML Tool — Validate (invalid input),features,22
-TOTAL,,,"34 spec files, 199 groups",smoke=168 / features=1206,1374
+TOTAL,,,"35 spec files, 200 groups",smoke=168 / features=1216,1384
