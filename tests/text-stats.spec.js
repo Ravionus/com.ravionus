@@ -63,10 +63,10 @@ test.describe('Text Statistics — smoke', () => {
 
     test('nav breadcrumb visible', async ({ page }) => {
         await page.goto(URL);
-        await expect(page.locator('nav')).toBeVisible();
+        await expect(page.locator('nav').first()).toBeVisible();
         await expect(page.locator('nav')).toContainText('Ravionus');
-        await expect(page.locator('nav')).toContainText('Tools');
-        await expect(page.locator('nav')).toContainText('Text Statistics');
+        await expect(page.locator('.page-breadcrumb')).toContainText('Tools');
+        await expect(page.locator('.page-breadcrumb')).toContainText('Text Statistics');
     });
 
     test('text input textarea is visible', async ({ page }) => {

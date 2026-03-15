@@ -54,10 +54,10 @@ test.describe('Smoke', () => {
 
     test('nav breadcrumb visible', async ({ page }) => {
         await page.goto(URL);
-        await expect(page.locator('nav')).toBeVisible();
+        await expect(page.locator('nav').first()).toBeVisible();
         await expect(page.locator('nav')).toContainText('Ravionus');
-        await expect(page.locator('nav')).toContainText('Tools');
-        await expect(page.locator('nav')).toContainText('JWT Decoder');
+        await expect(page.locator('.page-breadcrumb')).toContainText('Tools');
+        await expect(page.locator('.page-breadcrumb')).toContainText('JWT Decoder');
     });
 
     test('JWT token textarea is visible', async ({ page }) => {
