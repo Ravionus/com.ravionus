@@ -57,8 +57,19 @@
     '.site-footer a{color:#a855f7;text-decoration:none}',
     '.site-footer a:hover{text-decoration:underline}',
 
+    /* Hamburger button */
+    '.site-nav .nav-hamburger{display:none;background:none;border:1px solid rgba(255,255,255,0.1);color:#a0a0c0;font-size:1.3rem;cursor:pointer;padding:5px 10px;border-radius:8px;line-height:1;transition:color .2s,background .2s}',
+    '.site-nav .nav-hamburger:hover{color:#e2e2f0;background:#1a1a2e}',
+
     /* Responsive */
-    '@media(max-width:640px){.site-nav .nav-link{padding:6px 10px;font-size:0.8rem}.site-nav .btn-signin .btn-signin-label{display:none}}',
+    '@media(max-width:640px){' +
+      '.site-nav .nav-hamburger{display:flex;align-items:center;justify-content:center}' +
+      '.site-nav .nav-links{display:none}' +
+      '.site-nav.nav-open .nav-links{display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;z-index:199;background:rgba(10,10,15,.97);border-bottom:1px solid #2e2e48;padding:8px 16px 14px;gap:4px}' +
+      '.site-nav.nav-open .nav-link{width:100%;justify-content:flex-start;padding:10px 14px}' +
+      '.site-nav .btn-signin .btn-signin-label{display:none}' +
+    '}',
+
 
     /* Skip-to-main link (accessibility) */
     '.skip-to-main{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999}',
@@ -111,16 +122,41 @@
     '<div class="nav-inner">' +
       '<a href="/" class="nav-logo" aria-label="Ravionus – go to homepage">Ravionus</a>' +
       '<div class="nav-right">' +
-        '<div class="nav-links">' +
+        '<div class="nav-links" id="navLinks">' +
           navLink('/learn/', '✨ Learn', 'learn') +
           navLink('/tools/', '🛠️ Dev Tools', 'tools') +
           navLink('/playground/', '🧪 Playgrounds', 'playground') +
         '</div>' +
         authHtml +
+        '<button class="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>' +
       '</div>' +
     '</div>';
 
   document.body.prepend(nav);
+
+  // Hamburger toggle
+  var hamburger = nav.querySelector('.nav-hamburger');
+  if (hamburger) {
+    function closeMenu() {
+      nav.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open navigation menu');
+      hamburger.innerHTML = '&#9776;';
+    }
+    hamburger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = nav.classList.toggle('nav-open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburger.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      hamburger.innerHTML = isOpen ? '&#10005;' : '&#9776;';
+    });
+    nav.querySelectorAll('.nav-link').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) closeMenu();
+    });
+  }
 
   // Skip link — inserted before nav so it is the first focusable element
   var skipLink = document.createElement('a');

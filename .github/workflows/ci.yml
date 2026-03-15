@@ -1888,6 +1888,7 @@ jobs:
           cp -r index.html CNAME learn tools playground _site/ 2>/dev/null || true
           [ -f site.js ] && cp site.js _site/ || true
           [ -f 404.html ] && cp 404.html _site/ || true
+          [ -f og-image.svg ] && cp og-image.svg _site/ || true
           [ -f README.md ] && cp README.md _site/ || true
           [ -f robots.txt ] && cp robots.txt _site/ || true
           [ -f sitemap.xml ] && cp sitemap.xml _site/ || true
