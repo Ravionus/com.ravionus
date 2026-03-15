@@ -3,3 +3,6 @@ test-results/
 playwright-report/
 .playwright/
 test-output.txt
+*-test-out.txt
+debug-out.txt
+debug-sample*.js

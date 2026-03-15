@@ -1,0 +1,12 @@
+# Build / tool output
+node_modules/
+
+# Test artefacts
+*.txt
+!README.md
+!CNAME
+!robots.txt
+
+# Python
+__pycache__/
+*.pyc
