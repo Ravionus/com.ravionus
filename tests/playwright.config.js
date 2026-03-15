@@ -15,7 +15,8 @@ module.exports = defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } }
+    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'firefox',  use: { browserName: 'firefox'  } },
   ],
   // Starts the dev server automatically before tests.
   // reuseExistingServer: true means if port 3000 is already running (e.g. locally), it uses it.

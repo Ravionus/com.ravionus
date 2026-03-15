@@ -58,11 +58,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ hashFiles('tests/package-lock.json') }}
+          key: playwright-browsers-${{ hashFiles('tests/package-lock.json') }}
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run smoke tests
@@ -104,11 +104,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ hashFiles('tests/package-lock.json') }}
+          key: playwright-browsers-${{ hashFiles('tests/package-lock.json') }}
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run full regression suite

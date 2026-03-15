@@ -277,14 +277,14 @@ When adding a new tool/playground with slug `my_tool`:
 
 ## Test Suite
 
-- Framework: **Playwright** (Chromium only)
+- Framework: **Playwright** (Chromium + Firefox)
 - Location: `tests/`
 - Config: `tests/playwright.config.js`
   - `retries: 2` — each test retried twice before marked failed
   - `webServer`: starts `python -m http.server 3000` from repo root
   - Screenshots + video captured on failure only
 - **~22 tests per tool** (4 smoke + ~18 feature tests)
-- Total: **~1,370+ tests** across the full suite
+- Total: **~1,370+ tests** across the full suite (doubled across two browsers)
 
 ### Test anatomy (per spec file)
 ```
@@ -439,7 +439,7 @@ Run tests (requires Node.js + Playwright installed):
 ```bash
 cd tests
 npm install          # first time only
-npx playwright install chromium   # first time only
+npx playwright install chromium firefox   # first time only
 npx playwright test  # run all tests
 npx playwright test html-entity.spec.js --reporter=line  # run one spec
 ```
@@ -448,17 +448,23 @@ npx playwright test html-entity.spec.js --reporter=line  # run one spec
 
 ## Utility Scripts
 
-Located in `scripts/`. These are one-off bulk maintenance scripts — not part of the live site.
+Located in `scripts/`. These are bulk maintenance and generation scripts — not part of the live site.
 
-| Script | Purpose |
-|---|---|
-| `_add_tooltips.py` | Adds `title=` tooltip attributes to tab/toolbar buttons across all pages |
-| `_transform_subpages.py` | Migrated legacy per-page nav bars to the shared `site.js` pattern |
+| Script | Purpose | Idempotent? |
+|---|---|---|
+| `generate_sitemap.py` | Scans all `index.html` files and writes `sitemap.xml` with per-file `git log` lastmod dates. Run automatically in CI before deploy. | ✅ Safe to re-run |
+| `generate_og_image.js` | Uses Playwright (chromium) to render `og-image.svg` into a 1200×630 `og-image.png`. Re-run if the SVG changes. Run from repo root: `node scripts/generate_og_image.js` | ✅ Overwrites PNG |
+| `_add_og_image.py` | Inserts `og:image`, `og:image:alt`, and `twitter:image` meta tags into pages that have `og:url` but no `og:image`. Skips pages that already have the tags. | ✅ Skip-if-present |
+| `_fix_og_meta.py` | One-time migration: SVG→PNG for og:image URLs, adds `og:site_name`, adds `og:image:alt`. Already run — safe to re-run, will no-op on up-to-date pages. | ✅ Skip-if-present |
+| `_add_tooltips.py` | Adds `title=` tooltip attributes to tab/toolbar buttons across all pages. Safe to re-run — skips buttons that already have a `title`. | ✅ Skip-if-present |
+| `_transform_subpages.py` | One-time migration: replaced legacy per-page nav bars with the shared `site.js` pattern. Already applied to all pages. | ✅ No-op if already migrated |
+| `_normalize_breadcrumbs.py` | Normalises breadcrumb markup to the standard `.page-breadcrumb` structure. | ✅ Skip-if-present |
 
-Run them from the repo root:
+Run from the repo root:
 ```bash
-python scripts/_add_tooltips.py
-python scripts/_transform_subpages.py
+python scripts/generate_sitemap.py
+node scripts/generate_og_image.js
+python scripts/_add_og_image.py
 ```
 
 ---
