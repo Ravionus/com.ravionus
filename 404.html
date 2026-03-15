@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>404 — Page Not Found · Ravionus</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Head back to Ravionus for developer tools, playgrounds, and interactive learning.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0a0a0f;
+      --surface: #12121a;
+      --border:  #1e1e2e;
+      --text:    #e2e2f0;
+      --muted:   #7878a0;
+      --purple:  #a855f7;
+      --cyan:    #22d3ee;
+    }
+    html { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .not-found {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      gap: 0;
+    }
+
+    .not-found__code {
+      font-size: clamp(6rem, 20vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #a855f7, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
+    }
+
+    .not-found__title {
+      margin-top: 12px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .not-found__desc {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .not-found__links {
+      margin-top: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .not-found__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .not-found__link:hover {
+      color: var(--text);
+      border-color: rgba(168,85,247,.4);
+      background: rgba(168,85,247,.07);
+    }
+    .not-found__link.primary {
+      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      color: #fff;
+      border-color: transparent;
+    }
+    .not-found__link.primary:hover { opacity: .88; }
+  </style>
+</head>
+<body>
+  <script src="/site.js"></script>
+
+  <main id="main-content" class="not-found">
+    <div class="not-found__code" aria-hidden="true">404</div>
+    <h1 class="not-found__title">Page not found</h1>
+    <p class="not-found__desc">
+      The page you're looking for doesn't exist or may have been moved.
+    </p>
+    <nav class="not-found__links" aria-label="Recovery navigation">
+      <a href="/" class="not-found__link primary">🏠 Go to homepage</a>
+      <a href="/tools/" class="not-found__link">🛠️ Dev Tools</a>
+      <a href="/playground/" class="not-found__link">🧪 Playgrounds</a>
+      <a href="/learn/" class="not-found__link">✨ Learn</a>
+    </nav>
+  </main>
+</body>
+</html>

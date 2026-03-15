@@ -58,7 +58,11 @@
     '.site-footer a:hover{text-decoration:underline}',
 
     /* Responsive */
-    '@media(max-width:640px){.site-nav .nav-link{padding:6px 10px;font-size:0.8rem}.site-nav .btn-signin .btn-signin-label{display:none}}'
+    '@media(max-width:640px){.site-nav .nav-link{padding:6px 10px;font-size:0.8rem}.site-nav .btn-signin .btn-signin-label{display:none}}',
+
+    /* Skip-to-main link (accessibility) */
+    '.skip-to-main{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999}',
+    '.skip-to-main:focus{position:fixed;top:0;left:0;width:auto;height:auto;overflow:visible;padding:12px 20px;background:#0a0a0f;color:#a855f7;font-size:0.875rem;font-weight:600;border:2px solid #a855f7;text-decoration:none;border-radius:0 0 8px 0}'
   ].join('');
 
   var styleEl = document.createElement('style');
@@ -86,6 +90,7 @@
   // ── Build & inject nav ───────────────────────────────────────────────────
   var nav = document.createElement('nav');
   nav.className = 'site-nav';
+  nav.setAttribute('aria-label', 'Site navigation');
 
   // Auth area only on learn pages (actual Firebase auth lives in learn/app.js)
   var authHtml = isActive('learn')
@@ -104,7 +109,7 @@
 
   nav.innerHTML =
     '<div class="nav-inner">' +
-      '<a href="/" class="nav-logo">Ravionus</a>' +
+      '<a href="/" class="nav-logo" aria-label="Ravionus – go to homepage">Ravionus</a>' +
       '<div class="nav-right">' +
         '<div class="nav-links">' +
           navLink('/learn/', '✨ Learn', 'learn') +
@@ -117,12 +122,27 @@
 
   document.body.prepend(nav);
 
+  // Skip link — inserted before nav so it is the first focusable element
+  var skipLink = document.createElement('a');
+  skipLink.href = '#main-content';
+  skipLink.className = 'skip-to-main';
+  skipLink.textContent = 'Skip to main content';
+  nav.insertAdjacentElement('beforebegin', skipLink);
+
   // ── Build & inject footer ────────────────────────────────────────────────
   var footer = document.createElement('footer');
   footer.className = 'site-footer';
   footer.innerHTML = 'Crafted by <a href="/">Ravionus</a> &nbsp;&middot;&nbsp; &copy; ' + new Date().getFullYear() + ' Raviprasad';
 
   document.addEventListener('DOMContentLoaded', function () {
+    // Mark first content element as skip-link target if no #main-content exists
+    if (!document.getElementById('main-content')) {
+      var firstContent = nav.nextElementSibling;
+      if (firstContent && firstContent !== footer) {
+        firstContent.id = 'main-content';
+        firstContent.setAttribute('tabindex', '-1');
+      }
+    }
     document.body.appendChild(footer);
   });
 }());
