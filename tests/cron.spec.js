@@ -302,7 +302,7 @@ test.describe('Cron Expression Parser — next run times', () => {
         // parse as minutes within a window — if they cross an hour the next
         // item will have a different hour; we just confirm all 5 exist
         expect(times).toHaveLength(5);
-        times.forEach(t => expect(t).toMatch(/\d+:\d{2}\s*(AM|PM)/i));
+        times.forEach(t => expect(t).toMatch(/\d+:\d{2}\s*(AM|PM)|midnight|noon/i));
     });
 
     test('0 * * * * — all times end in :00 or midnight/noon', async ({ page }) => {
@@ -317,6 +317,9 @@ test.describe('Cron Expression Parser — next run times', () => {
         await expect(page.locator('#nextRunsList .run-item')).toHaveCount(5);
         const times = await page.locator('.run-item-time').allTextContents();
         times.forEach(t => {
+            // fmt12() returns 'midnight' (00:00) or 'noon' (12:00) — both have
+            // minute 0 which is divisible by 5, so they are valid.
+            if (/^midnight$|^noon$/i.test(t.trim())) return;
             const m = t.match(/:(\d{2})\s*(AM|PM)/i);
             expect(m).not.toBeNull();
             expect(parseInt(m[1], 10) % 5).toBe(0);
