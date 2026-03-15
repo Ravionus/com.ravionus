@@ -232,10 +232,14 @@ function initCatalog() {
         if (statsQuizzes) statsQuizzes.textContent = TOPICS.reduce((s, t) => s + t.sections.filter(s => s.type === 'quiz').length, 0);
     }
 
-    renderCards();
-
+    // Preserve any active search when re-initialised (e.g. from auth state change)
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
+    const currentFilter = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    renderCards(currentFilter);
+
+    // Only attach the input listener once (guard against re-init from auth callbacks)
+    if (searchInput && !searchInput.dataset.catalogListenerAttached) {
+        searchInput.dataset.catalogListenerAttached = 'true';
         searchInput.addEventListener('input', (e) => {
             renderCards(e.target.value.toLowerCase().trim());
         });
