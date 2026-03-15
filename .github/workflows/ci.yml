@@ -1887,19 +1887,27 @@ jobs:
       - name: Generate sitemap
         run: python scripts/generate_sitemap.py
 
+      - name: Patch SW cache version to commit SHA
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          sed -i "s/var CACHE = 'rv-[^']*'/var CACHE = 'rv-$SHORT_SHA'/" sw.js
+          echo "SW cache version set to rv-$SHORT_SHA"
+
       - name: Prepare site files
         run: |
           mkdir _site
           cp -r index.html CNAME learn tools playground _site/ 2>/dev/null || true
-          [ -f site.js ] && cp site.js _site/ || true
-          [ -f 404.html ] && cp 404.html _site/ || true
-          [ -f og-image.svg ] && cp og-image.svg _site/ || true
-          [ -f og-image.png ] && cp og-image.png _site/ || true
-          [ -f manifest.json ] && cp manifest.json _site/ || true
-          [ -f README.md ] && cp README.md _site/ || true
-          [ -f robots.txt ] && cp robots.txt _site/ || true
-          [ -f sitemap.xml ] && cp sitemap.xml _site/ || true
-          [ -f favicon.svg ] && cp favicon.svg _site/ || true
+          [ -f site.js ]            && cp site.js _site/            || true
+          [ -f sw.js ]              && cp sw.js _site/              || true
+          [ -f listing-search.js ]  && cp listing-search.js _site/  || true
+          [ -f 404.html ]           && cp 404.html _site/           || true
+          [ -f og-image.svg ]       && cp og-image.svg _site/       || true
+          [ -f og-image.png ]       && cp og-image.png _site/       || true
+          [ -f manifest.json ]      && cp manifest.json _site/      || true
+          [ -f README.md ]          && cp README.md _site/          || true
+          [ -f robots.txt ]         && cp robots.txt _site/         || true
+          [ -f sitemap.xml ]        && cp sitemap.xml _site/        || true
+          [ -f favicon.svg ]        && cp favicon.svg _site/        || true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
