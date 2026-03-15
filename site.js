@@ -200,7 +200,12 @@
       nav.insertAdjacentElement('afterend', mainEl);
     } else if (!document.getElementById('main-content')) {
       var existingMain = document.querySelector('main');
-      existingMain.id = 'main-content';
+      if (!existingMain.id) {
+        existingMain.id = 'main-content';
+      } else {
+        // Preserve the page's own id; redirect the skip link to it instead
+        skipLink.href = '#' + existingMain.id;
+      }
       existingMain.setAttribute('tabindex', '-1');
     }
     document.body.appendChild(footer);
