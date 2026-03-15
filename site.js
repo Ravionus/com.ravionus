@@ -28,6 +28,7 @@
     '.site-nav .nav-link:hover{color:#e2e2f0;background:#1a1a2e}',
     '.site-nav .nav-link.primary{background:linear-gradient(135deg,#7c3aed,#0e7490);color:#fff;font-weight:700}',
     '.site-nav .nav-link.primary:hover{opacity:.88;background:linear-gradient(135deg,#7c3aed,#0e7490)}',
+    '.site-nav .nav-link:focus-visible,.site-nav .nav-logo:focus-visible,.site-nav .nav-hamburger:focus-visible,.site-nav .btn-signin:focus-visible,.site-nav .btn-signout:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}',
 
     /* Auth area */
     '.site-nav .nav-auth{display:flex;align-items:center;gap:8px}',
