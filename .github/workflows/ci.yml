@@ -1894,6 +1894,7 @@ jobs:
           [ -f site.js ] && cp site.js _site/ || true
           [ -f 404.html ] && cp 404.html _site/ || true
           [ -f og-image.svg ] && cp og-image.svg _site/ || true
+          [ -f og-image.png ] && cp og-image.png _site/ || true
           [ -f manifest.json ] && cp manifest.json _site/ || true
           [ -f README.md ] && cp README.md _site/ || true
           [ -f robots.txt ] && cp robots.txt _site/ || true

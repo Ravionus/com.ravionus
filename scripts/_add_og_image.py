@@ -1,11 +1,12 @@
 import os, re
 
 INSERT = (
-    '\n    <meta property="og:image" content="https://ravionus.com/og-image.svg">'
+    '\n    <meta property="og:image" content="https://ravionus.com/og-image.png">'
     '\n    <meta property="og:image:width" content="1200">'
     '\n    <meta property="og:image:height" content="630">'
+    '\n    <meta property="og:image:alt" content="Ravionus — developer tools, interactive playgrounds, and bite-sized learning.">'
     '\n    <meta name="twitter:card" content="summary_large_image">'
-    '\n    <meta name="twitter:image" content="https://ravionus.com/og-image.svg">'
+    '\n    <meta name="twitter:image" content="https://ravionus.com/og-image.png">'
 )
 
 ROOT = os.path.dirname(os.path.abspath(__file__))

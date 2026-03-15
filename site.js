@@ -90,6 +90,14 @@
     document.head.appendChild(manifestLink);
   }
 
+  // Inject theme-color for mobile browsers (matches manifest + app background)
+  if (!document.querySelector('meta[name="theme-color"]')) {
+    var themeColor = document.createElement('meta');
+    themeColor.name = 'theme-color';
+    themeColor.content = '#0a0a0f';
+    document.head.appendChild(themeColor);
+  }
+
   // ── Active-section detection ─────────────────────────────────────────────
   var p = location.pathname;
   function isActive(section) {
