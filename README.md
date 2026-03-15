@@ -467,3 +467,15 @@ python scripts/_transform_subpages.py
 
 GitHub Pages (branch: `main`) + Dynadot custom domain (`ravionus.com`).  
 Deploy is triggered automatically by CI after all test jobs pass.
+
+---
+
+## License
+
+**Code** (everything outside `learn/`) — [MIT License](LICENSE)  
+You are free to use, copy, modify, and distribute the source code.
+
+**Learn content** (`learn/` directory) — [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)  
+You may share and adapt the course materials for non-commercial purposes with attribution.
+
+© 2026 Raviprasad
