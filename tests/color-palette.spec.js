@@ -502,7 +502,7 @@ test.describe('Color Palette Generator — sort', () => {
 // ── 11. Exports ───────────────────────────────────────────────────────────────
 test.describe('Color Palette Generator — exports', () => {
     test.beforeEach(async ({ context, page }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.goto(URL);
         await resetTool(page);
         await page.waitForTimeout(100);

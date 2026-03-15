@@ -630,7 +630,7 @@ test.describe('Date/Time Utilities — Clear', () => {
 // ── 9. Clipboard copy ─────────────────────────────────────────────────────────
 test.describe('Date/Time Utilities — clipboard', () => {
     test.beforeEach(async ({ context, page }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.goto(URL);
         await page.waitForLoadState('load');
     });

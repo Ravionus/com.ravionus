@@ -457,7 +457,7 @@ test.describe('CSS Layout Playground — mobile tabs', () => {
 // ── Copy buttons ──────────────────────────────────────────────────────────────
 test.describe('CSS Layout Playground — copy', () => {
     test('Copy HTML button shows toast when content present', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.goto(PAGE);
         const ta = page.locator('#htmlInput');
         await ta.click();
@@ -469,7 +469,7 @@ test.describe('CSS Layout Playground — copy', () => {
     });
 
     test('Copy CSS button shows toast when content present', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.goto(PAGE);
         await page.click('#tabCss');
         const ta = page.locator('#cssInput');

@@ -352,7 +352,7 @@ test.describe('JSON Explorer — features', () => {
 
     // ── Copy ─────────────────────────────────────────────────────────────────
     test('Copy JSON shows toast', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.goto(PAGE);
         await page.fill('#jsonInput', '{"test":true}');
         await page.click('#btnCopy');

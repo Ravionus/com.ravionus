@@ -395,7 +395,7 @@ test.describe('Cron Expression Parser — toolbar', () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto(BASE_URL);
-        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await page.context().grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
     });
 
     test('Parse button triggers parse of current input', async ({ page }) => {

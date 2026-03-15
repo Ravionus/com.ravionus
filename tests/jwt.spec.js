@@ -424,7 +424,7 @@ test.describe('Toolbar', () => {
         await page.goto(URL);
 
         // Grant clipboard permissions
-        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await page.context().grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
 
         await page.fill('#jwtInput', VALID_JWT);
         await page.click('#btnDecode');
@@ -438,7 +438,7 @@ test.describe('Toolbar', () => {
 
     test('Copy Header button copies header JSON', async ({ page }) => {
         await page.goto(URL);
-        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await page.context().grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
 
         await page.fill('#jwtInput', VALID_JWT);
         await page.click('#btnDecode');

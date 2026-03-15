@@ -192,7 +192,7 @@ test.describe('Case Converter — features', () => {
     });
 
     test('copy individual card shows toast — no dialog', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await context.grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.fill('#inputArea', 'hello world');
         const dialogs = /** @type {string[]} */ ([]);
         page.on('dialog', d => { dialogs.push(d.type()); d.dismiss(); });

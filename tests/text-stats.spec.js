@@ -384,7 +384,7 @@ test.describe('Text Statistics — toolbar', () => {
 
     test('Copy Stats copies text containing "Words"', async ({ page }) => {
         await page.goto(URL);
-        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await page.context().grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.locator('#textInput').fill(FIVE_WORDS);
         // Wait for debounce to fire before copying
         await expect(page.locator('#statWords')).toHaveText('5');
@@ -396,7 +396,7 @@ test.describe('Text Statistics — toolbar', () => {
 
     test('Copy Stats copies reading time', async ({ page }) => {
         await page.goto(URL);
-        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+        try { await page.context().grantPermissions(['clipboard-read', 'clipboard-write']); } catch (_) {} // Firefox: clipboard-read not a recognised permission
         await page.locator('#textInput').fill(FIVE_WORDS);
         // Wait for debounce to fire before copying
         await expect(page.locator('#statWords')).toHaveText('5');
