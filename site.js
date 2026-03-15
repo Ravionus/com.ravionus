@@ -81,6 +81,14 @@
   styleEl.textContent = css;
   document.head.appendChild(styleEl);
 
+  // Inject manifest link for PWA install support
+  if (!document.querySelector('link[rel="manifest"]')) {
+    var manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = '/manifest.json';
+    document.head.appendChild(manifestLink);
+  }
+
   // ── Active-section detection ─────────────────────────────────────────────
   var p = location.pathname;
   function isActive(section) {
@@ -171,13 +179,20 @@
   footer.innerHTML = 'Crafted by <a href="/">Ravionus</a> &nbsp;&middot;&nbsp; &copy; ' + new Date().getFullYear() + ' Raviprasad';
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Mark first content element as skip-link target if no #main-content exists
-    if (!document.getElementById('main-content')) {
-      var firstContent = nav.nextElementSibling;
-      if (firstContent && firstContent !== footer) {
-        firstContent.id = 'main-content';
-        firstContent.setAttribute('tabindex', '-1');
-      }
+    // Wrap page content in <main> if one doesn't already exist
+    if (!document.querySelector('main')) {
+      var mainEl = document.createElement('main');
+      mainEl.id = 'main-content';
+      mainEl.setAttribute('tabindex', '-1');
+      var toMove = [];
+      var node = nav.nextElementSibling;
+      while (node) { toMove.push(node); node = node.nextElementSibling; }
+      toMove.forEach(function (el) { mainEl.appendChild(el); });
+      nav.insertAdjacentElement('afterend', mainEl);
+    } else if (!document.getElementById('main-content')) {
+      var existingMain = document.querySelector('main');
+      existingMain.id = 'main-content';
+      existingMain.setAttribute('tabindex', '-1');
     }
     document.body.appendChild(footer);
   });
