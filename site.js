@@ -41,7 +41,7 @@
     '.site-nav .btn-signout:hover{background:rgba(239,68,68,0.12);color:#ef4444}',
 
     /* Breadcrumb bar (sub-pages) */
-    '.page-breadcrumb{max-width:1100px;margin:0 auto;padding:10px 24px;font-size:0.82rem;color:#7878a0;display:flex;align-items:center;gap:6px}',
+    '.page-breadcrumb{width:100%;box-sizing:border-box;padding:10px max(24px,calc((100vw - 1100px)/2 + 24px));font-size:0.82rem;color:#7878a0;display:flex;align-items:center;gap:6px}',
     '.page-breadcrumb a{color:#7878a0;text-decoration:none;transition:color .15s}',
     '.page-breadcrumb a:hover{color:#e2e2f0}',
     '.page-breadcrumb .sep{opacity:.4}',
