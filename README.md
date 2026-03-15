@@ -224,12 +224,40 @@ connect-src 'none';   ← tightened to specific origins for api-builder
 
 ## CI / CD Pipeline
 
-`.github/workflows/ci.yml` — path-filtered jobs + GitHub Pages deploy.
+Two workflow files live in `.github/workflows/`:
 
-### Strategy
+| File | Trigger | Purpose |
+|---|---|---|
+| `ci.yml` | Every push / PR | Path-filtered per-tool tests + GitHub Pages deploy |
+| `scheduled.yml` | Cron + manual dispatch | Smoke daily, full regression weekly |
+
+### `ci.yml` — push-triggered
+
 - **Job 0 (`changes`)** — uses `dorny/paths-filter` to detect which source areas changed.
 - **Jobs 1–40** — one test job per tool/playground/section. Each job runs only when its source files (`tools/<slug>/**` or `playground/<slug>/**`) or its spec file changed, **or** on every push to `main` (pre-deploy gate).
 - **Job 41 (`deploy`)** — GitHub Pages deploy. Only runs after all test jobs succeed or are skipped. Uses `actions/deploy-pages`.
+- **Caching** — all jobs use `actions/setup-node` npm cache + `actions/cache` for Playwright browser binaries (`~/.cache/ms-playwright`), keyed on `package-lock.json` hash. Reduces per-job overhead from ~3 min to ~1 min.
+
+### `scheduled.yml` — time-triggered
+
+| Job | Cron | When | Runs | Filter |
+|---|---|---|---|---|
+| `smoke_daily` | `0 2 * * 1-6` | Mon–Sat 02:00 UTC | ~130 tests | `--grep "smoke"` |
+| `regression` | `0 2 * * 0` | Sunday 02:00 UTC | ~1,370 tests | _(full suite)_ |
+
+Both jobs can also be triggered manually from the **Actions** tab → `Scheduled Tests` → `Run workflow`, with a `suite` input (`smoke` or `regression`).
+
+Failure artifacts (screenshots + videos) are uploaded for 7 days on any failure.
+
+### Test tiers
+
+Tests in every spec file follow a two-tier `describe` naming convention:
+
+| Tier | Describe block | Count | When it runs |
+|---|---|---|---|
+| **Smoke** | `— smoke` | ~130 tests | Every push to main + daily schedule |
+| **Features / Functional** | `— features` | ~1,240 tests | Every push to main (path-filtered) |
+| **Regression** | full suite | ~1,370 tests | Weekly (Sunday) schedule |
 
 ### Adding a new tool to CI (checklist)
 When adding a new tool/playground with slug `my_tool`:

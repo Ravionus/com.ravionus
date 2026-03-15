@@ -1,0 +1,124 @@
+name: Scheduled Tests
+
+# ── Schedule ──────────────────────────────────────────────────────────────────
+#
+#  Job          | When                            | Tests run
+#  --------------------------------------------------------------------------
+#  smoke_daily  | Mon–Sat 02:00 UTC               | --grep "smoke"  (~130 tests, ~7 min)
+#  regression   | Sunday  02:00 UTC               | full suite      (~1370 tests, ~18 min)
+#
+#  Both jobs can also be triggered manually via workflow_dispatch.
+#  Monthly budget (if repo is private): ~210 + ~72 = ~282 runner-minutes.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    - cron: '0 2 * * 1-6'   # Mon–Sat 02:00 UTC — smoke
+    - cron: '0 2 * * 0'     # Sunday  02:00 UTC — full regression
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - regression
+
+permissions:
+  contents: read
+
+jobs:
+
+  # ── Smoke — Mon–Sat daily ────────────────────────────────────────────────
+  smoke_daily:
+    name: "Smoke — daily (Mon–Sat)"
+    if: >-
+      github.event.schedule == '0 2 * * 1-6' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'smoke')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tests/package-lock.json
+
+      - name: Install test dependencies
+        run: npm ci
+        working-directory: tests
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('tests/package-lock.json') }}
+
+      - name: Install Playwright browser
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+        working-directory: tests
+
+      - name: Run smoke tests
+        run: npx playwright test --grep "smoke" --reporter=line
+        working-directory: tests
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-failures-${{ github.run_id }}
+          path: tests/test-results/
+          retention-days: 7
+
+  # ── Full regression — Sunday weekly ─────────────────────────────────────
+  regression:
+    name: "Regression — weekly (Sunday)"
+    if: >-
+      github.event.schedule == '0 2 * * 0' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'regression')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tests/package-lock.json
+
+      - name: Install test dependencies
+        run: npm ci
+        working-directory: tests
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('tests/package-lock.json') }}
+
+      - name: Install Playwright browser
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+        working-directory: tests
+
+      - name: Run full regression suite
+        run: npx playwright test --reporter=line
+        working-directory: tests
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-failures-${{ github.run_id }}
+          path: tests/test-results/
+          retention-days: 7
