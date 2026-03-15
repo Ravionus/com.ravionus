@@ -7,12 +7,14 @@ on:
       - '**.md'
       - '.gitignore'
       - 'CNAME'
+      - 'tests/test-map.csv'
   pull_request:
     paths-ignore:
       - 'README.md'
       - '**.md'
       - '.gitignore'
       - 'CNAME'
+      - 'tests/test-map.csv'
 
 # Permissions required by the GitHub Pages deploy action
 permissions:

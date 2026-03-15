@@ -1,0 +1,42 @@
+name: Update test map
+
+# Regenerates tests/test-map.csv whenever a spec file or the generator
+# script itself changes on main, then auto-commits the result back.
+# Uses [skip ci] in the commit message to avoid re-triggering CI.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tests/*.spec.js'
+      - 'scripts/generate_test_map.py'
+
+permissions:
+  contents: write   # needed to push the updated CSV back
+
+jobs:
+  update-map:
+    name: Regenerate test-map.csv
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Use the default GITHUB_TOKEN — contents:write above grants push access
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Regenerate test-map.csv
+        run: python scripts/generate_test_map.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet tests/test-map.csv; then
+            git add tests/test-map.csv
+            git commit -m "chore: regenerate test-map.csv [skip ci]"
+            git push
+          else
+            echo "test-map.csv is already up to date, nothing to commit."
+          fi
