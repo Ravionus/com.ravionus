@@ -86,6 +86,22 @@
   // ── Build & inject nav ───────────────────────────────────────────────────
   var nav = document.createElement('nav');
   nav.className = 'site-nav';
+
+  // Auth area only on learn pages (actual Firebase auth lives in learn/app.js)
+  var authHtml = isActive('learn')
+    ? '<div class="nav-auth" id="navAuth">' +
+        '<button class="btn-signin" id="signInBtn">' +
+          googleSvg +
+          ' <span class="btn-signin-label">Sign in</span>' +
+        '</button>' +
+        '<div class="user-chip hidden" id="userChip">' +
+          '<img class="user-avatar" id="userAvatar" src="" alt="avatar">' +
+          '<span class="user-name" id="userName"></span>' +
+          '<button class="btn-signout" id="signOutBtn">Sign out</button>' +
+        '</div>' +
+      '</div>'
+    : '';
+
   nav.innerHTML =
     '<div class="nav-inner">' +
       '<a href="/" class="nav-logo">Ravionus</a>' +
@@ -95,29 +111,11 @@
           navLink('/tools/', '🛠️ Dev Tools', 'tools') +
           navLink('/playground/', '🧪 Playgrounds', 'playground') +
         '</div>' +
-        '<div class="nav-auth" id="navAuth">' +
-          '<button class="btn-signin" id="signInBtn">' +
-            googleSvg +
-            ' <span class="btn-signin-label">Sign in</span>' +
-          '</button>' +
-          '<div class="user-chip hidden" id="userChip">' +
-            '<img class="user-avatar" id="userAvatar" src="" alt="avatar">' +
-            '<span class="user-name" id="userName"></span>' +
-            '<button class="btn-signout" id="signOutBtn">Sign out</button>' +
-          '</div>' +
-        '</div>' +
+        authHtml +
       '</div>' +
     '</div>';
 
   document.body.prepend(nav);
-
-  // On non-learn pages, Sign In navigates to /learn/
-  if (!isActive('learn')) {
-    var signInBtn = document.getElementById('signInBtn');
-    if (signInBtn) {
-      signInBtn.addEventListener('click', function () { location.href = '/learn/'; });
-    }
-  }
 
   // ── Build & inject footer ────────────────────────────────────────────────
   var footer = document.createElement('footer');

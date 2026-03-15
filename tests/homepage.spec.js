@@ -47,9 +47,9 @@ test.describe('Homepage — /', () => {
     }
   });
 
-  test('Sign In button is visible', async ({ page }) => {
+  test('Sign In button is not shown on homepage (tools/playground pages have no auth)', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#signInBtn')).toBeVisible();
+    await expect(page.locator('#signInBtn')).toHaveCount(0);
   });
 
   // ── Hero ─────────────────────────────────────────────────
