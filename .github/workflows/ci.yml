@@ -1878,9 +1878,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history needed for git log lastmod dates
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Generate sitemap
+        run: python scripts/generate_sitemap.py
 
       - name: Prepare site files
         run: |
