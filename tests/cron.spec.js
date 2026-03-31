@@ -8,8 +8,10 @@ const BASE_URL = 'http://localhost:3000/tools/cron/';
 /** Fill the cron input and wait for the description to update (debounce-safe) */
 async function fillCron(page, expr) {
     await page.locator('#cronInput').fill(expr);
-    // Wait for either a valid description or an error banner to become visible
-    await page.locator('#description:not(.placeholder), #errorBanner.visible').first().waitFor({ timeout: 3000 });
+    // Wait for either a valid description or an error banner to become visible.
+    // No explicit timeout — inherits the 10 s action timeout from playwright.config.js
+    // so Firefox under CI load doesn't flake with the old 3000 ms hard limit.
+    await page.locator('#description:not(.placeholder), #errorBanner.visible').first().waitFor();
 }
 
 /** Clear the input and confirm the placeholder returns */

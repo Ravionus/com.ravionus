@@ -84,7 +84,7 @@ jobs:
       github.event.schedule == '0 2 * * 0' ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'regression')
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50   # Firefox doubled the test count to ~2740; was 30 min (not enough)
 
     steps:
       - uses: actions/checkout@v4
