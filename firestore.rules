@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// ── Ravionus Learn — Firestore Security Rules ────────────────────────────────
+//
+// Data model:
+//   users/{uid}/data/progress          — learning progress (completedSections,
+//                                        quizScores, finished flags)
+//   users/{uid}/completions/{topicId}  — completion records used for
+//                                        certificate verification
+//
+// Policy:
+//   • Authenticated users may read and write only their own subtree.
+//   • No cross-user reads, no unauthenticated access, no other collections.
+// ─────────────────────────────────────────────────────────────────────────────
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── User data — progress + completions ──────────────────────────────────
+    match /users/{uid}/{document=**} {
+      // Only the signed-in user whose UID matches the path segment may access
+      // their own documents. All other requests are implicitly denied.
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── Deny everything else ────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -10,3 +10,9 @@ node_modules/
 # Python
 __pycache__/
 *.pyc
+
+# Secrets — never commit these
+.env
+.env.*
+*service-account*.json
+firebase-debug.log
