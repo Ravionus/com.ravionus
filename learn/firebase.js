@@ -25,7 +25,7 @@ import {
 // ── Config ────────────────────────────────────────────
 const firebaseConfig = {
     apiKey: "AIzaSyDKB1gnAIgVeLHV4Vbs2i8veSntpJ9wLLE",
-    authDomain: "ravionus.com",
+    authDomain: "ravionus-f5574.firebaseapp.com",
     projectId: "ravionus-f5574",
     storageBucket: "ravionus-f5574.firebasestorage.app",
     messagingSenderId: "701541143903",
