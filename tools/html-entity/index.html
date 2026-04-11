@@ -507,10 +507,10 @@ function encodeEntities(text) {
 }
 
 function decodeEntities(text) {
-    // Use the browser's native parser — safe because we only read textContent
-    var div = document.createElement('div');
-    div.innerHTML = text;
-    var decoded = div.textContent;
+    // DOMParser creates an inert document: no scripts run, no resources load,
+    // no event handlers fire — safe with arbitrary user input.
+    var doc = new DOMParser().parseFromString(text, 'text/html');
+    var decoded = doc.body ? doc.body.textContent : '';
     // Count entity occurrences in original
     var count = (text.match(/&[a-zA-Z#][^;]{0,10};/g) || []).length;
     return { text: decoded, count: count };
