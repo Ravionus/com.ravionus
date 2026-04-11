@@ -454,7 +454,7 @@ greet("World");`
         }
 
         // Template literals (handle nested ${ } up to one level)
-        out = out.replace(/`(?:[^`\\]|\\.|\$\{[^}]*\})*`/g, stash);
+        out = out.replace(/`(?:[^`\\$]|\\.|\$(?!\{)|\$\{[^}]*\})*`/g, stash);
         // Double-quoted strings
         out = out.replace(/"(?:[^"\\]|\\.)*"/g, stash);
         // Single-quoted strings
