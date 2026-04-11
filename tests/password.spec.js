@@ -168,13 +168,14 @@ test.describe('Password Generator — features', () => {
         await expect(page.locator('#errorBanner')).toHaveClass(/visible/);
     });
 
-    test('localStorage restores passwords on reload', async ({ page }) => {
+    test('passwords are not persisted to localStorage on reload', async ({ page }) => {
         await page.click('#btnGenerate');
         const before = await page.locator('.pw-value').allTextContents();
         expect(before).toHaveLength(5);
         await page.reload();
+        // Generated passwords are not stored in localStorage (security: clear-text sensitive data)
         const after = await page.locator('.pw-value').allTextContents();
-        expect(after).toEqual(before);
+        expect(after).toHaveLength(0);
     });
 
     test('localStorage restores length and count settings on reload', async ({ page }) => {
