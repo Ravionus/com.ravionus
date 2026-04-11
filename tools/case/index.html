@@ -482,20 +482,31 @@
         let toastTimer = null;
 
         // ── Build conversion cards (once, on load) ────────────────────────────
-        function escapeHtml(s) {
-            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
-
         CONVERSIONS.forEach(conv => {
             const card = document.createElement('div');
             card.className = 'case-card';
             card.setAttribute('data-case-id', conv.id);
-            card.innerHTML =
-                '<div class="case-card-header">' +
-                    '<span class="case-label">' + escapeHtml(conv.label) + '</span>' +
-                    '<button class="copy-btn" aria-label="Copy ' + escapeHtml(conv.label) + '">📋 Copy</button>' +
-                '</div>' +
-                '<div class="case-value" id="case-' + conv.id + '"></div>';
+
+            const header = document.createElement('div');
+            header.className = 'case-card-header';
+
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'case-label';
+            labelSpan.textContent = conv.label;
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.setAttribute('aria-label', 'Copy ' + conv.label);
+            copyBtn.textContent = '📋 Copy';
+
+            const valueDiv = document.createElement('div');
+            valueDiv.className = 'case-value';
+            valueDiv.id = 'case-' + conv.id;
+
+            header.appendChild(labelSpan);
+            header.appendChild(copyBtn);
+            card.appendChild(header);
+            card.appendChild(valueDiv);
             caseGrid.appendChild(card);
 
             card.querySelector('.copy-btn').addEventListener('click', () => {
