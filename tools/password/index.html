@@ -927,6 +927,8 @@
         // ── localStorage ──────────────────────────────────────────────────────
         function saveState() {
             try {
+                // Generated passwords are intentionally excluded — never persist
+                // secrets to localStorage.
                 localStorage.setItem(STORAGE_KEY, JSON.stringify({
                     length:    lengthInput.value,
                     count:     countInput.value,
@@ -934,8 +936,7 @@
                     lower:     chkLower.checked,
                     numbers:   chkNumbers.checked,
                     symbols:   chkSymbols.checked,
-                    ambiguous: chkAmbiguous.checked,
-                    passwords: currentPasswords
+                    ambiguous: chkAmbiguous.checked
                 }));
             } catch (_) {}
         }
@@ -952,10 +953,7 @@
                 if (s.numbers  !== undefined) { chkNumbers.checked = !!s.numbers; }
                 if (s.symbols  !== undefined) { chkSymbols.checked = !!s.symbols; }
                 if (s.ambiguous !== undefined) { chkAmbiguous.checked = !!s.ambiguous; ambiguousRow.classList.toggle('checked', chkAmbiguous.checked); }
-                if (Array.isArray(s.passwords) && s.passwords.length > 0) {
-                    currentPasswords = s.passwords;
-                    renderOutput();
-                }
+                // Passwords are not persisted — regenerate fresh on each visit.
                 syncCheckboxStyles();
             } catch (_) {}
         }
