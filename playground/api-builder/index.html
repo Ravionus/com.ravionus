@@ -939,8 +939,8 @@
                 headers:     getKVRows('headersBody'),
                 bodyType:    bodyType.value,
                 bodyText:    bodyInput.value,
-                authType:    authType.value,
-                authKeyName: document.getElementById('authKeyName').value
+                authType:    authType.value
+                // authKeyName and all auth credentials are not persisted — must be re-entered each session.
             }));
         } catch (_) {}
     }
@@ -961,9 +961,8 @@
             if (s.bodyType) { bodyType.value = s.bodyType; updateBodyPanel(); }
             if (s.bodyText) bodyInput.value = s.bodyText;
             if (s.authType) { authType.value = s.authType; updateAuthPanel(); }
-            // authToken, authUser, authPass, authKeyValue are not persisted — credentials
-            // must be re-entered each session.
-            if (s.authKeyName)  document.getElementById('authKeyName').value = s.authKeyName;
+            // authToken, authUser, authPass, authKeyName, authKeyValue are not persisted —
+            // auth fields must be re-entered each session.
         } catch (_) {}
     }
 
