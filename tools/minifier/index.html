@@ -420,7 +420,14 @@ greet("World");`
      */
     function minifyHtml(src) {
         // Remove <!-- ... --> comments (but not IE conditionals <!--[if ...)
-        let out = src.replace(/<!--(?!\[if)[\s\S]*?-->/g, '');
+        // Loop until stable: a single pass with lazy *? can leave behind <!--
+        // from nested/malformed comments like <!--<!---->  (CodeQL js/incomplete-sanitization).
+        let out = src;
+        let prev;
+        do {
+            prev = out;
+            out = out.replace(/<!--(?!\[if)[\s\S]*?-->/g, '');
+        } while (out !== prev);
         // Collapse multiple whitespace (including newlines) between > and < to a single space
         out = out.replace(/>\s+</g, '><');
         // Collapse multiple spaces inside tags / text runs to a single space
