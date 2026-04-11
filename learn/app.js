@@ -91,9 +91,11 @@ function deepMergeProgress(local, cloud) {
 
 function loadProgress() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        // Use Object.create(null) so bracket-assignment with a user-supplied
+        // topicId (e.g. '__proto__') cannot pollute Object.prototype.
+        return Object.assign(Object.create(null), JSON.parse(localStorage.getItem(STORAGE_KEY))) || Object.create(null);
     } catch {
-        return {};
+        return Object.create(null);
     }
 }
 
