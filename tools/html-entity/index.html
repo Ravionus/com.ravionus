@@ -506,13 +506,37 @@ function encodeEntities(text) {
     return { text: result, count: count };
 }
 
+// Reverse lookup: entity name → character (built lazily from NAMED_MAP)
+var _decodeMap = null;
+function getDecodeMap() {
+    if (_decodeMap) return _decodeMap;
+    _decodeMap = Object.create(null);
+    Object.keys(NAMED_MAP).forEach(function(ch) {
+        var ent = NAMED_MAP[ch];
+        if (ent.charAt(1) === '#') return; // numeric entity value, skip
+        var name = ent.slice(1, -1); // strip leading & and trailing ;
+        if (!_decodeMap[name]) _decodeMap[name] = ch;
+    });
+    return _decodeMap;
+}
+
 function decodeEntities(text) {
-    // DOMParser creates an inert document: no scripts run, no resources load,
-    // no event handlers fire — safe with arbitrary user input.
-    var doc = new DOMParser().parseFromString(text, 'text/html');
-    var decoded = doc.body ? doc.body.textContent : '';
+    var map = getDecodeMap();
     // Count entity occurrences in original
     var count = (text.match(/&[a-zA-Z#][^;]{0,10};/g) || []).length;
+    var decoded = text
+        // Hex numeric entities (before decimal to avoid partial matches)
+        .replace(/&#x([0-9a-fA-F]+);/gi, function(_, hex) {
+            try { return String.fromCodePoint(parseInt(hex, 16)); } catch (e) { return _; }
+        })
+        // Decimal numeric entities
+        .replace(/&#([0-9]+);/g, function(_, dec) {
+            try { return String.fromCodePoint(parseInt(dec, 10)); } catch (e) { return _; }
+        })
+        // Named entities via reverse lookup of NAMED_MAP
+        .replace(/&([a-zA-Z][a-zA-Z0-9]*);/g, function(match, name) {
+            return map[name] !== undefined ? map[name] : match;
+        });
     return { text: decoded, count: count };
 }
 
