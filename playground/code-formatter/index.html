@@ -528,7 +528,7 @@ Or use 🧪 Sample to load an example."
                            'UPDATE', 'INSERT', 'DELETE', 'VALUES', 'SET'];
 
         breakBefore.forEach(function (kw) {
-            var re = new RegExp(' (' + kw.replace(/ /g, ' ') + ')\\b', 'g');
+            var re = new RegExp(' (' + kw.replace(/ /g, '\\s+') + ')\\b', 'g');
             s = s.replace(re, '\n$1');
         });
 
