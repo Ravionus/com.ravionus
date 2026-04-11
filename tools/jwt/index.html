@@ -619,7 +619,7 @@
         };
 
         function renderClaims(payload) {
-            const rows = [];
+            const frag = document.createDocumentFragment();
             const status = getExpiryStatus(payload);
             const knownKeys = Object.keys(CLAIM_LABELS);
             const allKeys = [...knownKeys.filter(k => k in payload), ...Object.keys(payload).filter(k => !knownKeys.includes(k))];
@@ -627,39 +627,43 @@
             for (const key of allKeys) {
                 const val = payload[key];
                 const label = CLAIM_LABELS[key] || key;
-                let display = '';
+
+                const tr = document.createElement('tr');
+                const tdLabel = document.createElement('td');
+                tdLabel.textContent = label;
+                const tdVal = document.createElement('td');
 
                 if (key === 'exp') {
-                    const ts = formatTs(val);
-                    let badge = '';
-                    if (status === 'expired') {
-                        badge = `<span class="expiry-badge expired" id="expiryBadge">🔴 Expired</span>`;
-                    } else if (status === 'not_yet_valid') {
-                        badge = `<span class="expiry-badge not-yet" id="expiryBadge">⚠️ Not Yet Valid</span>`;
-                    } else if (status === 'valid') {
-                        badge = `<span class="expiry-badge valid" id="expiryBadge">🟢 Valid</span>`;
+                    tdVal.appendChild(document.createTextNode(formatTs(val) + ' '));
+                    if (status === 'expired' || status === 'not_yet_valid' || status === 'valid') {
+                        const badge = document.createElement('span');
+                        badge.id = 'expiryBadge';
+                        if (status === 'expired') {
+                            badge.className = 'expiry-badge expired';
+                            badge.textContent = '\uD83D\uDD34 Expired';
+                        } else if (status === 'not_yet_valid') {
+                            badge.className = 'expiry-badge not-yet';
+                            badge.textContent = '\u26A0\uFE0F Not Yet Valid';
+                        } else {
+                            badge.className = 'expiry-badge valid';
+                            badge.textContent = '\uD83D\uDFE2 Valid';
+                        }
+                        tdVal.appendChild(badge);
                     }
-                    display = `${ts} ${badge}`;
                 } else if (key === 'iat' || key === 'nbf') {
-                    display = formatTs(val);
+                    tdVal.textContent = formatTs(val);
                 } else if (typeof val === 'object') {
-                    display = JSON.stringify(val);
+                    tdVal.textContent = JSON.stringify(val);
                 } else {
-                    display = String(val);
+                    tdVal.textContent = String(val);
                 }
 
-                rows.push(`<tr><td>${escHtml(label)}</td><td>${display}</td></tr>`);
+                tr.appendChild(tdLabel);
+                tr.appendChild(tdVal);
+                frag.appendChild(tr);
             }
 
-            return rows.join('');
-        }
-
-        function escHtml(str) {
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+            return frag.childNodes.length > 0 ? frag : null;
         }
 
         // ── UI helpers ──
@@ -747,9 +751,10 @@
             payloadOutput.classList.remove('empty');
 
             // Claims table
-            const claimsRows = renderClaims(payload);
-            if (claimsRows) {
-                claimsTable.innerHTML = claimsRows;
+            const claimsFrag = renderClaims(payload);
+            if (claimsFrag) {
+                claimsTable.textContent = '';
+                claimsTable.appendChild(claimsFrag);
                 claimsSection.style.display = '';
             } else {
                 claimsSection.style.display = 'none';
