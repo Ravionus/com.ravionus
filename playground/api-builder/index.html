@@ -1224,10 +1224,16 @@
         document.getElementById('snipPythonCode').textContent = buildPython(info);
     }
 
+    // Escape backslashes then double-quotes for use inside a double-quoted string
+    // (applies to both shell/cURL and Python string literals).
+    function escapeForDblQuote(s) {
+        return s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    }
+
     function buildCurl(info) {
         var cmd = 'curl -X ' + info.method + ' \\\n  "' + info.url + '"';
         Object.keys(info.headers).forEach(function (k) {
-            cmd += ' \\\n  -H "' + k + ': ' + info.headers[k].replace(/"/g, '\\"') + '"';
+            cmd += ' \\\n  -H "' + escapeForDblQuote(k) + ': ' + escapeForDblQuote(info.headers[k]) + '"';
         });
         if (info.body) {
             cmd += ' \\\n  -d \'' + info.body.replace(/'/g, "'\\''") + '\'';
@@ -1251,7 +1257,7 @@
         if (Object.keys(hdrs).length > 0) {
             lines.push('headers = {');
             Object.keys(hdrs).forEach(function (k) {
-                lines.push('    "' + k + '": "' + hdrs[k].replace(/"/g, '\\"') + '",');
+                lines.push('    "' + escapeForDblQuote(k) + '": "' + escapeForDblQuote(hdrs[k]) + '",');
             });
             lines.push('}', '');
         }
