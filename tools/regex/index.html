@@ -556,10 +556,6 @@ function buildRegex(pattern, forceFlags) {
 }
 
 // ── HTML escape ────────────────────────────────────────────
-function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
 // ── Core: run ─────────────────────────────────────────────
 function runTest() {
     clearBanners();
@@ -652,8 +648,12 @@ function updateStatuses(matchCount, groupCount, pattern) {
 
 // ── Highlight render ───────────────────────────────────────
 function renderHighlight(text, matches) {
+    highlightView.textContent = '';   // clear previous content
     if (!text) {
-        highlightView.innerHTML = '<span class="highlight-placeholder">Enter a pattern above and type here, or click ⚡ Test…</span>';
+        const ph = document.createElement('span');
+        ph.className = 'highlight-placeholder';
+        ph.textContent = 'Enter a pattern above and type here, or click ⚡ Test…';
+        highlightView.appendChild(ph);
         return;
     }
     if (!matches.length) {
@@ -661,22 +661,31 @@ function renderHighlight(text, matches) {
         return;
     }
 
-    let html = '';
+    const frag = document.createDocumentFragment();
     let pos = 0;
     matches.forEach((m, idx) => {
         const cls = 'm' + ((idx % 5) + 1);
-        if (m.index > pos) html += escHtml(text.slice(pos, m.index));
+        if (m.index > pos) {
+            frag.appendChild(document.createTextNode(text.slice(pos, m.index)));
+        }
+        const mark = document.createElement('mark');
+        mark.className = cls;
         if (m[0].length === 0) {
             // Zero-width match: render a cursor marker
-            html += `<mark class="${cls}" title="zero-width match at ${m.index}">​</mark>`;
+            mark.title = 'zero-width match at ' + m.index;
+            mark.appendChild(document.createTextNode('\u200B'));
             pos = m.index;
         } else {
-            html += `<mark class="${cls}" title="Match ${idx + 1}: ${escHtml(m[0])}">${escHtml(m[0])}</mark>`;
+            mark.title = 'Match ' + (idx + 1) + ': ' + m[0];
+            mark.textContent = m[0];
             pos = m.index + m[0].length;
         }
+        frag.appendChild(mark);
     });
-    if (pos < text.length) html += escHtml(text.slice(pos));
-    highlightView.innerHTML = html;
+    if (pos < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(pos)));
+    }
+    highlightView.appendChild(frag);
 }
 
 // ── Match table ────────────────────────────────────────────
