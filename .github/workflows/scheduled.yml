@@ -56,20 +56,26 @@ jobs:
         run: npm ci
         working-directory: tests
 
+      - name: Pick random browser
+        id: browser
+        run: |
+          browsers=(chromium firefox webkit)
+          echo "name=${browsers[$((RANDOM % 3))]}" >> $GITHUB_OUTPUT
+
       - name: Cache Playwright browsers
         id: pw-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-browsers-${{ hashFiles('tests/package-lock.json') }}
+          key: playwright-browsers-${{ steps.browser.outputs.name }}-${{ hashFiles('tests/package-lock.json') }}
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox
+        run: npx playwright install --with-deps ${{ steps.browser.outputs.name }}
         working-directory: tests
 
       - name: Run smoke tests
-        run: npx playwright test --grep "smoke" --reporter=line
+        run: npx playwright test --grep "smoke" --reporter=line --project=${{ steps.browser.outputs.name }}
         working-directory: tests
 
       - name: Upload failure artifacts
@@ -87,7 +93,7 @@ jobs:
       github.event.schedule == '0 2 * * 0' ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'regression')
     runs-on: ubuntu-latest
-    timeout-minutes: 50   # Firefox doubled the test count to ~2740; was 30 min (not enough)
+    timeout-minutes: 30   # Single random browser per run (~1370 tests); was 50 min for both browsers
 
     steps:
       - uses: actions/checkout@v4
@@ -102,20 +108,26 @@ jobs:
         run: npm ci
         working-directory: tests
 
+      - name: Pick random browser
+        id: browser
+        run: |
+          browsers=(chromium firefox webkit)
+          echo "name=${browsers[$((RANDOM % 3))]}" >> $GITHUB_OUTPUT
+
       - name: Cache Playwright browsers
         id: pw-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-browsers-${{ hashFiles('tests/package-lock.json') }}
+          key: playwright-browsers-${{ steps.browser.outputs.name }}-${{ hashFiles('tests/package-lock.json') }}
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox
+        run: npx playwright install --with-deps ${{ steps.browser.outputs.name }}
         working-directory: tests
 
-      - name: Run full regression suite
-        run: npx playwright test --reporter=line
+      - name: Run full regression suite (${{ steps.browser.outputs.name }})
+        run: npx playwright test --reporter=line --project=${{ steps.browser.outputs.name }}
         working-directory: tests
 
       - name: Upload failure artifacts

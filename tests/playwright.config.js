@@ -17,6 +17,7 @@ module.exports = defineConfig({
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },
     { name: 'firefox',  use: { browserName: 'firefox'  } },
+    { name: 'webkit',   use: { browserName: 'webkit'   } },
   ],
   // Starts the dev server automatically before tests.
   // reuseExistingServer: true means if port 3000 is already running (e.g. locally), it uses it.
