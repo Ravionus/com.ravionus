@@ -930,18 +930,17 @@
     }
     function saveState() {
         try {
+            // Auth credentials (tokens, passwords, API keys) are intentionally
+            // excluded — never persist secrets to localStorage.
             localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                method:       method.value,
-                url:          urlInput.value,
-                params:       getKVRows('paramsBody'),
-                headers:      getKVRows('headersBody'),
-                bodyType:     bodyType.value,
-                bodyText:     bodyInput.value,
-                authType:     authType.value,
-                authToken:    document.getElementById('authToken').value,
-                authUser:     document.getElementById('authUser').value,
-                authKeyName:  document.getElementById('authKeyName').value,
-                authKeyValue: document.getElementById('authKeyValue').value
+                method:      method.value,
+                url:         urlInput.value,
+                params:      getKVRows('paramsBody'),
+                headers:     getKVRows('headersBody'),
+                bodyType:    bodyType.value,
+                bodyText:    bodyInput.value,
+                authType:    authType.value,
+                authKeyName: document.getElementById('authKeyName').value
             }));
         } catch (_) {}
     }
@@ -962,10 +961,9 @@
             if (s.bodyType) { bodyType.value = s.bodyType; updateBodyPanel(); }
             if (s.bodyText) bodyInput.value = s.bodyText;
             if (s.authType) { authType.value = s.authType; updateAuthPanel(); }
-            if (s.authToken)    document.getElementById('authToken').value = s.authToken;
-            if (s.authUser)     document.getElementById('authUser').value = s.authUser;
+            // authToken, authUser, authPass, authKeyValue are not persisted — credentials
+            // must be re-entered each session.
             if (s.authKeyName)  document.getElementById('authKeyName').value = s.authKeyName;
-            if (s.authKeyValue) document.getElementById('authKeyValue').value = s.authKeyValue;
         } catch (_) {}
     }
 
