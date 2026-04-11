@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners, filterBenignErrors } = require('./helpers');
 
 const BASE = 'http://localhost:3000';
 const URL  = `${BASE}/tools/html-entity/`;
@@ -11,17 +12,12 @@ test.describe('HTML Entity Encoder/Decoder — smoke', () => {
     let errors;
 
     test.beforeEach(async ({ page }) => {
-        errors = [];
-        page.on('pageerror', e => errors.push(e.message));
-        page.on('console',   m => { if (m.type() === 'error') errors.push(m.text()); });
+        errors = attachErrorListeners(page);
         await page.goto(URL);
     });
 
     test('page loads without JS or CSP errors', async ({ page }) => {
-        const real = errors.filter(e =>
-            !e.includes('favicon') &&
-            !e.includes('net::ERR')
-        );
+        const real = filterBenignErrors(errors);
         expect(real, 'Unexpected errors: ' + real.join('\n')).toHaveLength(0);
     });
 

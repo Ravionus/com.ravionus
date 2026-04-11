@@ -10,16 +10,13 @@
 // ============================================================
 
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners } = require('./helpers');
 
 // ── Smoke (pre-deploy gate) ──────────────────────────────────
 test.describe('Base64 Encoder/Decoder — smoke', () => {
 
   test('loads without JS or CSP errors', async ({ page }) => {
-    const errors = [];
-    page.on('pageerror', e => errors.push(e.message));
-    page.on('console', m => {
-      if (m.type() === 'error') errors.push(m.text().slice(0, 140));
-    });
+    const errors = attachErrorListeners(page);
     await page.goto('/tools/base64/');
     await page.waitForLoadState('networkidle');
     expect(errors, `Errors on load: ${errors.join(' | ')}`).toHaveLength(0);

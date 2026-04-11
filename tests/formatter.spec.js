@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners, filterBenignErrors } = require('./helpers');
 
 const PAGE = 'http://localhost:3000/tools/formatter/index.html';
 
@@ -14,12 +15,10 @@ async function waitForReady(page) {
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Code Formatter — Smoke', () => {
     test('loads without JS or CSP errors', async ({ page }) => {
-        const errors = /** @type {string[]} */ ([]);
-        page.on('pageerror',  e => errors.push(e.message));
-        page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+        const errors = attachErrorListeners(page);
         await page.goto(PAGE);
         await page.waitForTimeout(800); // allow CDN scripts time to load
-        expect(errors.filter(e => !e.includes('favicon'))).toHaveLength(0);
+        expect(filterBenignErrors(errors)).toHaveLength(0);
     });
 
     test('nav breadcrumb and links are visible', async ({ page }) => {

@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners, filterBenignErrors } = require('./helpers');
 
 const BASE = 'http://localhost:3000';
 const URL  = `${BASE}/tools/qr/`;
@@ -10,19 +11,12 @@ test.describe('QR Code Generator — smoke', () => {
     let errors;
 
     test.beforeEach(async ({ page }) => {
-        errors = [];
-        page.on('pageerror',  e => errors.push(e.message));
-        page.on('console',    m => { if (m.type() === 'error') errors.push(m.text()); });
+        errors = attachErrorListeners(page);
         await page.goto(URL);
     });
 
     test.afterEach(() => {
-        const real = errors.filter(e =>
-            !e.includes('favicon') &&
-            !e.includes('ERR_FILE_NOT_FOUND') &&
-            !e.includes('net::ERR')
-        );
-        expect(real).toHaveLength(0);
+        expect(filterBenignErrors(errors)).toHaveLength(0);
     });
 
     test('page loads with correct title and no JS/CSP errors', async ({ page }) => {

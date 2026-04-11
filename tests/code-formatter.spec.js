@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners, filterBenignErrors } = require('./helpers');
 
 const BASE = 'http://localhost:3000';
 const URL  = `${BASE}/playground/code-formatter/`;
@@ -17,20 +18,13 @@ test.describe('Code Formatter — smoke', () => {
     let errors;
 
     test.beforeEach(async ({ page }) => {
-        errors = [];
-        page.on('pageerror', e => errors.push(e.message));
-        page.on('console',   m => { if (m.type() === 'error') errors.push(m.text()); });
+        errors = attachErrorListeners(page);
         await page.goto(URL);
     });
 
     test('page loads without JS or CSP errors', async ({ page }) => {
         // Allow only benign CDN 404 / network warnings, not real JS errors
-        const real = errors.filter(e =>
-            !e.includes('favicon') &&
-            !e.includes('net::ERR') &&
-            !e.includes('NetworkError') &&
-            !e.includes('Failed to fetch')
-        );
+        const real = filterBenignErrors(errors, ['NetworkError', 'Failed to fetch']);
         expect(real, 'Unexpected errors: ' + real.join('\n')).toHaveLength(0);
     });
 

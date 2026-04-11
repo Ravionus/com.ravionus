@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const { attachErrorListeners, filterBenignErrors } = require('./helpers');
 
 const PAGE = 'http://localhost:3000/tools/yaml/index.html';
 
@@ -8,13 +9,11 @@ const PAGE = 'http://localhost:3000/tools/yaml/index.html';
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('YAML Tool — Smoke', () => {
     test('loads without JS or CSP errors', async ({ page }) => {
-        const errors = /** @type {string[]} */ ([]);
-        page.on('pageerror', e => errors.push(e.message));
-        page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+        const errors = attachErrorListeners(page);
         await page.goto(PAGE);
         // Wait briefly for js-yaml CDN load
         await page.waitForTimeout(500);
-        expect(errors.filter(e => !e.includes('favicon'))).toHaveLength(0);
+        expect(filterBenignErrors(errors)).toHaveLength(0);
     });
 
     test('nav links are visible', async ({ page }) => {
