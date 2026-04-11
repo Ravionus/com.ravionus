@@ -1076,11 +1076,22 @@
             fields.forEach(f => {
                 const row = document.createElement('div');
                 row.className = 'field-row';
-                row.innerHTML = `
-                    <span class="field-row-name">${f.label}</span>
-                    <span class="field-row-val">${f.raw}</span>
-                    <span class="field-row-desc">${describeFieldHuman(f.raw, f.key)}</span>
-                `;
+
+                const spanName = document.createElement('span');
+                spanName.className = 'field-row-name';
+                spanName.textContent = f.label;
+
+                const spanVal = document.createElement('span');
+                spanVal.className = 'field-row-val';
+                spanVal.textContent = f.raw;
+
+                const spanDesc = document.createElement('span');
+                spanDesc.className = 'field-row-desc';
+                spanDesc.textContent = describeFieldHuman(f.raw, f.key);
+
+                row.appendChild(spanName);
+                row.appendChild(spanVal);
+                row.appendChild(spanDesc);
                 fieldsBreakdown.appendChild(row);
             });
         }
