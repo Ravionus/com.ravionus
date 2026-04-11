@@ -233,11 +233,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run learn tests
-        run: npx playwright test catalog.spec.js topic.spec.js
+        run: npx playwright test --project=chromium --project=firefox catalog.spec.js topic.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -282,11 +282,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run JSON Formatter tests
-        run: npx playwright test json.spec.js
+        run: npx playwright test --project=chromium --project=firefox json.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -331,11 +331,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Markdown Preview tests
-        run: npx playwright test markdown.spec.js
+        run: npx playwright test --project=chromium --project=firefox markdown.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -380,11 +380,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Base64 tests
-        run: npx playwright test base64.spec.js
+        run: npx playwright test --project=chromium --project=firefox base64.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -429,11 +429,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run URL Encoder/Decoder tests
-        run: npx playwright test url.spec.js
+        run: npx playwright test --project=chromium --project=firefox url.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -478,11 +478,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run CSV ↔ JSON Converter tests
-        run: npx playwright test csv.spec.js
+        run: npx playwright test --project=chromium --project=firefox csv.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -527,11 +527,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run YAML Validator tests
-        run: npx playwright test yaml.spec.js
+        run: npx playwright test --project=chromium --project=firefox yaml.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -576,11 +576,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Regex Tester tests
-        run: npx playwright test regex.spec.js
+        run: npx playwright test --project=chromium --project=firefox regex.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -625,11 +625,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Code Formatter tests
-        run: npx playwright test formatter.spec.js
+        run: npx playwright test --project=chromium --project=firefox formatter.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -674,11 +674,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Hash Generator tests
-        run: npx playwright test hash.spec.js
+        run: npx playwright test --project=chromium --project=firefox hash.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -723,11 +723,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Diff Checker tests
-        run: npx playwright test diff.spec.js
+        run: npx playwright test --project=chromium --project=firefox diff.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -772,11 +772,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run UUID/GUID Generator tests
-        run: npx playwright test uuid.spec.js
+        run: npx playwright test --project=chromium --project=firefox uuid.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -821,11 +821,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Password Generator tests
-        run: npx playwright test password.spec.js
+        run: npx playwright test --project=chromium --project=firefox password.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -870,11 +870,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Lorem Ipsum Generator tests
-        run: npx playwright test lorem.spec.js
+        run: npx playwright test --project=chromium --project=firefox lorem.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -919,11 +919,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Case Converter tests
-        run: npx playwright test case.spec.js
+        run: npx playwright test --project=chromium --project=firefox case.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -968,11 +968,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Color Converter tests
-        run: npx playwright test color.spec.js
+        run: npx playwright test --project=chromium --project=firefox color.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1017,11 +1017,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Minifier tests
-        run: npx playwright test minifier.spec.js
+        run: npx playwright test --project=chromium --project=firefox minifier.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1066,11 +1066,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run QR Code Generator tests
-        run: npx playwright test qr.spec.js
+        run: npx playwright test --project=chromium --project=firefox qr.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1115,11 +1115,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Syntax Highlighter tests
-        run: npx playwright test syntax.spec.js
+        run: npx playwright test --project=chromium --project=firefox syntax.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1162,11 +1162,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run JavaScript REPL tests
-        run: npx playwright test repl.spec.js
+        run: npx playwright test --project=chromium --project=firefox repl.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1208,11 +1208,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run CSS Layout Playground tests
-        run: npx playwright test css-layout.spec.js
+        run: npx playwright test --project=chromium --project=firefox css-layout.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1254,11 +1254,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run JSON Explorer tests
-        run: npx playwright test json-explorer.spec.js
+        run: npx playwright test --project=chromium --project=firefox json-explorer.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1300,11 +1300,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Git Simulator tests
-        run: npx playwright test git-sim.spec.js
+        run: npx playwright test --project=chromium --project=firefox git-sim.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1346,11 +1346,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Color Palette Generator tests
-        run: npx playwright test color-palette.spec.js
+        run: npx playwright test --project=chromium --project=firefox color-palette.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1392,11 +1392,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Date/Time Utilities tests
-        run: npx playwright test datetime.spec.js
+        run: npx playwright test --project=chromium --project=firefox datetime.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1438,11 +1438,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Base Converter tests
-        run: npx playwright test base-converter.spec.js
+        run: npx playwright test --project=chromium --project=firefox base-converter.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1484,11 +1484,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Password Generator (Playground) tests
-        run: npx playwright test password-gen.spec.js
+        run: npx playwright test --project=chromium --project=firefox password-gen.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1530,11 +1530,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run JWT Decoder tests
-        run: npx playwright test jwt.spec.js
+        run: npx playwright test --project=chromium --project=firefox jwt.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1576,11 +1576,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Text Statistics tests
-        run: npx playwright test text-stats.spec.js
+        run: npx playwright test --project=chromium --project=firefox text-stats.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1623,11 +1623,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Cron Expression Parser tests
-        run: npx playwright test cron.spec.js
+        run: npx playwright test --project=chromium --project=firefox cron.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1670,11 +1670,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run API Request Builder tests
-        run: npx playwright test api-builder.spec.js
+        run: npx playwright test --project=chromium --project=firefox api-builder.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1717,11 +1717,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run Code Formatter tests
-        run: npx playwright test code-formatter.spec.js
+        run: npx playwright test --project=chromium --project=firefox code-formatter.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1764,11 +1764,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run HTML Entity tests
-        run: npx playwright test html-entity.spec.js
+        run: npx playwright test --project=chromium --project=firefox html-entity.spec.js
         working-directory: tests
 
       - name: Upload report on failure
@@ -1813,11 +1813,11 @@ jobs:
 
       - name: Install Playwright browser
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox firefox firefox firefox firefox
+        run: npx playwright install --with-deps chromium firefox
         working-directory: tests
 
       - name: Run homepage tests
-        run: npx playwright test homepage.spec.js
+        run: npx playwright test --project=chromium --project=firefox homepage.spec.js
         working-directory: tests
 
       - name: Upload report on failure

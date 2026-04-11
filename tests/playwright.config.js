@@ -17,6 +17,8 @@ module.exports = defineConfig({
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },
     { name: 'firefox',  use: { browserName: 'firefox'  } },
+    // webkit is available in CI (scheduled runs) but not installed locally by default.
+    // To run locally: npx playwright install webkit
     { name: 'webkit',   use: { browserName: 'webkit'   } },
   ],
   // Starts the dev server automatically before tests.
