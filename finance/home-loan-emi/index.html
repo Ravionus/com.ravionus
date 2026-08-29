@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Home Loan EMI Calculator — Ravionus</title>
+    <meta name="description" content="Calculate monthly home loan EMI payments, interest payable, and full loan amortization schedule. Free client-side financial calculator.">
+    <link rel="canonical" href="https://ravionus.com/finance/home-loan-emi/">
+    <meta property="og:title" content="Home Loan EMI Calculator — Ravionus">
+    <meta property="og:description" content="Calculate monthly home loan EMI payments, total interest payable, and full loan amortization schedule.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ravionus">
+    <meta property="og:url" content="https://ravionus.com/finance/home-loan-emi/">
+    <meta property="og:image" content="https://ravionus.com/og-image.png">
+    <meta property="og:image:alt" content="Home Loan EMI Calculator — Ravionus">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://ravionus.com/og-image.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="/flags.js"></script>
+    <script src="/site.js" defer></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #0e0e16;
+            --border: #1e1e2e;
+            --border2: #2a2a3e;
+            --text: #e2e2f0;
+            --muted: #7878a0;
+            --purple: #a855f7;
+            --cyan: #22d3ee;
+            --green: #22c55e;
+            --red: #ef4444;
+            --accent-g: linear-gradient(135deg, #a855f7, #22d3ee);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 24px 16px;
+            width: 100%;
+        }
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 6px;
+        }
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+        .calc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+        @media (max-width: 900px) {
+            .calc-container { grid-template-columns: 1fr; }
+        }
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .input-control {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .input-control:focus {
+            border-color: var(--purple);
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .stat-card {
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: 6px;
+        }
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text);
+        }
+        .stat-value.highlight-emi { color: var(--purple); }
+        .stat-value.highlight-interest { color: var(--red); }
+        .stat-value.highlight-total { color: var(--cyan); }
+        
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            max-height: 400px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: right;
+        }
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            position: sticky;
+            top: 0;
+            background: var(--surface2);
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        td:first-child, th:first-child { text-align: left; }
+        tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(255,255,255,0.02); }
+    </style>
+</head>
+
+<body>
+    <div class="page-breadcrumb">
+        <a href="/">Home</a><span class="sep">/</span>
+        <a href="/finance/">Personal Finance</a><span class="sep">/</span>
+        <span class="crumb-current">Home Loan EMI Calculator</span>
+    </div>
+
+    <div class="page-header">
+        <h1>🏠 Home Loan EMI Calculator</h1>
+        <p>Calculate your monthly home loan payment (EMI), total interest payable, and amortisation schedule.</p>
+    </div>
+
+    <div class="calc-container">
+        <!-- Inputs Panel -->
+        <div class="panel">
+            <div class="panel-title">⚙️ Loan Parameters</div>
+
+            <div class="form-group">
+                <label for="loanAmountInput">Loan Amount ($)</label>
+                <input type="number" id="loanAmountInput" class="input-control" value="300000" min="1000" step="5000">
+            </div>
+
+            <div class="form-group">
+                <label for="interestRateInput">Interest Rate (% p.a.)</label>
+                <input type="number" id="interestRateInput" class="input-control" value="6.5" min="0.1" max="30" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="tenureYearsInput">Loan Tenure (Years)</label>
+                <input type="number" id="tenureYearsInput" class="input-control" value="20" min="1" max="40" step="1">
+            </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="panel">
+            <div class="panel-title">📊 Payment Breakdown</div>
+
+            <div class="summary-cards">
+                <div class="stat-card">
+                    <div class="stat-label">Monthly EMI</div>
+                    <div class="stat-value highlight-emi" id="statEmi">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Principal Amount</div>
+                    <div class="stat-value" id="statPrincipal">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Interest Payable</div>
+                    <div class="stat-value highlight-interest" id="statInterest">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Amount Payable</div>
+                    <div class="stat-value highlight-total" id="statTotal">$0</div>
+                </div>
+            </div>
+
+            <div class="panel-title" style="margin-top: 10px;">📅 Amortisation Schedule (Monthly)</div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Opening Balance</th>
+                            <th>EMI Paid</th>
+                            <th>Interest Paid</th>
+                            <th>Principal Paid</th>
+                            <th>Closing Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="amortTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        'use strict';
+        var STORAGE_KEY = 'ravionus_tool_finance_emi';
+
+        var loanAmountInput = document.getElementById('loanAmountInput');
+        var interestRateInput = document.getElementById('interestRateInput');
+        var tenureYearsInput = document.getElementById('tenureYearsInput');
+
+        var statEmi = document.getElementById('statEmi');
+        var statPrincipal = document.getElementById('statPrincipal');
+        var statInterest = document.getElementById('statInterest');
+        var statTotal = document.getElementById('statTotal');
+        var amortTableBody = document.getElementById('amortTableBody');
+
+        function formatCurrency(val) {
+            return '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function calculate() {
+            var P = parseFloat(loanAmountInput.value) || 0;
+            var annualRate = parseFloat(interestRateInput.value) || 0;
+            var years = parseInt(tenureYearsInput.value, 10) || 1;
+
+            var r = (annualRate / 12) / 100;
+            var n = years * 12;
+
+            var emi = 0;
+            if (P > 0 && r > 0 && n > 0) {
+                emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            } else if (P > 0 && n > 0) {
+                emi = P / n;
+            }
+
+            var totalPayment = emi * n;
+            var totalInterest = totalPayment - P;
+
+            statEmi.textContent = formatCurrency(emi);
+            statPrincipal.textContent = formatCurrency(P);
+            statInterest.textContent = formatCurrency(totalInterest);
+            statTotal.textContent = formatCurrency(totalPayment);
+
+            var balance = P;
+            var tableHtml = '';
+
+            for (var m = 1; m <= n; m++) {
+                var interestPaid = balance * r;
+                var principalPaid = emi - interestPaid;
+                var openingBal = balance;
+                balance = Math.max(0, balance - principalPaid);
+
+                tableHtml += '<tr>' +
+                    '<td>Month ' + m + '</td>' +
+                    '<td>' + formatCurrency(openingBal) + '</td>' +
+                    '<td>' + formatCurrency(emi) + '</td>' +
+                    '<td style="color:var(--red)">' + formatCurrency(interestPaid) + '</td>' +
+                    '<td style="color:var(--green)">' + formatCurrency(principalPaid) + '</td>' +
+                    '<td style="font-weight:600;color:var(--cyan)">' + formatCurrency(balance) + '</td>' +
+                '</tr>';
+            }
+
+            amortTableBody.innerHTML = tableHtml;
+
+            // Persist state
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    P: P,
+                    rate: annualRate,
+                    years: years
+                }));
+            } catch (e) {}
+        }
+
+        [loanAmountInput, interestRateInput, tenureYearsInput].forEach(function (el) {
+            el.addEventListener('input', calculate);
+            el.addEventListener('change', calculate);
+        });
+
+        // Restore saved state
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                var data = JSON.parse(saved);
+                if (data.P !== undefined) loanAmountInput.value = data.P;
+                if (data.rate !== undefined) interestRateInput.value = data.rate;
+                if (data.years !== undefined) tenureYearsInput.value = data.years;
+            }
+        } catch (e) {}
+
+        calculate();
+    })();
+    </script>
+</body>
+
+</html>

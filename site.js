@@ -2,9 +2,24 @@
  * site.js — shared nav & footer injected into every page.
  * Loaded as the first script inside <body> on every page.
  * Uses absolute paths so it works regardless of page depth.
+ * 
+ * IMPORTANT: Depends on flags.js being loaded BEFORE this script.
+ * Load order: <script src="/flags.js"></script> → <script src="/site.js"></script>
+ * Fallback: If flags.js not loaded, this script will attempt to load it dynamically.
+ * All methods check for window.RavionusFlags existence before use (safe fallback).
  */
 (function () {
   'use strict';
+
+  // Fallback: Ensure flags.js engine is available if not already loaded.
+  // This handles cases where flags.js may not have been included in <head>.
+  if (!window.RavionusFlags && typeof document !== 'undefined') {
+    var flagsScript = document.createElement('script');
+    flagsScript.src = '/flags.js';
+    document.head.appendChild(flagsScript);
+    // Note: Async load means RavionusFlags may not be immediately available,
+    // but all uses are guarded with existence checks below.
+  }
 
   // ── CSS ─────────────────────────────────────────────────────────────────────
   var css = [
@@ -103,7 +118,16 @@
   function isActive(section) {
     return p === '/' + section + '/' || p.indexOf('/' + section + '/') === 0;
   }
+
+  function isSectionEnabled(sec) {
+    if (window.RavionusFlags && typeof window.RavionusFlags.isSectionEnabled === 'function') {
+      return window.RavionusFlags.isSectionEnabled(sec);
+    }
+    return true;
+  }
+
   function navLink(href, label, section) {
+    if (!isSectionEnabled(section)) return '';
     return '<a href="' + href + '" class="nav-link' + (isActive(section) ? ' primary' : '') + '">' + label + '</a>';
   }
 
@@ -143,6 +167,7 @@
           navLink('/learn/', '✨ Learn', 'learn') +
           navLink('/tools/', '🛠️ Dev Tools', 'tools') +
           navLink('/playground/', '🧪 Playgrounds', 'playground') +
+          navLink('/finance/', '💰 Personal Finance', 'finance') +
         '</div>' +
         authHtml +
         '<button class="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>' +
@@ -187,6 +212,54 @@
   footer.className = 'site-footer';
   footer.innerHTML = 'Crafted by <a href="/">Ravionus</a> &nbsp;&middot;&nbsp; &copy; ' + new Date().getFullYear() + ' Raviprasad';
 
+  // ── Page Killswitch & Catalogue Filter Engine ───────────────────────────
+  function runKillswitchCheck() {
+    if (!window.RavionusFlags) return;
+
+    var rawPath = location.pathname.replace(/^\/+|\/+$/g, '');
+    if (!rawPath) {
+      // Homepage: filter feature sections/cards
+      window.RavionusFlags.applyListingFilters();
+      return;
+    }
+
+    var parts = rawPath.split('/');
+    var section = parts[0];
+    var isCataloguePage = parts.length === 1 || (parts.length === 2 && parts[1] === 'index.html');
+
+    // Check parent section killswitch first
+    if (!window.RavionusFlags.isSectionEnabled(section)) {
+      renderMaintenanceView(section, true);
+      return;
+    }
+
+    if (isCataloguePage) {
+      window.RavionusFlags.applyListingFilters();
+      return;
+    }
+
+    // Specific feature page (e.g. finance/interest-calculator)
+    var featurePath = section + '/' + parts[1];
+    if (!window.RavionusFlags.isFeatureEnabled(featurePath)) {
+      renderMaintenanceView(featurePath, false);
+    }
+  }
+
+  function renderMaintenanceView(targetKey, isSection) {
+    var main = document.querySelector('main') || document.body;
+    var title = isSection ? 'Section Temporarily Disabled' : 'Tool Temporarily Disabled';
+    var desc = 'The feature "' + targetKey + '" is currently undergoing maintenance or has been disabled via killswitch.';
+
+    main.innerHTML = [
+      '<div id="maintenanceBanner" style="max-width:600px;margin:80px auto;padding:40px 24px;text-align:center;background:#12121a;border:1px solid #2e2e48;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5)">',
+      '  <div style="font-size:3rem;margin-bottom:16px">⚠️</div>',
+      '  <h1 style="font-size:1.6rem;font-weight:700;color:#e2e2f0;margin-bottom:12px">' + title + '</h1>',
+      '  <p style="color:#7878a0;font-size:0.95rem;line-height:1.6;margin-bottom:24px">' + desc + '</p>',
+      '  <a href="/" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#a855f7,#22d3ee);color:#fff;font-weight:600;text-decoration:none;transition:opacity .2s">← Return to Homepage</a>',
+      '</div>'
+    ].join('');
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     // Wrap page content in <main> if one doesn't already exist
     if (!document.querySelector('main')) {
@@ -209,6 +282,9 @@
       existingMain.setAttribute('tabindex', '-1');
     }
     document.body.appendChild(footer);
+
+    // Run killswitch verification after DOM is ready
+    runKillswitchCheck();
   });
 
   // ── Service worker (PWA offline support) ────────────────────────────────
@@ -216,3 +292,4 @@
     navigator.serviceWorker.register('/sw.js').catch(function () {});
   }
 }());
+

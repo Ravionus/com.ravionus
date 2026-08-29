@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Interest Calculator — Simple & Compound Interest | Ravionus</title>
+    <meta name="description" content="Calculate simple and compound interest with compounding frequency options and monthly contributions. Free client-side financial calculator.">
+    <link rel="canonical" href="https://ravionus.com/finance/interest-calculator/">
+    <meta property="og:title" content="Interest Calculator — Simple & Compound Interest | Ravionus">
+    <meta property="og:description" content="Calculate simple and compound interest with compounding frequency options and monthly contributions.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ravionus">
+    <meta property="og:url" content="https://ravionus.com/finance/interest-calculator/">
+    <meta property="og:image" content="https://ravionus.com/og-image.png">
+    <meta property="og:image:alt" content="Interest Calculator — Ravionus">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://ravionus.com/og-image.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="/flags.js"></script>
+    <script src="/site.js" defer></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #0e0e16;
+            --border: #1e1e2e;
+            --border2: #2a2a3e;
+            --text: #e2e2f0;
+            --muted: #7878a0;
+            --purple: #a855f7;
+            --cyan: #22d3ee;
+            --green: #22c55e;
+            --red: #ef4444;
+            --accent-g: linear-gradient(135deg, #a855f7, #22d3ee);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 24px 16px;
+            width: 100%;
+        }
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: 6px;
+        }
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+        .calc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+        @media (max-width: 900px) {
+            .calc-container { grid-template-columns: 1fr; }
+        }
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .input-control, .select-control {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .input-control:focus, .select-control:focus {
+            border-color: var(--purple);
+        }
+        .toggle-group {
+            display: flex;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 2px;
+        }
+        .toggle-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+        .toggle-btn.active {
+            background: var(--purple);
+            color: #fff;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .stat-card {
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: 6px;
+        }
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text);
+        }
+        .stat-value.highlight-interest { color: var(--green); }
+        .stat-value.highlight-balance { color: var(--cyan); }
+        
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: right;
+        }
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--surface2);
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        td:first-child, th:first-child { text-align: left; }
+        tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(255,255,255,0.02); }
+    </style>
+</head>
+
+<body>
+    <div class="page-breadcrumb">
+        <a href="/">Home</a><span class="sep">/</span>
+        <a href="/finance/">Personal Finance</a><span class="sep">/</span>
+        <span class="crumb-current">Interest Calculator</span>
+    </div>
+
+    <div class="page-header">
+        <h1>📈 Simple & Compound Interest Calculator</h1>
+        <p>Calculate your investment growth, interest earned, and compound interest schedule with periodic contributions.</p>
+    </div>
+
+    <div class="calc-container">
+        <!-- Inputs Panel -->
+        <div class="panel">
+            <div class="panel-title">⚙️ Calculation Parameters</div>
+
+            <div class="form-group">
+                <label>Interest Type</label>
+                <div class="toggle-group" id="interestTypeToggle">
+                    <button type="button" class="toggle-btn active" data-type="compound">Compound Interest</button>
+                    <button type="button" class="toggle-btn" data-type="simple">Simple Interest</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="principalInput">Initial Principal ($)</label>
+                <input type="number" id="principalInput" class="input-control" value="10000" min="0" step="500">
+            </div>
+
+            <div class="form-group">
+                <label for="rateInput">Annual Interest Rate (%)</label>
+                <input type="number" id="rateInput" class="input-control" value="7" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="yearsInput">Investment Horizon (Years)</label>
+                <input type="number" id="yearsInput" class="input-control" value="10" min="1" max="50" step="1">
+            </div>
+
+            <div class="form-group" id="compoundingFreqGroup">
+                <label for="freqSelect">Compounding Frequency</label>
+                <select id="freqSelect" class="select-control">
+                    <option value="1">Annually (1/yr)</option>
+                    <option value="2">Semi-Annually (2/yr)</option>
+                    <option value="4">Quarterly (4/yr)</option>
+                    <option value="12" selected>Monthly (12/yr)</option>
+                    <option value="365">Daily (365/yr)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="monthlyContribInput">Monthly Contribution ($)</label>
+                <input type="number" id="monthlyContribInput" class="input-control" value="200" min="0" step="50">
+            </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="panel">
+            <div class="panel-title">📊 Investment Summary</div>
+
+            <div class="summary-cards">
+                <div class="stat-card">
+                    <div class="stat-label">Total Principal</div>
+                    <div class="stat-value" id="statPrincipal">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Contributions</div>
+                    <div class="stat-value" id="statContributions">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Interest Earned</div>
+                    <div class="stat-value highlight-interest" id="statInterest">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Final Future Balance</div>
+                    <div class="stat-value highlight-balance" id="statBalance">$0</div>
+                </div>
+            </div>
+
+            <div class="panel-title" style="margin-top: 10px;">📅 Year-by-Year Growth Table</div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Start Balance</th>
+                            <th>Contributions</th>
+                            <th>Interest Earned</th>
+                            <th>End Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        'use strict';
+        var STORAGE_KEY = 'ravionus_tool_finance_interest';
+
+        var type = 'compound';
+        var principalInput = document.getElementById('principalInput');
+        var rateInput = document.getElementById('rateInput');
+        var yearsInput = document.getElementById('yearsInput');
+        var freqSelect = document.getElementById('freqSelect');
+        var monthlyContribInput = document.getElementById('monthlyContribInput');
+        var compoundingFreqGroup = document.getElementById('compoundingFreqGroup');
+
+        var statPrincipal = document.getElementById('statPrincipal');
+        var statContributions = document.getElementById('statContributions');
+        var statInterest = document.getElementById('statInterest');
+        var statBalance = document.getElementById('statBalance');
+        var scheduleTableBody = document.getElementById('scheduleTableBody');
+
+        function formatCurrency(val) {
+            return '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function calculate() {
+            var P = parseFloat(principalInput.value) || 0;
+            var r = (parseFloat(rateInput.value) || 0) / 100;
+            var years = parseInt(yearsInput.value, 10) || 1;
+            var n = parseInt(freqSelect.value, 10) || 12;
+            var PMT = parseFloat(monthlyContribInput.value) || 0;
+
+            var currentBalance = P;
+            var totalContributions = PMT * 12 * years;
+            var totalInterest = 0;
+
+            var tableHtml = '';
+
+            for (var y = 1; y <= years; y++) {
+                var startBal = currentBalance;
+                var yearContrib = PMT * 12;
+                var yearInterest = 0;
+
+                if (type === 'compound') {
+                    // Compound interest calculation month by month for accuracy with monthly contributions
+                    for (var m = 1; m <= 12; m++) {
+                        var monthlyRate = r / 12;
+                        var mInterest = (currentBalance + PMT) * monthlyRate;
+                        yearInterest += mInterest;
+                        currentBalance += PMT + mInterest;
+                    }
+                } else {
+                    // Simple interest
+                    yearInterest = P * r + (yearContrib * r / 2);
+                    currentBalance += yearContrib + yearInterest;
+                }
+
+                totalInterest += yearInterest;
+
+                tableHtml += '<tr>' +
+                    '<td>Year ' + y + '</td>' +
+                    '<td>' + formatCurrency(startBal) + '</td>' +
+                    '<td>' + formatCurrency(yearContrib) + '</td>' +
+                    '<td>' + formatCurrency(yearInterest) + '</td>' +
+                    '<td style="font-weight:600;color:var(--cyan)">' + formatCurrency(currentBalance) + '</td>' +
+                '</tr>';
+            }
+
+            statPrincipal.textContent = formatCurrency(P);
+            statContributions.textContent = formatCurrency(totalContributions);
+            statInterest.textContent = formatCurrency(totalInterest);
+            statBalance.textContent = formatCurrency(currentBalance);
+            scheduleTableBody.innerHTML = tableHtml;
+
+            // Persist state
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    type: type,
+                    P: P,
+                    r: rateInput.value,
+                    years: years,
+                    n: n,
+                    PMT: PMT
+                }));
+            } catch (e) {}
+        }
+
+        // Toggle buttons
+        document.querySelectorAll('#interestTypeToggle .toggle-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('#interestTypeToggle .toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                type = btn.getAttribute('data-type');
+                compoundingFreqGroup.style.display = type === 'compound' ? '' : 'none';
+                calculate();
+            });
+        });
+
+        [principalInput, rateInput, yearsInput, freqSelect, monthlyContribInput].forEach(function (el) {
+            el.addEventListener('input', calculate);
+            el.addEventListener('change', calculate);
+        });
+
+        // Restore saved state
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                var data = JSON.parse(saved);
+                if (data.type) {
+                    type = data.type;
+                    document.querySelectorAll('#interestTypeToggle .toggle-btn').forEach(function (b) {
+                        b.classList.toggle('active', b.getAttribute('data-type') === type);
+                    });
+                    compoundingFreqGroup.style.display = type === 'compound' ? '' : 'none';
+                }
+                if (data.P !== undefined) principalInput.value = data.P;
+                if (data.r !== undefined) rateInput.value = data.r;
+                if (data.years !== undefined) yearsInput.value = data.years;
+                if (data.n !== undefined) freqSelect.value = data.n;
+                if (data.PMT !== undefined) monthlyContribInput.value = data.PMT;
+            }
+        } catch (e) {}
+
+        calculate();
+    })();
+    </script>
+</body>
+
+</html>
