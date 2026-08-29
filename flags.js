@@ -1,33 +1,25 @@
 /**
  * flags.js — Ravionus Feature Flag & Killswitch Engine
- * Global declarative configuration for enabling/disabling sections and features.
- * Works synchronously client-side with zero build dependencies.
+ * Loads feature flag configuration from /flags-config.json for real-time admin control.
+ * Falls back to embedded defaults if fetch fails (offline/error).
+ * 
+ * Admin usage: Edit flags-config.json in GitHub and commit. Changes live in ~30-60 seconds.
+ * Test usage: Tests automatically adapt to current flag configuration.
  */
 (function (root) {
   'use strict';
 
-  var RavionusFlags = {
-    /**
-     * Section-level killswitches.
-     * Setting a section to false disables all features within that section.
-     */
+  // Default embedded config (used if flags-config.json fetch fails)
+  var defaultConfig = {
     sections: {
       learn: true,
       tools: true,
       playground: true,
       finance: true
     },
-
-    /**
-     * Granular feature-level killswitches.
-     * Format: "section/feature-slug"
-     */
     features: {
-      // Personal Finance features
       'finance/interest-calculator': true,
       'finance/home-loan-emi': true,
-
-      // Dev Tools features (examples)
       'tools/base64': true,
       'tools/case': true,
       'tools/color': true,
@@ -49,8 +41,6 @@
       'tools/url': true,
       'tools/uuid': true,
       'tools/yaml': true,
-
-      // Playgrounds features
       'playground/api-builder': true,
       'playground/base-converter': true,
       'playground/code-formatter': true,
@@ -62,7 +52,17 @@
       'playground/markdown': true,
       'playground/password-gen': true,
       'playground/repl': true
-    },
+    }
+  };
+
+  // Start with defaults, will be updated when config loads
+  var config = JSON.parse(JSON.stringify(defaultConfig));
+  var configLoaded = false;
+
+  var RavionusFlags = {
+    sections: config.sections,
+    features: config.features,
+    configReady: false,
 
     /**
      * Check if a section is enabled.
@@ -79,6 +79,42 @@
         return false;
       }
       return true;
+    },
+
+    /**
+     * Reload configuration from flags-config.json (useful for testing or admin changes).
+     * @returns {Promise} Resolves when config is loaded
+     */
+    reloadConfig: function () {
+      var self = this;
+      return fetch('/flags-config.json')
+        .then(function (res) {
+          if (!res.ok) throw new Error('Failed to fetch flags config');
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.sections) self.sections = data.sections;
+          if (data.features) self.features = data.features;
+          self.configReady = true;
+          return data;
+        })
+        .catch(function (err) {
+          // Silently fail and keep using current config
+          console.warn('Killswitch: Could not load flags-config.json, using defaults', err);
+          return null;
+        });
+    },
+
+    /**
+     * Wait for config to be loaded (useful for tests and initialization).
+     * @returns {Promise} Resolves when config is ready
+     */
+    waitForConfig: function () {
+      var self = this;
+      if (this.configReady) {
+        return Promise.resolve();
+      }
+      return this.reloadConfig();
     },
 
     /**
@@ -168,6 +204,13 @@
       });
     }
   };
+
+  // Automatically load config on script load (async, non-blocking)
+  if (typeof fetch !== 'undefined') {
+    RavionusFlags.reloadConfig().catch(function () {
+      // Silent fail - already logged in reloadConfig
+    });
+  }
 
   root.RavionusFlags = RavionusFlags;
 
